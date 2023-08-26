@@ -1,10 +1,15 @@
+import { Route,Routes,BrowserRouter } from 'react-router-dom';
+import Login from './pages/login/login.jsx';
+
 import {createRoot} from "react-dom/client";
+
 const App = () => {
     return(
-        <div>
-            <h1>React </h1>
-        
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path='/login' element={<Login/>} />
+            </Routes>
+        </BrowserRouter>
 
     )
 };
