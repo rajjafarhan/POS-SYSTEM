@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const LoginFrame = () => {
-  const [email, setEmail] = useState("");
+  const [data, setData] = useState({ email: "", password: "" });
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+  };
   return (
     <div className="bg-white shadow p-5  pt-5 mx-5 ">
       <div>
@@ -18,19 +22,31 @@ const LoginFrame = () => {
             <div>
               <div className="input-container">
                 <input
-                  value={email}
+                  value={data.email}
                   onChange={(e) => {
-                    setEmail(e.target.value);
+                    handleInputChange(e);
                   }}
                   type="email"
                   className={`text-black inp_u`}
                   name="email"
                 />
-                <label className={`${email === "" ? "" : "inp_d"}`}>Email</label>
+                <label className={`${data.email === "" ? "" : "inp_d"}`}>
+                  Email
+                </label>
               </div>
               <div className="input-container">
-                <input type="password" className="text-black" name="password" />
-                <label>Password</label>
+                <input
+                  value={data.password}
+                  onChange={(e) => {
+                    handleInputChange(e);
+                  }}
+                  type="password"
+                  className="text-black"
+                  name="password"
+                />
+                <label className={`${data.password === "" ? "" : "inp_d"}`}>
+                  Password
+                </label>
               </div>
             </div>
             <div>
