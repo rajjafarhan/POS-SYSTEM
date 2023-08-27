@@ -1,42 +1,39 @@
-const SideBar = () => {
-  return (
-    <>
-      <button
-        className="btn btn-primary"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasWithBothOptions"
-        aria-controls="offcanvasWithBothOptions"
-      >
-        Enable both scrolling & backdrop
-      </button>
+import "./sidebar.css";
+import SideBar from "./sidebar";
 
-      <div
-        className="offcanvas offcanvas-start"
-        data-bs-scroll="true"
-        tabIndex="-1"
-        id="offcanvasWithBothOptions"
-        aria-labelledby="offcanvasWithBothOptionsLabel"
-      >
-        <div className="offcanvas-header">
-          <h5 className="offcanvas-title" id="offcanvasWithBothOptionsLabel">
-            Backdrop with scrolling
+const NavBar = () => {
+  return (
+    <div>
+      <SideBar />
+      <nav className="d-flex bg-dgreen justify-content-between align-items-center py-3 text-light">
+        <div className="ms-5">
+          <h2 className="x-font">
+            POS <span className="text-yellow">System</span>
+          </h2>
+        </div>
+        <div className="d-flex align-items-center justify-content-around me-5">
+          <img src="" alt="" />
+          <h5 className="px-4 fs-4">
+            Hi, <span className="x-font text-yellow">Usman</span>
           </h5>
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
+          <div className="background_hm bg-yello">
+            <button
+              className="menu__icon hmbtn"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasWithBothOptions"
+              aria-controls="offcanvasWithBothOptions"
+            >
+              <span className="bg-yellow"></span>
+              <span className="bg-yellow"></span>
+              <span className="bg-yellow"></span>
+            </button>
+          </div>
         </div>
-        <div className="offcanvas-body">
-          <p>
-            Try scrolling the rest of the page to see this option in action.
-          </p>
-        </div>
-      </div>
-    </>
+      </nav>
+      <div className="my-3"></div>
+    </div>
   );
 };
 
-export default SideBar;
+export default NavBar;

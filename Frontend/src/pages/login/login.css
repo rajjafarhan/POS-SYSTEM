@@ -142,8 +142,9 @@
     left:0;
     border-radius: 40%;
     opacity:0.2;
-    animation: rotate 30s infinite;
-    
+    will-change: transform; /* Optimize rendering */
+  transform-origin: center; /* Set the rotation center if needed */
+  animation: rotate 30s infinite;
   }
   
   @keyframes rotate {
@@ -152,6 +153,7 @@
     }
   
     100% {
-      transform: rotate(360deg);
+      transform: rotate(1turn);
     }
   }
+  

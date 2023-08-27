@@ -50,3 +50,9 @@
 .w-37rem{
     width: 40rem !important;
 }
+.h-3rem{
+    height: 3rem;
+}
+.cursor-pointer{
+    cursor: pointer !important;
+}
