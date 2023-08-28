@@ -1,0 +1,11 @@
+.w-20rem{
+    width: 20rem !important;
+}
+
+.h-13rem{
+    height: 13rem;
+}
+.dash_card:hover{
+    background-color: rgb(0, 0, 0) !important;
+
+}

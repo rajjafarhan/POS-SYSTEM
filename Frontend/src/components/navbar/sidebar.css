@@ -11,9 +11,10 @@
 .opt-hover:hover{
     background-color: #437694 ;
 }
-p{
+p.side{
     padding: 0;
     margin: 0;
+    margin-bottom: 0 !important;
 }
 /* navbar */
 
