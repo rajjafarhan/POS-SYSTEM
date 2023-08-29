@@ -3,10 +3,12 @@ import { createRoot } from "react-dom/client";
 import LoginSignup from "./pages/login/auth";
 import LoginFrame from "./pages/login/loginFrame";
 import SignupFrame from "./pages/login/signupFrame";
+import Layout from "./layout/layout";
+import Dashboard from "./pages/dashboard/dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./global.css";
-import NavBar from "./components/navbar/navbar";
+import VendorPage from "./pages/vendor/vendor";
 
 const App = () => {
   return (
@@ -16,7 +18,10 @@ const App = () => {
           <Route path="login" element={<LoginFrame />} />
           <Route path="signup" element={<SignupFrame />} />
         </Route>
-        <Route path="/lol" element={<NavBar />} />
+        <Route path="/pos" element={<Layout />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="vendor" element={<VendorPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

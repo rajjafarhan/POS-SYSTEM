@@ -1,0 +1,36 @@
+.d_main{
+    min-height: 80vh;
+}
+.modal_bg{
+    height: 35rem !important;
+    overflow-y: auto;
+}
+@media only screen and (min-width: 600px) {
+   .mob-vendor{
+    display: none !important;
+   }
+  }
+  @media only screen and (max-width: 600px) {
+    .pc_vendor{
+     display: none !important;
+    }
+   }
+.t_main{
+    border-radius: 1rem !important;
+}
+td{
+    max-width: 43rem;
+}
+.b_tb{
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+.nbg:nth-child(even){
+    background-color: #e3f6f5;
+}
+.nbg:hover{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+button:disabled{
+    color: gray !important;
+}
