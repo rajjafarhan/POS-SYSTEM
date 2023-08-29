@@ -4,10 +4,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-const MySelect = ({ name , setter, values ,curr}) => {
-  const handleChange = (e) => {
-    setter(e.target.value);
-  };
+const MySelect = ({ name, setter, values, curr, id }) => {
+ 
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -17,7 +15,9 @@ const MySelect = ({ name , setter, values ,curr}) => {
           id="demo-simple-select"
           value={curr ? curr : ""}
           label="Age"
-          onChange={handleChange}
+          onChange={(e) => {
+            setter(e.target.value, id);
+          }}
         >
           {values.map((val) => {
             return <MenuItem value={`${val}`}>{val.toUpperCase()}</MenuItem>;
