@@ -1,5 +1,7 @@
 import { TextField } from "@mui/material";
 import MySelect from "../../components/select/select";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const ProductsInput = ({
   qtyVal,
@@ -49,10 +51,10 @@ const ProductsInput = ({
         onClick={() => {
           deleteProduct(id);
         }}
-        className="text-dark btn-close border-0 bg-white fs-4"
-        type="button"
-        aria-label="Close"
-      ></button>
+        className="text-danger  border-0 bg-white fs-4"
+      >
+        <FontAwesomeIcon icon={faTrash} />
+      </button>
     </div>
   );
 };

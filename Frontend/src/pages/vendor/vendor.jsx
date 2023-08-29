@@ -18,7 +18,6 @@ const VendorPage = () => {
     dayjs(`${tdate.getFullYear()}-${tdate.getMonth() + 1}-${tdate.getDate()}`)
   );
   const [timePeriod, setTimePeriod] = useState("jan");
-
   let [product, setProduct] = useState([]);
 
   const handleProductQty = (val, id) => {
@@ -85,7 +84,7 @@ const VendorPage = () => {
       </div>
       {modal && (
         <Modal>
-          <section className="bg-white rounded p-5">
+          <section className="bg-white rounded p-5 modal_bg">
             <div>
               <div className="d-flex justify-content-between align-items-center">
                 <h1 className="text-dgreen">Create Receipt 🧾</h1>
@@ -132,7 +131,9 @@ const VendorPage = () => {
                   </div>
                 );
               })}
-              <button onClick={addProduct}>Add product</button>
+              <div className="d-flex justify-content-center align-items-center mt-4">
+                <button className="btn bg-dgreen text-white" onClick={addProduct}>Add product</button>
+              </div>
             </div>
           </section>
         </Modal>

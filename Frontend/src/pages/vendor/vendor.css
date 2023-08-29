@@ -1,6 +1,7 @@
 .d_main{
     min-height: 80vh;
 }
-.odal{
- 
+.modal_bg{
+    height: 35rem !important;
+    overflow-y: auto;
 }
