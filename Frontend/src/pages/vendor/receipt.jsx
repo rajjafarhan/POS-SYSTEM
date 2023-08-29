@@ -140,10 +140,10 @@ const VendorReceipt = () => {
                 <Text>1</Text>
                 <Text style={{ marginLeft: "15px", width: "181px" }}>
                   {" "}
-                  Rajja Cutie
+                  Anday
                 </Text>
               </View>
-              <Text>Infinite</Text>
+              <Text>10</Text>
             </View>
             <Text style={{ margin: "0", padding: "0", fontSize: "12px" }}>
               -----------------------------------------------------
