@@ -2,8 +2,11 @@ import "./vendor.css";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import Modal from "../../components/modal/modal";
+import VendorReceipt from "./receipt";
 
 const Table = ({ headings, data }) => {
+  const [showReceiptModal, setShowReceiptModal] = useState(false);
   let total = 54;
   let pages = Math.ceil(total / 10);
   let [curr, setcurr] = useState(1);
@@ -31,7 +34,13 @@ const Table = ({ headings, data }) => {
         <tbody>
           {data.map((d, index) => {
             return (
-              <tr key={index} className="cursor-pointer nbg">
+              <tr
+                key={index}
+                onClick={() => {
+                  setShowReceiptModal(true);
+                }}
+                className="cursor-pointer nbg"
+              >
                 <td className="p-3 text-center">{d.id}</td>
                 <td className="p-3 text-center">{d.rName}</td>
                 <td className="p-3 text-center">{d.rDesc}</td>
@@ -71,6 +80,19 @@ const Table = ({ headings, data }) => {
           </tr>
         </tfoot>
       </table>
+      {showReceiptModal && (
+        <Modal>
+          <section>
+            <button
+              onClick={() => setShowReceiptModal(false)}
+              className="text-dark btn-close border-0 bg-white fs-4 abs_tr"
+              type="button"
+              aria-label="Close"
+            ></button>
+            <VendorReceipt />
+          </section>
+        </Modal>
+      )}
     </div>
   );
 };

@@ -34,3 +34,8 @@ td{
 button:disabled{
     color: gray !important;
 }
+.abs_tr{
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+}
