@@ -7,7 +7,8 @@ const LoginFrame = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setData({ ...data, [name]: value });
+    // console.log(e)
+    setData({ ...data, [name]: value }); 
   };
   return (
     <div className="bg-white shadow p-5  pt-5 mx-5 ">

@@ -5,10 +5,10 @@ const LoginSignup = () => {
   useEffect(() => {
     document.body.classList.add("no-overflow");
 
-    return () => {
-      document.body.classList.remove("no-overflow");
-    };
-  }, []);
+    // return () => {
+    //   document.body.classList.remove("no-overflow");
+    // };
+  }, []); 
   return (
     <>
       <section>

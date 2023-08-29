@@ -5,7 +5,6 @@ import LoginFrame from "./pages/login/loginFrame";
 import SignupFrame from "./pages/login/signupFrame";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
 import "./global.css";
 import NavBar from "./components/navbar/navbar";
 
