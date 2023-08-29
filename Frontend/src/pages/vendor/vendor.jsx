@@ -1,6 +1,6 @@
 import Receipt from "../../components/vendorReceipt/vendorRecipt";
 import MySelect from "../../components/select/select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddButton from "../../components/addButton/addButton";
 import Modal from "../../components/modal/modal";
 import { TextField } from "@mui/material";
@@ -9,35 +9,39 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import ProductsInput from "./productsInp";
+import Table from "./table";
+import { rData } from "./data";
 import "./vendor.css";
 
 const VendorPage = () => {
   const [modal, setModal] = useState(false);
   const tdate = new Date();
-  const [date, setDate] = useState(
-    dayjs(`${tdate.getFullYear()}-${tdate.getMonth() + 1}-${tdate.getDate()}`)
-  );
+  const [receiptData, setReceiptData] = useState({
+    date: dayjs(
+      `${tdate.getFullYear()}-${tdate.getMonth() + 1}-${tdate.getDate()}`
+    ),
+    rName: "",
+    rDesc: "",
+  });
   const [timePeriod, setTimePeriod] = useState("jan");
   let [product, setProduct] = useState([]);
 
-  const handleProductQty = (val, id) => {
-    setProduct((prev) => {
-      const obj = [...prev];
-      obj[id].data.productQty = val;
-      return obj;
-    });
-  };
-  const handleTotalNo = (val, id) => {
-    setProduct((prev) => {
-      const obj = [...prev];
-      obj[id].data.totalNo = val;
-      return obj;
-    });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setReceiptData({ ...receiptData, [name]: value });
   };
   const handleproduct = (val, id) => {
     setProduct((prevcomponents) => {
       const updatedComponents = [...prevcomponents];
       updatedComponents[id].data.product = val;
+      return updatedComponents;
+    });
+  };
+  const handleProductChange = (e, id) => {
+    const { name, value } = e.target;
+    setProduct((prev) => {
+      const updatedComponents = [...prev];
+      updatedComponents[id]["data"][name] = value;
       return updatedComponents;
     });
   };
@@ -76,7 +80,13 @@ const VendorPage = () => {
         </div>
       </div>
       <div>
-        <div className="  d-flex flex-wrap ">
+        <div className="pc_vendor d-flex justify-content-center align-items-start">
+          <Table
+            headings={["Id", "Name", "Description", "Date", "Cost"]}
+            data={rData}
+          />
+        </div>
+        <div className="mob-vendor  d-flex flex-wrap ">
           <Receipt />
           <Receipt />
           <Receipt />
@@ -96,18 +106,34 @@ const VendorPage = () => {
                 ></button>
               </div>
               <div className="mt-5 d-flex ">
-                <TextField id="outlined-search" label="Name" type="search" />
+                <TextField
+                  id="outlined-search"
+                  name="rName"
+                  value={receiptData.rName}
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
+                  label="Name"
+                  type="search"
+                />
                 <div className="mx-1"></div>
                 <TextField
                   id="outlined-search"
+                  name="rDesc"
+                  value={receiptData.rDesc}
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
                   label="Description"
                   type="search"
                 />
                 <div className="mx-1"></div>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
-                    value={date}
-                    onChange={(newValue) => setDate(newValue)}
+                    value={receiptData.date}
+                    onChange={(newValue) => {
+                      setReceiptData({ ...receiptData, ["date"]: newValue });
+                    }}
                   />
                 </LocalizationProvider>
               </div>
@@ -116,8 +142,7 @@ const VendorPage = () => {
                 return (
                   <div key={index}>
                     <ProductsInput
-                      setqtyVal={handleProductQty}
-                      setnoVal={handleTotalNo}
+                      hanldleProductChange={handleProductChange}
                       setProduct={handleproduct}
                       values={["pen", "paper", "rock"]}
                       product={prod?.data?.product}
@@ -132,7 +157,12 @@ const VendorPage = () => {
                 );
               })}
               <div className="d-flex justify-content-center align-items-center mt-4">
-                <button className="btn bg-dgreen text-white" onClick={addProduct}>Add product</button>
+                <button
+                  className="btn bg-dgreen text-white"
+                  onClick={addProduct}
+                >
+                  Add product
+                </button>
               </div>
             </div>
           </section>

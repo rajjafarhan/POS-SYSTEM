@@ -4,10 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const ProductsInput = ({
+  handleProductChange,
   qtyVal,
-  setqtyVal,
   noVal,
-  setnoVal,
   product,
   setProduct,
   values,
@@ -29,8 +28,9 @@ const ProductsInput = ({
         <TextField
           id="outlined-search"
           value={qtyVal}
+          name="productQty"
           onChange={(e) => {
-            setqtyVal(e.target.value, id);
+            handleProductChange(e, id);
           }}
           label="Quantity"
           type="number"
@@ -40,8 +40,9 @@ const ProductsInput = ({
         <TextField
           id="outlined-search"
           value={noVal}
+          name="totalNo"
           onChange={(e) => {
-            setnoVal(e.target.value, id);
+            handleProductChange(e, id);
           }}
           label="Total No."
           type="number"

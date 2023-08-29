@@ -5,7 +5,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 const MySelect = ({ name, setter, values, curr, id }) => {
- 
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
@@ -19,8 +18,12 @@ const MySelect = ({ name, setter, values, curr, id }) => {
             setter(e.target.value, id);
           }}
         >
-          {values.map((val) => {
-            return <MenuItem value={`${val}`}>{val.toUpperCase()}</MenuItem>;
+          {values.map((val, index) => {
+            return (
+              <MenuItem key={index} value={`${val}`}>
+                {val.toUpperCase()}
+              </MenuItem>
+            );
           })}
         </Select>
       </FormControl>
