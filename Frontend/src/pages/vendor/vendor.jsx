@@ -142,7 +142,7 @@ const VendorPage = () => {
                 return (
                   <div key={index}>
                     <ProductsInput
-                      hanldleProductChange={handleProductChange}
+                      handleProductChange={handleProductChange}
                       setProduct={handleproduct}
                       values={["pen", "paper", "rock"]}
                       product={prod?.data?.product}

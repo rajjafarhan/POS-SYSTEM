@@ -17,7 +17,7 @@ const NavBar = () => {
             Hi, <span className="x-font text-yellow">Usman</span>
           </h5>
           <div className="background_hm bg-yello">
-            <button
+            <button 
               className="menu__icon hmbtn"
               type="button"
               data-bs-toggle="offcanvas"
