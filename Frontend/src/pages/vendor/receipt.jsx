@@ -58,8 +58,7 @@ const VendorReceipt = () => {
                 marginTop: "4px",
               }}
             >
-              Address: Gulistan-e-johar, Block # 14, Al-Rehman Residency, Flat
-              No 101, Karachi, Pakistan.
+              Address: North Karachi, L1, Karachi, Pakistan.
             </Text>
             <Text
               wrap={true}
@@ -140,10 +139,10 @@ const VendorReceipt = () => {
                 <Text>1</Text>
                 <Text style={{ marginLeft: "15px", width: "181px" }}>
                   {" "}
-                  Anday
+                  Some Other Product
                 </Text>
               </View>
-              <Text>10</Text>
+              <Text>200</Text>
             </View>
             <Text style={{ margin: "0", padding: "0", fontSize: "12px" }}>
               -----------------------------------------------------

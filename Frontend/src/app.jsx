@@ -5,11 +5,12 @@ import LoginFrame from "./pages/login/loginFrame";
 import SignupFrame from "./pages/login/signupFrame";
 import Layout from "./layout/layout";
 import Dashboard from "./pages/dashboard/dashboard";
+import VendorPage from "./pages/vendor/vendor";
+import MyDocument from "./pages/vendor/receipt";
+import Customer from "./pages/customer/customer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./global.css";
-import VendorPage from "./pages/vendor/vendor";
-import MyDocument from "./pages/vendor/receipt";
 
 const App = () => {
   return (
@@ -22,8 +23,8 @@ const App = () => {
         <Route path="/pos" element={<Layout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="vendor" element={<VendorPage />} />
+          <Route path="customer" element={<Customer />} />
         </Route>
-        <Route path="/doc" element={<MyDocument />} />
       </Routes>
     </BrowserRouter>
   );

@@ -14,7 +14,7 @@ const NavBar = () => {
         <div className="d-flex align-items-center justify-content-around me-5">
           <img src="" alt="" />
           <h5 className="px-4 fs-4">
-            Hi, <span className="x-font text-yellow">Usman</span>
+            Hi, <span className="x-font text-yellow">Soban</span>
           </h5>
           <div className="background_hm bg-yello">
             <button
