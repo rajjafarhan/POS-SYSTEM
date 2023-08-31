@@ -9,6 +9,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import ProductsInput from "../vendor/productsInp";
 
 const Customer = () => {
   const [showModal, setShowModal] = useState(false);
@@ -20,11 +21,49 @@ const Customer = () => {
     rName: "",
     rDesc: "",
   });
+  const [product, setProduct] = useState([]);
   const [timePeriod, setTimePeriod] = useState("jan");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setReceiptData({ ...receiptData, [name]: value });
   };
+
+  const handleproduct = (val, id) => {
+    setProduct((prevcomponents) => {
+      const updatedComponents = [...prevcomponents];
+      updatedComponents[id].data.product = val;
+      return updatedComponents;
+    });
+  };
+  const handleProductChange = (e, id) => {
+    const { name, value } = e.target;
+    setProduct((prev) => {
+      const updatedComponents = [...prev];
+      updatedComponents[id]["data"][name] = value;
+      return updatedComponents;
+    });
+  };
+  const deleteProduct = (id) => {
+    setProduct((prev) => {
+      const obj = [...product];
+      obj.splice(id, 1);
+      return obj;
+    });
+  };
+
+  const addProduct = () => {
+    setProduct((prevComp) => [
+      ...prevComp,
+      {
+        data: {
+          productQty: "",
+          totalNo: "",
+          product: "",
+        },
+      },
+    ]);
+  };
+
   return (
     <section>
       <div className="text-dgreen d-flex justify-content-between my-3 align-items-center px-5">
@@ -33,9 +72,9 @@ const Customer = () => {
           <AddButton onChange={setShowModal} />
           <MySelect
             name="Time"
-            // setter={setTimePeriod}
+            setter={setTimePeriod}
             values={["jan", "feb", "mar"]}
-            // curr={timePeriod}
+            curr={timePeriod}
           />
         </div>
       </div>
@@ -94,7 +133,7 @@ const Customer = () => {
                 </LocalizationProvider>
               </div>
 
-              {/* {product.map((prod, index) => {
+              {product.map((prod, index) => {
                 return (
                   <div key={index}>
                     <ProductsInput
@@ -111,11 +150,11 @@ const Customer = () => {
                     />
                   </div>
                 );
-              })} */}
+              })}
               <div className="d-flex justify-content-center align-items-center mt-4">
                 <button
                   className="btn bg-dgreen text-white"
-                  //   onClick={addProduct}
+                  onClick={addProduct}
                 >
                   Add product
                 </button>

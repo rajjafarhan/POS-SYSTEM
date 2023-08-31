@@ -9,12 +9,30 @@
    .mob-vendor{
     display: none !important;
    }
+   .pc_vendor{
+    display: flex !important;
+   }
+   .subheadiv{
+    padding-left: 3rem !important;
+   }
   }
-  @media only screen and (max-width: 600px) {
+@media only screen and (max-width: 600px) {
     .pc_vendor{
      display: none !important;
     }
-   }
+   .mob-vendor{
+    display: flex;
+   }}
+
+@media only screen and (max-width: 400px){
+    .subheadiv > h1{
+        font-size: 22px !important;
+    }
+    .subheadiv{
+        padding-left: 1rem !important;
+        margin-left: 0 !important;
+    }
+}
 .t_main{
     border-radius: 1rem !important;
 }
