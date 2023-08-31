@@ -59,7 +59,7 @@ const VendorPage = () => {
       {
         data: {
           productQty: "",
-          totalNo: "",
+          color: "",
           product: "",
         },
       },
@@ -146,7 +146,7 @@ const VendorPage = () => {
                       setProduct={handleproduct}
                       values={["pen", "paper", "rock"]}
                       product={prod?.data?.product}
-                      noVal={prod?.data?.totalNo ? prod?.data?.totalNo : ""}
+                      color={prod?.data?.color ? prod?.data?.color : ""}
                       qtyVal={
                         prod?.data?.productQty ? prod?.data?.productQty : ""
                       }
@@ -163,6 +163,40 @@ const VendorPage = () => {
                 >
                   Add product
                 </button>
+              </div>
+              <div>
+                <div className="my-2 d-flex justify-content-between align-items-center">
+                  <h3 className="text-dgreen">Total</h3>
+                  <TextField
+                    id="outlined-search"
+                    label={800}
+                    type="number"
+                    disabled
+                  />
+                </div>
+                <div className="my-2 d-flex justify-content-between align-items-center">
+                  <h3 className="text-dgreen">Cash</h3>
+                  <TextField
+                    id="outlined-search"
+                    label="Cash"
+                    type="number"
+                    value={10000}
+                  />
+                </div>
+                <div className="my-2 d-flex justify-content-between align-items-center">
+                  <h3 className="text-dgreen">Change</h3>
+                  <TextField
+                    id="outlined-search"
+                    label={200}
+                    type="number"
+                    disabled
+                  />
+                </div>
+                <div className="d-flex justify-content-center mt-3">
+                  <button className="btn bg-dgreen text-light ">
+                    Create Receipt!
+                  </button>
+                </div>
               </div>
             </div>
           </section>

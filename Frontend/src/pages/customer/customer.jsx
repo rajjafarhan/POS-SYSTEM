@@ -57,13 +57,12 @@ const Customer = () => {
       {
         data: {
           productQty: "",
-          totalNo: "",
+          color: "",
           product: "",
         },
       },
     ]);
   };
-
   return (
     <section>
       <div className="text-dgreen d-flex justify-content-between my-3 align-items-center px-5">
@@ -90,76 +89,118 @@ const Customer = () => {
       {showModal && (
         <Modal>
           <section className="bg-white rounded p-5 modal_bg">
-            <div>
-              <div className="d-flex justify-content-between align-items-center">
-                <h1 className="text-dgreen">Create Customer Receipt 🧾</h1>
-                <button
-                  onClick={() => setShowModal(false)}
-                  className="text-dark btn-close border-0 bg-white fs-4"
-                  type="button"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="mt-5 d-flex ">
-                <TextField
-                  id="outlined-search"
-                  name="rName"
-                  value={receiptData.rName}
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
-                  label="Name"
-                  type="search"
-                />
-                <div className="mx-1"></div>
-                <TextField
-                  id="outlined-search"
-                  name="rDesc"
-                  value={receiptData.rDesc}
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
-                  label="Description"
-                  type="search"
-                />
-                <div className="mx-1"></div>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    value={receiptData.date}
-                    onChange={(newValue) => {
-                      setReceiptData({ ...receiptData, ["date"]: newValue });
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const data = { ...receiptData, products: [...product] };
+              }}
+            >
+              <div>
+                <div className="d-flex justify-content-between align-items-center">
+                  <h1 className="text-dgreen">Create Customer Receipt 🧾</h1>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="text-dark btn-close border-0 bg-white fs-4"
+                    type="button"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="mt-5 d-flex ">
+                  <TextField
+                    id="outlined-search"
+                    name="rName"
+                    value={receiptData.rName}
+                    onChange={(e) => {
+                      handleChange(e);
                     }}
+                    label="Name"
+                    type="search"
                   />
-                </LocalizationProvider>
-              </div>
+                  <div className="mx-1"></div>
+                  <TextField
+                    id="outlined-search"
+                    name="rDesc"
+                    value={receiptData.rDesc}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                    label="Description"
+                    type="search"
+                  />
+                  <div className="mx-1"></div>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      value={receiptData.date}
+                      onChange={(newValue) => {
+                        setReceiptData({ ...receiptData, ["date"]: newValue });
+                      }}
+                    />
+                  </LocalizationProvider>
+                </div>
 
-              {product.map((prod, index) => {
-                return (
-                  <div key={index}>
-                    <ProductsInput
-                      handleProductChange={handleProductChange}
-                      setProduct={handleproduct}
-                      values={["pen", "paper", "rock"]}
-                      product={prod?.data?.product}
-                      noVal={prod?.data?.totalNo ? prod?.data?.totalNo : ""}
-                      qtyVal={
-                        prod?.data?.productQty ? prod?.data?.productQty : ""
-                      }
-                      deleteProduct={deleteProduct}
-                      id={index}
+                {product.map((prod, index) => {
+                  return (
+                    <div key={index}>
+                      <ProductsInput
+                        handleProductChange={handleProductChange}
+                        setProduct={handleproduct}
+                        values={["pen", "paper", "rock"]}
+                        product={prod?.data?.product}
+                        color={prod?.data?.color ? prod?.data?.color : ""}
+                        qtyVal={
+                          prod?.data?.productQty ? prod?.data?.productQty : ""
+                        }
+                        deleteProduct={deleteProduct}
+                        id={index}
+                      />
+                    </div>
+                  );
+                })}
+                <div className="d-flex justify-content-center align-items-center mt-4">
+                  <button
+                    type="button"
+                    className="btn bg-dgreen text-white"
+                    onClick={addProduct}
+                  >
+                    Add product
+                  </button>
+                </div>
+                <div>
+                  <div className="my-2 d-flex justify-content-between align-items-center">
+                    <h3 className="text-dgreen">Total</h3>
+                    <TextField
+                      id="outlined-search"
+                      label={800}
+                      type="number"
+                      disabled
                     />
                   </div>
-                );
-              })}
-              <div className="d-flex justify-content-center align-items-center mt-4">
-                <button
-                  className="btn bg-dgreen text-white"
-                  onClick={addProduct}
-                >
-                  Add product
-                </button>
+                  <div className="my-2 d-flex justify-content-between align-items-center">
+                    <h3 className="text-dgreen">Cash</h3>
+                    <TextField
+                      id="outlined-search"
+                      label="Cash"
+                      type="number"
+                      value={10000}
+                    />
+                  </div>
+                  <div className="my-2 d-flex justify-content-between align-items-center">
+                    <h3 className="text-dgreen">Change</h3>
+                    <TextField
+                      id="outlined-search"
+                      label={200}
+                      type="number"
+                      disabled
+                    />
+                  </div>
+                  <div className="d-flex justify-content-center mt-3">
+                    <button type="submit" className="btn bg-dgreen text-light ">
+                      Create Receipt!
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            </form>
           </section>
         </Modal>
       )}
