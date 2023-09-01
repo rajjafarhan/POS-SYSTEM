@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import ProductsInput from "./productsInp";
 import Table from "./table";
 import { rData } from "./data";
+import { products } from "./data";
 import "./vendor.css";
 
 const VendorPage = () => {
@@ -151,6 +152,7 @@ const VendorPage = () => {
                         prod?.data?.productQty ? prod?.data?.productQty : ""
                       }
                       deleteProduct={deleteProduct}
+                      products={products}
                       id={index}
                     />
                   </div>

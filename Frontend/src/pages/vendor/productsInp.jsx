@@ -1,52 +1,78 @@
 import { TextField } from "@mui/material";
-import MySelect from "../../components/select/select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Autocomplete from "@mui/material/Autocomplete";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
 
 const ProductsInput = ({
   handleProductChange,
+  handleColorChange,
   qtyVal,
   color,
   product,
   setProduct,
-  values,
   id,
+  unitPrice,
+  totalPrice,
+  products,
   deleteProduct,
 }) => {
-  const obj = [
-    {
-      label: "pen",
-    },
-    {
-      label: "paper",
-    },
-    {
-      label: "rocks",
-    },
-  ];
+  useEffect(() => {
+    handleProductChange(
+      {
+        target: { name: "unitPrice", value: color ? color.price : 0 },
+      },
+      id
+    );
+  }, [color]);
+  useEffect(() => {
+    handleProductChange(
+      {
+        target: {
+          name: "totalPrice",
+          value: product && qtyVal && color ? color?.price * qtyVal : 0,
+        },
+      },
+      id
+    );
+  }, [product, color, qtyVal]);
   return (
     <div className="d-flex flex-wrap justify-content-between align-items-center mt-3">
       <div className="m2">
         <Autocomplete
+          value={product}
+          onChange={(e, val) => {
+            setProduct(val, id);
+          }}
           disablePortal
           id="combo-box-demo"
-          options={obj}
+          options={products}
           renderInput={(params) => <TextField {...params} label="Product" />}
+          size="small"
+        />
+      </div>
+      <div className="m2">
+        <Autocomplete
+          inputValuevalue={color ? color : "pen"}
+          name="color"
+          onChange={(e, newVal) => {
+            handleColorChange(newVal, id);
+          }}
+          disablePortal
+          id="combo-box-demo"
+          options={product ? product?.colorty : []}
+          renderInput={(params) => <TextField {...params} label="Color" />}
           size="small"
         />
       </div>
       <div className="m2">
         <TextField
           id="outlined-search"
-          name="pricePerUnit"
-          onChange={(e) => {
-            handleProductChange(e, id);
-          }}
+          name="unitPrice"
           label="Price Per Unit"
           type="number"
-          value={100}
           disabled
+          value={unitPrice}
           size="small"
         />
       </div>
@@ -63,23 +89,11 @@ const ProductsInput = ({
           size="small"
         />
       </div>
+
       <div className="m2">
         <TextField
           id="outlined-search"
-          value={color}
-          name="color"
-          onChange={(e) => {
-            handleProductChange(e, id);
-          }}
-          label="Color"
-          type="search"
-          size="small"
-        />
-      </div>
-      <div className="m2">
-        <TextField
-          id="outlined-search"
-          value={1000}
+          value={totalPrice}
           name="totalPrice"
           label="Total Price"
           size="small"
