@@ -32,7 +32,7 @@ const Customer = () => {
       let sum = 0;
       product.forEach((elem) => {
         sum += elem.data.totalPrice;
-        console.log(sum);
+     
       });
       setReceiptData({
         ...receiptData,
@@ -188,7 +188,7 @@ const Customer = () => {
                         }
                         deleteProduct={deleteProduct}
                         products={products}
-                        p={product}
+                       
                         unitPrice={
                           prod?.data?.unitPrice ? prod?.data?.unitPrice : 0
                         }

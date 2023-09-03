@@ -1,6 +1,6 @@
 import Receipt from "../../components/vendorReceipt/vendorRecipt";
 import MySelect from "../../components/select/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddButton from "../../components/addButton/addButton";
 import Modal from "../../components/modal/modal";
 import { TextField } from "@mui/material";
@@ -23,13 +23,44 @@ const VendorPage = () => {
     ),
     rName: "",
     rDesc: "",
+    total: 0,
+    cash: "",
+    change: 0,
   });
   const [timePeriod, setTimePeriod] = useState("jan");
   let [product, setProduct] = useState([]);
 
+  useEffect(() => {
+    const hanldeTotalChange = () => {
+      let sum = 0;
+      product.forEach((elem) => {
+        sum += elem.data.totalPrice;
+      });
+      setReceiptData({
+        ...receiptData,
+        ["total"]: sum,
+      });
+    };
+    hanldeTotalChange();
+  }, [product]);
+
+  useEffect(() => {
+    setReceiptData({
+      ...receiptData,
+      ["change"]: receiptData?.cash - receiptData?.total,
+    });
+  }, [receiptData.total, receiptData.cash]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setReceiptData({ ...receiptData, [name]: value });
+  };
+  const handleColorChange = (val, id) => {
+    setProduct((prev) => {
+      const newObj = [...prev];
+      newObj[id].data.color = val;
+      return newObj;
+    });
   };
   const handleproduct = (val, id) => {
     setProduct((prevcomponents) => {
@@ -62,10 +93,14 @@ const VendorPage = () => {
           productQty: "",
           color: "",
           product: "",
+          unitPrice: 0,
+          totalPrice: 0,
         },
       },
     ]);
   };
+  console.log(product);
+
   return (
     <section className="d_main">
       <div className="text-dgreen subheadiv d-flex justify-content-between my-3 align-items-center pe-5">
@@ -145,6 +180,7 @@ const VendorPage = () => {
                     <ProductsInput
                       handleProductChange={handleProductChange}
                       setProduct={handleproduct}
+                      handleColorChange={handleColorChange}
                       values={["pen", "paper", "rock"]}
                       product={prod?.data?.product}
                       color={prod?.data?.color ? prod?.data?.color : ""}
@@ -153,6 +189,12 @@ const VendorPage = () => {
                       }
                       deleteProduct={deleteProduct}
                       products={products}
+                      unitPrice={
+                        prod?.data?.unitPrice ? prod?.data?.unitPrice : 0
+                      }
+                      totalPrice={
+                        prod?.data?.totalPrice ? prod?.data?.totalPrice : 0
+                      }
                       id={index}
                     />
                   </div>
@@ -171,7 +213,7 @@ const VendorPage = () => {
                   <h3 className="text-dgreen">Total</h3>
                   <TextField
                     id="outlined-search"
-                    label={800}
+                    label={receiptData.total}
                     type="number"
                     disabled
                   />
@@ -181,15 +223,19 @@ const VendorPage = () => {
                   <TextField
                     id="outlined-search"
                     label="Cash"
+                    name="cash"
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     type="number"
-                    value={10000}
+                    value={receiptData.cash}
                   />
                 </div>
                 <div className="my-2 d-flex justify-content-between align-items-center">
                   <h3 className="text-dgreen">Change</h3>
                   <TextField
                     id="outlined-search"
-                    label={200}
+                    label={receiptData.change}
                     type="number"
                     disabled
                   />
