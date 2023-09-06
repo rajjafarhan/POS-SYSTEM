@@ -8,8 +8,11 @@ import {
   faWarehouse,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const SideBar = () => {
+  const [currSec, setCurrSec] = useState("dashboard");
+
   return (
     <>
       <div
@@ -31,44 +34,91 @@ const SideBar = () => {
           ></button>
         </div>
         <div className="offcanvas-body">
-          <Link to={"/pos/dashboard"}>
-            <div className="h-3rem d-flex align-items-center cursor-pointer opt-hover">
+          <Link
+            to={"/pos/dashboard"}
+            onClick={() => {
+              setCurrSec("dashboard");
+            }}
+          >
+            <div
+              className={`${
+                currSec === "dashboard" ? "bg-hover" : ""
+              } h-3rem d-flex align-items-center cursor-pointer opt-hover`}
+            >
               <p className="ms-4 fs-5 side">
                 <FontAwesomeIcon icon={faChartLine} />
                 <span className="ms-3">Dashboard</span>
               </p>
             </div>
           </Link>
-          <Link to={"/pos/vendor"}>
-            <div className="h-3rem d-flex align-items-center cursor-pointer opt-hover">
+          <Link
+            to={"/pos/vendor"}
+            onClick={() => {
+              setCurrSec("vendor");
+            }}
+          >
+            <div
+              className={`${
+                currSec === "vendor" ? "bg-hover" : ""
+              } h-3rem d-flex align-items-center cursor-pointer opt-hover`}
+            >
               <p className="ms-4 fs-5 side">
                 <FontAwesomeIcon icon={faArrowTrendUp} />
                 <span className="ms-3">Vendor </span>
               </p>
             </div>
           </Link>
-          <Link to={"/pos/customer"}>
-            <div className="h-3rem d-flex align-items-center cursor-pointer opt-hover">
+          <Link
+            to={"/pos/customer"}
+            onClick={() => {
+              setCurrSec("invoice");
+            }}
+          >
+            <div
+              className={`${
+                currSec === "invoice" ? "bg-hover" : ""
+              } h-3rem d-flex align-items-center cursor-pointer opt-hover`}
+            >
               <p className="ms-4 fs-5 side">
                 <FontAwesomeIcon icon={faFileInvoice} />
                 <span className="ms-3">Invoice </span>
               </p>
             </div>
           </Link>
-          <Link to={'/pos/inventory'}>
-          <div className="h-3rem d-flex align-items-center cursor-pointer opt-hover">
-            <p className="ms-4 fs-5 side">
-              <FontAwesomeIcon icon={faWarehouse} />
-              <span className="ms-3">Inventory </span>
-            </p>
-          </div>
+          <Link
+            to={"/pos/inventory"}
+            onClick={() => {
+              setCurrSec("inventory");
+            }}
+          >
+            <div
+              className={`${
+                currSec === "inventory" ? "bg-hover" : ""
+              } h-3rem d-flex align-items-center cursor-pointer opt-hover`}
+            >
+              <p className="ms-4 fs-5 side">
+                <FontAwesomeIcon icon={faWarehouse} />
+                <span className="ms-3">Inventory </span>
+              </p>
+            </div>
           </Link>
-          <div className="h-3rem d-flex align-items-center cursor-pointer opt-hover">
-            <p className="ms-4 fs-5 side">
-              <FontAwesomeIcon icon={faChartLine} />
-              <span className="ms-3">Report </span>
-            </p>
-          </div>
+          <Link
+            to={"/pos/settings"}
+            onClick={() => {
+              setCurrSec("settings");
+            }}
+          >
+            <div
+              className={`${
+                currSec === "settings" ? "bg-hover" : ""
+              } h-3rem d-flex align-items-center cursor-pointer opt-hover`}
+            >
+              <p className="ms-4 fs-5 side">
+                <FontAwesomeIcon icon={faChartLine} />
+                <span className="ms-3">Report </span>
+              </p>
+            </div>
+          </Link>
         </div>
       </div>
     </>

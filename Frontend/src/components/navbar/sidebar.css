@@ -9,7 +9,10 @@
     padding-right:0 !important ;
 }
 .opt-hover:hover{
-    background-color: #437694 ;
+}
+.bg-hover{
+  background-color: #437694 !important ;
+
 }
 p.side{
     padding: 0;

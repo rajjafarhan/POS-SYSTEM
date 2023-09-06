@@ -11,6 +11,7 @@ import Customer from "./pages/customer/customer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./global.css";
+import Settings from "./pages/settings/settings";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="vendor" element={<VendorPage />} />
           <Route path="customer" element={<Customer />} />
           <Route path="inventory" element={<Inventory />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
     </BrowserRouter>
