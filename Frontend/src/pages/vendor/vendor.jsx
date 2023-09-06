@@ -41,14 +41,17 @@ const VendorPage = () => {
         ["total"]: sum,
       });
     };
-    hanldeTotalChange();
+    setTimeout(hanldeTotalChange, 100);
   }, [product]);
 
   useEffect(() => {
-    setReceiptData({
-      ...receiptData,
-      ["change"]: receiptData?.cash - receiptData?.total,
-    });
+    const handleChangechange = () => {
+      setReceiptData({
+        ...receiptData,
+        ["change"]: receiptData?.cash - receiptData?.total,
+      });
+    };
+    setTimeout(handleChangechange, 100);
   }, [receiptData.total, receiptData.cash]);
 
   const handleChange = (e) => {
@@ -66,6 +69,13 @@ const VendorPage = () => {
     setProduct((prevcomponents) => {
       const updatedComponents = [...prevcomponents];
       updatedComponents[id].data.product = val;
+      return updatedComponents;
+    });
+  };
+  const handleSize = (val, id) => {
+    setProduct((prevcomponents) => {
+      const updatedComponents = [...prevcomponents];
+      updatedComponents[id].data.size = val;
       return updatedComponents;
     });
   };
@@ -93,13 +103,13 @@ const VendorPage = () => {
           productQty: "",
           color: "",
           product: "",
+          size: "",
           unitPrice: 0,
           totalPrice: 0,
         },
       },
     ]);
   };
-  console.log(product);
 
   return (
     <section className="d_main">
@@ -173,16 +183,16 @@ const VendorPage = () => {
                   />
                 </LocalizationProvider>
               </div>
-
               {product.map((prod, index) => {
                 return (
                   <div key={index}>
                     <ProductsInput
                       handleProductChange={handleProductChange}
+                      handleSize={handleSize}
                       setProduct={handleproduct}
                       handleColorChange={handleColorChange}
-                      values={["pen", "paper", "rock"]}
                       product={prod?.data?.product}
+                      size={prod?.data?.size}
                       color={prod?.data?.color ? prod?.data?.color : ""}
                       qtyVal={
                         prod?.data?.productQty ? prod?.data?.productQty : ""

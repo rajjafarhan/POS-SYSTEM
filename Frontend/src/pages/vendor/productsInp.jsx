@@ -10,6 +10,8 @@ const ProductsInput = ({
   qtyVal,
   color,
   product,
+  size,
+  handleSize,
   setProduct,
   id,
   unitPrice,
@@ -17,7 +19,9 @@ const ProductsInput = ({
   products,
   deleteProduct,
 }) => {
+  console.log(color);
   useEffect(() => {
+    
     handleProductChange(
       {
         target: { name: "unitPrice", value: color ? color.price : 0 },
@@ -53,14 +57,28 @@ const ProductsInput = ({
       </div>
       <div className="m2">
         <Autocomplete
-          inputValuevalue={color ? color : "pen"}
+          value={size ? size : ""}
+          name="color"
+          onChange={(e, newVal) => {
+            handleSize(newVal, id);
+          }}
+          disablePortal
+          id="combo-box-demo"
+          options={product ? product?.size : []}
+          renderInput={(params) => <TextField {...params} label="Size" />}
+          size="small"
+        />
+      </div>
+      <div className="m2">
+        <Autocomplete
+          value={color && size ? color : ""}
           name="color"
           onChange={(e, newVal) => {
             handleColorChange(newVal, id);
           }}
           disablePortal
           id="combo-box-demo"
-          options={product ? product?.colorty : []}
+          options={size ? size?.variants : []}
           renderInput={(params) => <TextField {...params} label="Color" />}
           size="small"
         />
