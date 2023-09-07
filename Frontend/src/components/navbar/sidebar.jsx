@@ -103,7 +103,7 @@ const SideBar = () => {
             </div>
           </Link>
           <Link
-            to={"/pos/settings"}
+            to={"/pos/settings/basicinfo"}
             onClick={() => {
               setCurrSec("settings");
             }}

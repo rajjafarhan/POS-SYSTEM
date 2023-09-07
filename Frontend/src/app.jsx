@@ -8,10 +8,12 @@ import Dashboard from "./pages/dashboard/dashboard";
 import VendorPage from "./pages/vendor/vendor";
 import Inventory from "./pages/inventory/invemtory";
 import Customer from "./pages/customer/customer";
+import SettingsLayout from "./pages/settings/settingsLayout";
+import BasicInfo from "./pages/settings/settings";
+import AccountSettings from "./pages/settings/accSettings";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./global.css";
-import Settings from "./pages/settings/settings";
 
 const App = () => {
   return (
@@ -26,7 +28,10 @@ const App = () => {
           <Route path="vendor" element={<VendorPage />} />
           <Route path="customer" element={<Customer />} />
           <Route path="inventory" element={<Inventory />} />
-          <Route path="settings" element={<Settings />} />
+          <Route path="settings" element={<SettingsLayout />}>
+            <Route path="basicinfo" element={<BasicInfo />} />
+            <Route path="accsettings" element={<AccountSettings />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,0 +1,22 @@
+.settings_main{
+    min-height: 80vh !important;
+}
+ul{
+    list-style: none ;
+}
+.snav_h{
+    min-height: 60vh ;
+}
+fieldset{
+    border: 2px solid transparent!important;
+}
+.textfield_w{
+    width: 20rem !important;
+}
+.s_hover:hover{
+    background-color: #4a7994 !important;
+    color: white !important;
+}
+.bg_sl{
+    background-color: #4a7994 !important;
+}
