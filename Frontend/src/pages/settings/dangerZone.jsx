@@ -32,7 +32,10 @@ const DangerZone = () => {
               <div className="d-flex justify-content-between align-items-center">
                 <h1 className="text-dgreen pe-4">Are You Sure? </h1>
                 <button
-                  onClick={() => setShowDeleteModal(false)}
+                  onClick={() => {
+                    setShowDeleteModal(false);
+                    setShowPass(false);
+                  }}
                   className="text-dark btn-close border-0 bg-white fs-4"
                   type="button"
                   aria-label="Close"
@@ -55,6 +58,7 @@ const DangerZone = () => {
                     className="px-5 btn btn-danger mx-3"
                     onClick={() => {
                       setShowDeleteModal(false);
+                      setShowPass(false);
                     }}
                   >
                     No
