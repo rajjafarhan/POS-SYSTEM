@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 const SettingsLayout = ({ children }) => {
   const loc = useLocation();
   const pathName = loc.pathname;
-  console.log(pathName);
   return (
     <div className="container settings_main">
       <div>

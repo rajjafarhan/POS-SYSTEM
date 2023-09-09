@@ -1,4 +1,5 @@
 import { TextField } from "@mui/material";
+import DangerZone from "./dangerZone";
 
 const AccountSettings = () => {
   return (
@@ -45,6 +46,7 @@ const AccountSettings = () => {
           Save
         </button>
       </div>
+      <DangerZone />
     </div>
   );
 };
