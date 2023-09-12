@@ -2,7 +2,7 @@ import "./vendorReceipt.css";
 
 const Receipt = () => {
   return (
-    <div className="m-3 shadow cursor-pointer vendor_r p-4 w-50">
+    <div className="m-3 shadow cursor-pointer vendor_r p-4 ">
       <div className="d-flex flex-column ">
         <div className="d-flex justify-content-between">
           <div>

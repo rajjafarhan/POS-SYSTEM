@@ -1,27 +1,97 @@
 import { TextField } from "@mui/material";
-import MySelect from "../../components/select/select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Autocomplete from "@mui/material/Autocomplete";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
 
 const ProductsInput = ({
   handleProductChange,
+  handleColorChange,
   qtyVal,
-  noVal,
+  color,
   product,
+  size,
+  handleSize,
   setProduct,
-  values,
   id,
+  unitPrice,
+  totalPrice,
+  products,
   deleteProduct,
 }) => {
+  console.log(color);
+  useEffect(() => {
+    
+    handleProductChange(
+      {
+        target: { name: "unitPrice", value: color ? color.price : 0 },
+      },
+      id
+    );
+  }, [color]);
+  useEffect(() => {
+    handleProductChange(
+      {
+        target: {
+          name: "totalPrice",
+          value: product && qtyVal && color ? color?.price * qtyVal : 0,
+        },
+      },
+      id
+    );
+  }, [product, color, qtyVal]);
   return (
     <div className="d-flex flex-wrap justify-content-between align-items-center mt-3">
       <div className="m2">
-        <MySelect
-          curr={product}
-          name={"Product"}
-          setter={setProduct}
-          values={values}
-          id={id}
+        <Autocomplete
+          value={product}
+          onChange={(e, val) => {
+            setProduct(val, id);
+          }}
+          disablePortal
+          id="combo-box-demo"
+          options={products}
+          renderInput={(params) => <TextField {...params} label="Product" />}
+          size="small"
+        />
+      </div>
+      <div className="m2">
+        <Autocomplete
+          value={size ? size : ""}
+          name="color"
+          onChange={(e, newVal) => {
+            handleSize(newVal, id);
+          }}
+          disablePortal
+          id="combo-box-demo"
+          options={product ? product?.size : []}
+          renderInput={(params) => <TextField {...params} label="Size" />}
+          size="small"
+        />
+      </div>
+      <div className="m2">
+        <Autocomplete
+          value={color && size ? color : ""}
+          name="color"
+          onChange={(e, newVal) => {
+            handleColorChange(newVal, id);
+          }}
+          disablePortal
+          id="combo-box-demo"
+          options={size ? size?.variants : []}
+          renderInput={(params) => <TextField {...params} label="Color" />}
+          size="small"
+        />
+      </div>
+      <div className="m2">
+        <TextField
+          id="outlined-search"
+          name="unitPrice"
+          label="Price Per Unit"
+          type="number"
+          disabled
+          value={unitPrice}
+          size="small"
         />
       </div>
       <div className="m2">
@@ -34,18 +104,19 @@ const ProductsInput = ({
           }}
           label="Quantity"
           type="number"
+          size="small"
         />
       </div>
+
       <div className="m2">
         <TextField
           id="outlined-search"
-          value={noVal}
-          name="totalNo"
-          onChange={(e) => {
-            handleProductChange(e, id);
-          }}
-          label="Total No."
-          type="number"
+          value={totalPrice}
+          name="totalPrice"
+          label="Total Price"
+          size="small"
+          type="search"
+          disabled
         />
       </div>
       <button
