@@ -1,7 +1,7 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
 
-const url ="mongodb+srv://rajjafarhan:pakistan1947@cluster0.pjvclz0.mongodb.net/?retryWrites=true&w=majority"
+const url =process.env.MONGODB_URL || "mongodb://localhost:27017";
 // console.log(url);
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(url, {
