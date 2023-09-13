@@ -1,6 +1,6 @@
 import Receipt from "../../components/vendorReceipt/vendorRecipt";
 import MySelect from "../../components/select/select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddButton from "../../components/addButton/addButton";
 import Modal from "../../components/modal/modal";
 import { TextField } from "@mui/material";
@@ -23,67 +23,40 @@ const VendorPage = () => {
     ),
     rName: "",
     rDesc: "",
-    total: 0,
     cash: "",
-    change: 0,
   });
   const [timePeriod, setTimePeriod] = useState("jan");
   let [product, setProduct] = useState([]);
 
-  useEffect(() => {
-    const hanldeTotalChange = () => {
-      let sum = 0;
-      product.forEach((elem) => {
-        sum += elem.data.totalPrice;
-      });
-      setReceiptData({
-        ...receiptData,
-        ["total"]: sum,
-      });
-    };
-    setTimeout(hanldeTotalChange, 100);
-  }, [product]);
+  const computeTotal = () => {
+    let sum = 0;
+    product.forEach((elem) => {
+      sum += elem?.totalPrice;
+    });
+    return sum;
+  };
 
-  useEffect(() => {
-    const handleChangechange = () => {
-      setReceiptData({
-        ...receiptData,
-        ["change"]: receiptData?.cash - receiptData?.total,
-      });
-    };
-    setTimeout(handleChangechange, 100);
-  }, [receiptData.total, receiptData.cash]);
+  const total = computeTotal();
+  const change = receiptData.cash - total;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setReceiptData({ ...receiptData, [name]: value });
   };
-  const handleColorChange = (val, id) => {
-    setProduct((prev) => {
-      const newObj = [...prev];
-      newObj[id].data.color = val;
-      return newObj;
-    });
-  };
+
   const handleproduct = (val, id) => {
     setProduct((prevcomponents) => {
       const updatedComponents = [...prevcomponents];
-      updatedComponents[id].data.product = val;
+      updatedComponents[id].product = val;
       return updatedComponents;
     });
   };
-  const handleSize = (val, id) => {
-    setProduct((prevcomponents) => {
-      const updatedComponents = [...prevcomponents];
-      updatedComponents[id].data.size = val;
-      return updatedComponents;
-    });
-  };
+
   const handleProductChange = (e, id) => {
     const { name, value } = e.target;
     setProduct((prev) => {
       const updatedComponents = [...prev];
-      updatedComponents[id]["data"][name] = value;
+      updatedComponents[id][name] = value;
       return updatedComponents;
     });
   };
@@ -99,18 +72,17 @@ const VendorPage = () => {
     setProduct((prevComp) => [
       ...prevComp,
       {
-        data: {
-          productQty: "",
-          color: "",
-          product: "",
-          size: "",
-          unitPrice: 0,
-          totalPrice: 0,
-        },
+        product: "",
+        productQty: "",
+        unitPrice: 0,
+        totalPrice: 0,
       },
     ]);
   };
-
+  const submit = () => {
+    const obj = { ...receiptData, change, total };
+    console.log({ ...obj, product });
+  };
   return (
     <section className="d_main">
       <div className="text-dgreen subheadiv d-flex justify-content-between my-3 align-items-center pe-5">
@@ -188,22 +160,18 @@ const VendorPage = () => {
                   <div key={index}>
                     <ProductsInput
                       handleProductChange={handleProductChange}
-                      handleSize={handleSize}
                       setProduct={handleproduct}
-                      handleColorChange={handleColorChange}
-                      product={prod?.data?.product}
-                      size={prod?.data?.size}
-                      color={prod?.data?.color ? prod?.data?.color : ""}
-                      qtyVal={
-                        prod?.data?.productQty ? prod?.data?.productQty : ""
-                      }
                       deleteProduct={deleteProduct}
+                      product={prod?.product}
+                      qtyVal={
+                        prod?.productQty ? prod?.productQty : ""
+                      }
                       products={products}
                       unitPrice={
-                        prod?.data?.unitPrice ? prod?.data?.unitPrice : 0
+                        prod?.unitPrice ? prod?.unitPrice : 0
                       }
                       totalPrice={
-                        prod?.data?.totalPrice ? prod?.data?.totalPrice : 0
+                        prod?.totalPrice ? prod?.totalPrice : 0
                       }
                       id={index}
                     />
@@ -223,7 +191,7 @@ const VendorPage = () => {
                   <h3 className="text-dgreen">Total</h3>
                   <TextField
                     id="outlined-search"
-                    label={receiptData.total}
+                    label={total}
                     type="number"
                     disabled
                   />
@@ -245,13 +213,18 @@ const VendorPage = () => {
                   <h3 className="text-dgreen">Change</h3>
                   <TextField
                     id="outlined-search"
-                    label={receiptData.change}
+                    label={change}
                     type="number"
                     disabled
                   />
                 </div>
                 <div className="d-flex justify-content-center mt-3">
-                  <button className="btn bg-dgreen text-light ">
+                  <button
+                    className="btn bg-dgreen text-light "
+                    onClick={() => {
+                      submit();
+                    }}
+                  >
                     Create Receipt!
                   </button>
                 </div>

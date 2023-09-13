@@ -6,43 +6,30 @@ import { useEffect } from "react";
 
 const ProductsInput = ({
   handleProductChange,
-  handleColorChange,
-  qtyVal,
-  color,
-  product,
-  size,
-  handleSize,
   setProduct,
-  id,
+  deleteProduct,
+  product,
   unitPrice,
+  qtyVal,
   totalPrice,
   products,
-  deleteProduct,
+  id,
 }) => {
-  console.log(color);
-  useEffect(() => {
-    
-    handleProductChange(
-      {
-        target: { name: "unitPrice", value: color ? color.price : 0 },
-      },
-      id
-    );
-  }, [color]);
   useEffect(() => {
     handleProductChange(
       {
         target: {
           name: "totalPrice",
-          value: product && qtyVal && color ? color?.price * qtyVal : 0,
+          value: product && qtyVal ? product?.price * qtyVal : 0,
         },
       },
       id
     );
-  }, [product, color, qtyVal]);
+  }, [product, qtyVal]);
+
   return (
     <div className="d-flex flex-wrap justify-content-between align-items-center mt-3">
-      <div className="m2">
+      <div className="w-15rem">
         <Autocomplete
           value={product}
           onChange={(e, val) => {
@@ -55,34 +42,7 @@ const ProductsInput = ({
           size="small"
         />
       </div>
-      <div className="m2">
-        <Autocomplete
-          value={size ? size : ""}
-          name="color"
-          onChange={(e, newVal) => {
-            handleSize(newVal, id);
-          }}
-          disablePortal
-          id="combo-box-demo"
-          options={product ? product?.size : []}
-          renderInput={(params) => <TextField {...params} label="Size" />}
-          size="small"
-        />
-      </div>
-      <div className="m2">
-        <Autocomplete
-          value={color && size ? color : ""}
-          name="color"
-          onChange={(e, newVal) => {
-            handleColorChange(newVal, id);
-          }}
-          disablePortal
-          id="combo-box-demo"
-          options={size ? size?.variants : []}
-          renderInput={(params) => <TextField {...params} label="Color" />}
-          size="small"
-        />
-      </div>
+
       <div className="m2">
         <TextField
           id="outlined-search"
@@ -90,7 +50,7 @@ const ProductsInput = ({
           label="Price Per Unit"
           type="number"
           disabled
-          value={unitPrice}
+          value={product?.price}
           size="small"
         />
       </div>

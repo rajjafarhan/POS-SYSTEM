@@ -81,3 +81,27 @@ a{
   .css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
     letter-spacing: 8px !important;
   }
+  fieldset{
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: rgba(0, 0, 0, 0.23) !important;
+}
+p{
+    margin: 0;
+    padding: 0;
+}
+.w-35{
+    width: 35% !important;
+}
+.w-65{
+    width: 65% !important;
+}
+.text-grey{
+    color: rgb(89, 89, 89) !important;
+}
+.eye:hover{
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+.br-40{
+    border-radius: 40% !important;
+}

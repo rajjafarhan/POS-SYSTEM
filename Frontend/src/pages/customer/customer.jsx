@@ -27,42 +27,27 @@ const Customer = () => {
   });
   const [product, setProduct] = useState([]);
   const [timePeriod, setTimePeriod] = useState("jan");
-  useEffect(() => {
-    const hanldeTotalChange = () => {
-      let sum = 0;
-      product.forEach((elem) => {
-        sum += elem.data.totalPrice;
-     
-      });
-      setReceiptData({
-        ...receiptData,
-        ["total"]: sum,
-      });
-    };
-    hanldeTotalChange();
-  }, [product]);
-  useEffect(() => {
-    setReceiptData({
-      ...receiptData,
-      ["change"]: receiptData?.cash - receiptData?.total,
+
+  const computeTotal = () => {
+    let sum = 0;
+    product.forEach((elem) => {
+      sum += elem?.totalPrice;
     });
-  }, [receiptData.total, receiptData.cash]);
+    return sum;
+  };
+
+  const total = computeTotal();
+  const change = receiptData.cash - total;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setReceiptData({ ...receiptData, [name]: value });
   };
-  const handleColorChange = (val, id) => {
-    setProduct((prev) => {
-      const newObj = [...prev];
-      newObj[id].data.color = val;
-      return newObj;
-    });
-  };
+
   const handleproduct = (val, id) => {
     setProduct((prevcomponents) => {
       const updatedComponents = [...prevcomponents];
-      updatedComponents[id].data.product = val;
+      updatedComponents[id].product = val;
       return updatedComponents;
     });
   };
@@ -70,7 +55,7 @@ const Customer = () => {
     const { name, value } = e.target;
     setProduct((prev) => {
       const updatedComponents = [...prev];
-      updatedComponents[id]["data"][name] = value;
+      updatedComponents[id][name] = value;
       return updatedComponents;
     });
   };
@@ -86,18 +71,17 @@ const Customer = () => {
     setProduct((prevComp) => [
       ...prevComp,
       {
-        data: {
-          productQty: "",
-          color: "",
-          product: "",
-          unitPrice: 0,
-          totalPrice: 0,
-        },
+        product: "",
+        productQty: "",
+        unitPrice: 0,
+        totalPrice: 0,
       },
     ]);
   };
-
-  console.log(product);
+  const submit = () => {
+    const obj = { ...receiptData, change, total };
+    console.log({ ...obj, ...product });
+  };
   return (
     <section>
       <div className="text-dgreen d-flex justify-content-between my-3 align-items-center px-5">
@@ -124,131 +108,120 @@ const Customer = () => {
       {showModal && (
         <Modal>
           <section className="bg-white rounded p-5 modal_bg">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const data = { ...receiptData, products: [...product] };
-              }}
-            >
-              <div>
-                <div className="d-flex justify-content-between align-items-center">
-                  <h1 className="text-dgreen">Create Customer Receipt 🧾</h1>
-                  <button
-                    onClick={() => setShowModal(false)}
-                    className="text-dark btn-close border-0 bg-white fs-4"
-                    type="button"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div className="mt-5 d-flex ">
-                  <TextField
-                    id="outlined-search"
-                    name="rName"
-                    value={receiptData.rName}
-                    onChange={(e) => {
-                      handleChange(e);
+            <div>
+              <div className="d-flex justify-content-between align-items-center">
+                <h1 className="text-dgreen">Create Customer Receipt 🧾</h1>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="text-dark btn-close border-0 bg-white fs-4"
+                  type="button"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="mt-5 d-flex ">
+                <TextField
+                  id="outlined-search"
+                  name="rName"
+                  value={receiptData.rName}
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
+                  label="Name"
+                  type="search"
+                />
+                <div className="mx-1"></div>
+                <TextField
+                  id="outlined-search"
+                  name="rDesc"
+                  value={receiptData.rDesc}
+                  onChange={(e) => {
+                    handleChange(e);
+                  }}
+                  label="Description"
+                  type="search"
+                />
+                <div className="mx-1"></div>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    value={receiptData.date}
+                    onChange={(newValue) => {
+                      setReceiptData({ ...receiptData, ["date"]: newValue });
                     }}
-                    label="Name"
-                    type="search"
                   />
-                  <div className="mx-1"></div>
-                  <TextField
-                    id="outlined-search"
-                    name="rDesc"
-                    value={receiptData.rDesc}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                    label="Description"
-                    type="search"
-                  />
-                  <div className="mx-1"></div>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      value={receiptData.date}
-                      onChange={(newValue) => {
-                        setReceiptData({ ...receiptData, ["date"]: newValue });
-                      }}
-                    />
-                  </LocalizationProvider>
-                </div>
+                </LocalizationProvider>
+              </div>
 
-                {product.map((prod, index) => {
-                  return (
-                    <div key={index}>
-                      <ProductsInput
-                        handleProductChange={handleProductChange}
-                        handleColorChange={handleColorChange}
-                        setProduct={handleproduct}
-                        values={["pen", "paper", "rock"]}
-                        product={prod?.data?.product}
-                        color={prod?.data?.color ? prod?.data?.color : ""}
-                        qtyVal={
-                          prod?.data?.productQty ? prod?.data?.productQty : ""
-                        }
-                        deleteProduct={deleteProduct}
-                        products={products}
-                       
-                        unitPrice={
-                          prod?.data?.unitPrice ? prod?.data?.unitPrice : 0
-                        }
-                        totalPrice={
-                          prod?.data?.totalPrice ? prod?.data?.totalPrice : 0
-                        }
-                        id={index}
-                      />
-                    </div>
-                  );
-                })}
-                <div className="d-flex justify-content-center align-items-center mt-4">
+              {product.map((prod, index) => {
+                return (
+                  <div key={index}>
+                    <ProductsInput
+                      handleProductChange={handleProductChange}
+                      setProduct={handleproduct}
+                      deleteProduct={deleteProduct}
+                      product={prod?.product}
+                      qtyVal={prod?.productQty ? prod?.productQty : ""}
+                      products={products}
+                      unitPrice={prod?.unitPrice ? prod?.unitPrice : 0}
+                      totalPrice={prod?.totalPrice ? prod?.totalPrice : 0}
+                      id={index}
+                    />
+                  </div>
+                );
+              })}
+              <div className="d-flex justify-content-center align-items-center mt-4">
+                <button
+                  type="button"
+                  className="btn bg-dgreen text-white"
+                  onClick={addProduct}
+                >
+                  Add product
+                </button>
+              </div>
+              <div>
+                <div className="my-2 d-flex justify-content-between align-items-center">
+                  <h3 className="text-dgreen">Total</h3>
+                  <TextField
+                    id="outlined-search"
+                    label={total}
+                    type="number"
+                    disabled
+                  />
+                </div>
+                <div className="my-2 d-flex justify-content-between align-items-center">
+                  <h3 className="text-dgreen">Cash</h3>
+                  <TextField
+                    id="outlined-search"
+                    label="Cash"
+                    name="cash"
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
+                    type="number"
+                    value={receiptData.cash}
+                  />
+                </div>
+                <div className="my-2 d-flex justify-content-between align-items-center">
+                  <h3 className="text-dgreen">Change</h3>
+                  <TextField
+                    id="outlined-search"
+                    label={change}
+                    type="number"
+                    disabled
+                  />
+                </div>
+                <div className="d-flex justify-content-center mt-3">
                   <button
-                    type="button"
-                    className="btn bg-dgreen text-white"
-                    onClick={addProduct}
+                    onClick={() => {
+                      submit();
+                    }}
+                    type="submit"
+                    className="btn bg-dgreen text-light "
                   >
-                    Add product
+                    Create Receipt!
                   </button>
                 </div>
-                <div>
-                  <div className="my-2 d-flex justify-content-between align-items-center">
-                    <h3 className="text-dgreen">Total</h3>
-                    <TextField
-                      id="outlined-search"
-                      label={receiptData.total}
-                      type="number"
-                      disabled
-                    />
-                  </div>
-                  <div className="my-2 d-flex justify-content-between align-items-center">
-                    <h3 className="text-dgreen">Cash</h3>
-                    <TextField
-                      id="outlined-search"
-                      label="Cash"
-                      name="cash"
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                      type="number"
-                      value={receiptData.cash}
-                    />
-                  </div>
-                  <div className="my-2 d-flex justify-content-between align-items-center">
-                    <h3 className="text-dgreen">Change</h3>
-                    <TextField
-                      id="outlined-search"
-                      label={receiptData.change}
-                      type="number"
-                      disabled
-                    />
-                  </div>
-                  <div className="d-flex justify-content-center mt-3">
-                    <button type="submit" className="btn bg-dgreen text-light ">
-                      Create Receipt!
-                    </button>
-                  </div>
-                </div>
               </div>
-            </form>
+            </div>
           </section>
         </Modal>
       )}

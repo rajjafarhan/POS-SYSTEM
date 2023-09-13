@@ -1,10 +1,30 @@
 import { pData } from "../vendor/data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import Modal from "../../components/modal/modal";
+import ItemDescription from "./itemDesc";
+import DeleteItem from "./delItem";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faTrash,
+  faEye,
+} from "@fortawesome/free-solid-svg-icons";
 
 const InventoryTable = () => {
-  const headings = ["Id", "Name", "Qty", "Unit Price", "Total Price"];
+  const [currItem, setCurrItem] = useState();
+  const [showItemModal, setShowItemModal] = useState(false);
+  const [showDelModal, setShowDelModal] = useState(false);
+  const headings = [
+    "Id",
+    "Name",
+    "Category",
+    "Qty",
+    "Unit Price",
+    "Total Price",
+    "View",
+    "Delete",
+  ];
   let pages = Math.ceil(pData.length / 10);
   let [curr, setcurr] = useState(1);
   const next = () => {
@@ -13,8 +33,8 @@ const InventoryTable = () => {
   const prev = () => {
     setcurr(curr - 1);
   };
-  const currData = pData.slice((curr-1)*10,curr*10)
-  console.log(currData)
+  const currData = pData.slice((curr - 1) * 10, curr * 10);
+
   return (
     <div>
       <table className="t_main p-4 rounde shadow">
@@ -32,18 +52,35 @@ const InventoryTable = () => {
         <tbody>
           {currData.map((d, index) => {
             return (
-              <tr
-                key={index}
-                onClick={() => {
-                  setShowReceiptModal(true);
-                }}
-                className="cursor-pointer nbg"
-              >
+              <tr key={index} className="cursor-pointer nbg z-0">
                 <td className="p-3 text-center">{d.id}</td>
                 <td className="p-3 text-center">{d.name}</td>
+                <td className="p-3 text-center">{d.category}</td>
                 <td className="p-3 text-center">{d.qty}</td>
                 <td className="p-3 text-center">{d.unitPrice}</td>
                 <td className="p-3 text-center">{d.qty * d.unitPrice}</td>
+                <td className="p- text-center text-danger fs-5">
+                  <button
+                    className="border-0 eye bg-transpaent p-2 rounded-circle text-dgreen bg-transparent "
+                    onClick={() => {
+                      setCurrItem(d);
+                      setShowItemModal(true);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faEye} />
+                  </button>
+                </td>
+                <td className="p- text-center text-danger fs-5">
+                  <button
+                    className="border-0 bg-transparent text-danger eye p-2  br-40"
+                    onClick={() => {
+                      setCurrItem(d);
+                      setShowDelModal(true);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                </td>
               </tr>
             );
           })}
@@ -78,6 +115,19 @@ const InventoryTable = () => {
           </tr>
         </tfoot>
       </table>
+      {showItemModal && (
+        <Modal>
+          <ItemDescription
+            product={currItem}
+            setShowItemModal={setShowItemModal}
+          />
+        </Modal>
+      )}
+      {showDelModal && (
+        <Modal>
+          <DeleteItem currItem={currItem} setShowDelModal={setShowDelModal} />
+        </Modal>
+      )}
     </div>
   );
 };
