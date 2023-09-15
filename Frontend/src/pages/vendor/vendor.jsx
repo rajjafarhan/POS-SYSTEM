@@ -12,9 +12,12 @@ import ProductsInput from "./productsInp";
 import Table from "./table";
 import { rData } from "./data";
 import { products } from "./data";
+import VendorReceipt from "./receipt";
+import { ReceiptLayout } from "./table";
 import "./vendor.css";
 
 const VendorPage = () => {
+  const [receiptModal, setReceiptModal] = useState(false);
   const [modal, setModal] = useState(false);
   const tdate = new Date();
   const [receiptData, setReceiptData] = useState({
@@ -82,6 +85,8 @@ const VendorPage = () => {
   const submit = () => {
     const obj = { ...receiptData, change, total };
     console.log({ ...obj, product });
+    setModal(false);
+    setReceiptModal(true);
   };
   return (
     <section className="d_main">
@@ -163,16 +168,10 @@ const VendorPage = () => {
                       setProduct={handleproduct}
                       deleteProduct={deleteProduct}
                       product={prod?.product}
-                      qtyVal={
-                        prod?.productQty ? prod?.productQty : ""
-                      }
+                      qtyVal={prod?.productQty ? prod?.productQty : ""}
                       products={products}
-                      unitPrice={
-                        prod?.unitPrice ? prod?.unitPrice : 0
-                      }
-                      totalPrice={
-                        prod?.totalPrice ? prod?.totalPrice : 0
-                      }
+                      unitPrice={prod?.unitPrice ? prod?.unitPrice : 0}
+                      totalPrice={prod?.totalPrice ? prod?.totalPrice : 0}
                       id={index}
                     />
                   </div>
@@ -231,6 +230,13 @@ const VendorPage = () => {
               </div>
             </div>
           </section>
+        </Modal>
+      )}
+      {receiptModal && (
+        <Modal>
+          <ReceiptLayout setShowReceiptModal={setReceiptModal}>
+            <VendorReceipt data={{ ...receiptData, change, total, product }} />
+          </ReceiptLayout>
         </Modal>
       )}
     </section>

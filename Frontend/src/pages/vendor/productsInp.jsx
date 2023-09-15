@@ -47,7 +47,7 @@ const ProductsInput = ({
         <TextField
           id="outlined-search"
           name="unitPrice"
-          label="Price Per Unit"
+          // label="Unit Price"
           type="number"
           disabled
           value={product?.price}

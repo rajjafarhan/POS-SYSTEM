@@ -5,6 +5,20 @@ import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../components/modal/modal";
 import VendorReceipt from "./receipt";
 
+export const ReceiptLayout = ({ children, setShowReceiptModal }) => {
+  return (
+    <section>
+      <button
+        onClick={() => setShowReceiptModal(false)}
+        className="text-dark btn-close border-0 bg-white fs-4 abs_tr"
+        type="button"
+        aria-label="Close"
+      ></button>
+      {children}
+    </section>
+  );
+};
+
 const Table = ({ headings, data }) => {
   const [showReceiptModal, setShowReceiptModal] = useState(false);
   let total = 54;
@@ -82,15 +96,9 @@ const Table = ({ headings, data }) => {
       </table>
       {showReceiptModal && (
         <Modal>
-          <section>
-            <button
-              onClick={() => setShowReceiptModal(false)}
-              className="text-dark btn-close border-0 bg-white fs-4 abs_tr"
-              type="button"
-              aria-label="Close"
-            ></button>
+          <ReceiptLayout setShowReceiptModal={setShowReceiptModal}>
             <VendorReceipt />
-          </section>
+          </ReceiptLayout>
         </Modal>
       )}
     </div>

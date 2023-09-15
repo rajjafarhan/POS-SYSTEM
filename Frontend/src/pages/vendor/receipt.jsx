@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
   },
 });
 
-// Create Document Component
-const VendorReceipt = () => {
+const VendorReceipt = ({ data }) => {
   const l = "lol";
+  console.log(data);
   return (
     <PDFViewer width={400} height={600}>
       <Document
@@ -103,47 +103,31 @@ const VendorReceipt = () => {
             <Text style={{ margin: "0", padding: "0", fontSize: "12px" }}>
               -----------------------------------------------------
             </Text>
+            {data?.product.map((prod, index) => {
+              return (
+                <View
+                  wrap={true}
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    fontSize: "12px",
+                    marginTop: "0px",
+                    marginBottom: "0px",
+                  }}
+                >
+                  <View style={{ display: "flex", flexDirection: "row" }}>
+                    <Text>{index + 1}</Text>
+                    <Text style={{ marginLeft: "15px", width: "181px" }}>
+                      {" "}
+                      {prod?.product?.label}
+                    </Text>
+                  </View>
+                  <Text>{prod?.totalPrice}</Text>
+                </View>
+              );
+            })}
 
-            <View
-              wrap={true}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                fontSize: "12px",
-                marginTop: "0px",
-                marginBottom: "0px",
-              }}
-            >
-              <View style={{ display: "flex", flexDirection: "row" }}>
-                <Text>1</Text>
-                <Text style={{ marginLeft: "15px", width: "181px" }}>
-                  {" "}
-                  Some product
-                </Text>
-              </View>
-              <Text>200</Text>
-            </View>
-            <View
-              wrap={true}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                fontSize: "12px",
-                marginTop: "0px",
-                marginBottom: "0px",
-              }}
-            >
-              <View style={{ display: "flex", flexDirection: "row" }}>
-                <Text>1</Text>
-                <Text style={{ marginLeft: "15px", width: "181px" }}>
-                  {" "}
-                  Some Other Product
-                </Text>
-              </View>
-              <Text>200</Text>
-            </View>
             <Text style={{ margin: "0", padding: "0", fontSize: "12px" }}>
               -----------------------------------------------------
             </Text>
@@ -162,7 +146,9 @@ const VendorReceipt = () => {
                 Total
               </Text>
 
-              <Text style={{ fontSize: "14px", fontWeight: "bold" }}>400</Text>
+              <Text style={{ fontSize: "14px", fontWeight: "bold" }}>
+                {data?.total}
+              </Text>
             </View>
             <View
               wrap={true}
@@ -177,7 +163,9 @@ const VendorReceipt = () => {
             >
               <Text style={{ fontSize: "12px", fontWeight: "bold" }}>Cash</Text>
 
-              <Text style={{ fontSize: "12px", fontWeight: "bold" }}>500</Text>
+              <Text style={{ fontSize: "12px", fontWeight: "bold" }}>
+                {data?.cash}
+              </Text>
             </View>
             <View
               wrap={true}
@@ -194,7 +182,9 @@ const VendorReceipt = () => {
                 Change
               </Text>
 
-              <Text style={{ fontSize: "12px", fontWeight: "bold" }}>100</Text>
+              <Text style={{ fontSize: "12px", fontWeight: "bold" }}>
+                {data?.change}
+              </Text>
             </View>
             <Text
               style={{
