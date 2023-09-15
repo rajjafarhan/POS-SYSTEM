@@ -1,14 +1,19 @@
 import "./login.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { validateEmail, validatePass } from "../../helpers/validate";
 
 const LoginFrame = () => {
   const [data, setData] = useState({ email: "", password: "" });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // console.log(e)
-    setData({ ...data, [name]: value }); 
+    setData({ ...data, [name]: value });
+    if (name === "email") {
+      console.log(validateEmail(value));
+    } else {
+      console.log(validatePass(value));
+    }
   };
   return (
     <div className="bg-white shadow p-5  pt-5 mx-5 ">
@@ -18,6 +23,7 @@ const LoginFrame = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              const { email, pass } = data;
             }}
           >
             <div>
@@ -28,7 +34,7 @@ const LoginFrame = () => {
                     handleInputChange(e);
                   }}
                   type="email"
-                  className={`text-black inp_u`}
+                  className={` text-black inp_u`}
                   name="email"
                 />
                 <label className={`${data.email === "" ? "" : "inp_d"}`}>
@@ -42,7 +48,7 @@ const LoginFrame = () => {
                     handleInputChange(e);
                   }}
                   type="password"
-                  className="text-black"
+                  className={` text-black`}
                   name="password"
                 />
                 <label className={`${data.password === "" ? "" : "inp_d"}`}>

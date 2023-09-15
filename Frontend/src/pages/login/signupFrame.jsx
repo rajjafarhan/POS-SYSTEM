@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { validateEmail, validatePass } from "../../helpers/validate";
 
 const SignupFrame = () => {
   const [data, setData] = useState({
@@ -11,6 +12,11 @@ const SignupFrame = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
+    if (name === "email") {
+      console.log(validateEmail(value));
+    } else {
+      console.log(validatePass(value));
+    }
   };
 
   return (

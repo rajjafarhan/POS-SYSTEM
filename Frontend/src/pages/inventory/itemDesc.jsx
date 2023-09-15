@@ -1,6 +1,7 @@
 import { TextField } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import ImageInput from "../../components/imageInput/imgInput.jsx";
 import { useState } from "react";
 
 const ItemAttribute = ({ handleItemChange, product, isEditable }) => {
@@ -32,8 +33,8 @@ const ItemAttribute = ({ handleItemChange, product, isEditable }) => {
             type="text"
             name="category"
             onChange={(e) => {
-                handleItemChange(e);
-              }}
+              handleItemChange(e);
+            }}
             value={product?.category}
           />
         )}
@@ -92,11 +93,13 @@ const ItemAttribute = ({ handleItemChange, product, isEditable }) => {
 const ItemDescription = ({ setShowItemModal, product }) => {
   const [isEditable, setIsEditable] = useState(false);
   const [item, setitem] = useState(product);
+  const [img, setImg] = useState();
 
   const handleItemChange = (e) => {
     const { name, value } = e.target;
     setitem({ ...item, [name]: value });
   };
+  
 
   return (
     <section className="bg-white rounded p-5 modal_bg">
@@ -124,6 +127,20 @@ const ItemDescription = ({ setShowItemModal, product }) => {
             handleItemChange={handleItemChange}
             product={item}
             isEditable={isEditable}
+          />
+        </div>
+        <div className="d-flex flex-column align-items-start">
+          <h3 className="text-dgreen w-50 my-4">Product Image:</h3>
+
+          <ImageInput
+            setcardImage={setImg}
+            img={
+              <img
+                src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
+                alt=""
+              />
+            }
+            setIsEditable={setIsEditable}
           />
         </div>
         <div className="d-flex justify-content-center mt-5">

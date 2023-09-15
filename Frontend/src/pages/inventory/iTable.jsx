@@ -91,6 +91,9 @@ const InventoryTable = () => {
               Total Records :
             </td>
             <td className="p-2 fs-5 text-dgreen ">{pData.length}</td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td className="p-2 fs-5 text-dgreen text-center">
               Page {curr} of {pages}
             </td>
@@ -103,7 +106,7 @@ const InventoryTable = () => {
                 <FontAwesomeIcon icon={faArrowLeft} />
               </button>
             </td>
-            <td className="p-2 text-center" s>
+            <td className="p-2 text-center">
               <button
                 onClick={next}
                 disabled={curr === pages}

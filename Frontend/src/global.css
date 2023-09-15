@@ -105,3 +105,12 @@ p{
 .br-40{
     border-radius: 40% !important;
 }
+
+.b-red{
+    border-bottom: 2px solid red  !important;
+
+}
+.b-dgreen{
+    border-bottom: 2px solid  #2c698d !important;
+
+}
