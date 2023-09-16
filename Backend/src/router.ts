@@ -31,4 +31,4 @@ router.post('/basicinfo',(req,res)=>{})
 
 //*****************Dashboard ******************** */
 
-
+router.get('/allsale',)

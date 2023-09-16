@@ -85,13 +85,14 @@ export const products = [
     price: 12,
   },
 ];
-export const pData = [
+export let pData = [
   {
     id: 1,
     name: "Good Product blue 500gm",
     qty: 64,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: true,
   },
   {
     id: 2,
@@ -99,6 +100,7 @@ export const pData = [
     qty: 64,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: true,
   },
   {
     id: 3,
@@ -106,6 +108,7 @@ export const pData = [
     qty: 64,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: true,
   },
   {
     id: 4,
@@ -113,6 +116,7 @@ export const pData = [
     qty: 64,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: true,
   },
   {
     id: 5,
@@ -120,6 +124,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: false,
   },
   {
     id: 6,
@@ -127,6 +132,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: false,
   },
   {
     id: 7,
@@ -134,6 +140,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: false,
   },
   {
     id: 8,
@@ -141,6 +148,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: false,
   },
   {
     id: 9,
@@ -148,6 +156,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: false,
   },
   {
     id: 10,
@@ -155,6 +164,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: false,
   },
   {
     id: 11,
@@ -162,6 +172,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: false,
   },
   {
     id: 12,
@@ -169,6 +180,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "Brass",
+    addToWebsite: false,
   },
   {
     id: 13,
@@ -176,6 +188,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 14,
@@ -183,6 +196,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 15,
@@ -190,6 +204,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 16,
@@ -197,6 +212,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 17,
@@ -204,6 +220,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 18,
@@ -211,6 +228,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 19,
@@ -218,6 +236,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 20,
@@ -225,6 +244,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 21,
@@ -232,6 +252,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 22,
@@ -239,6 +260,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 23,
@@ -246,6 +268,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 24,
@@ -253,6 +276,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 25,
@@ -260,6 +284,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 26,
@@ -267,6 +292,7 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 27,
@@ -274,20 +300,23 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 28,
-    name: "Good Product blue 500gm",
+    name: "bad Product blue 500gm",
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 29,
-    name: "Good Product blue 500gm",
+    name: "Bad Product blue 500gm",
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 30,
@@ -295,19 +324,22 @@ export const pData = [
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 31,
-    name: "Good Product blue 500gm",
+    name: "Good Product red 500gm",
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
   {
     id: 32,
-    name: "Good Product blue 500gm",
+    name: "Good Product red 500gm",
     qty: 34,
     unitPrice: 20,
     category: "copper",
+    addToWebsite: false,
   },
 ];

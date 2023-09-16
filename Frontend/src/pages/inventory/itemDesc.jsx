@@ -1,8 +1,8 @@
-import { TextField } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import ImageInput from "../../components/imageInput/imgInput.jsx";
 import { useState } from "react";
+import Checkbox from "@mui/material/Checkbox";
 
 const ItemAttribute = ({ handleItemChange, product, isEditable }) => {
   return (
@@ -86,6 +86,18 @@ const ItemAttribute = ({ handleItemChange, product, isEditable }) => {
           />
         )}
       </div>
+      <div className="d-flex justify-content-between mt-2  align-items-center">
+        <h3 className="text-dgreen w-6">Display on Website</h3>
+        <Checkbox
+          name="addToWebsite"
+          checked={product.addToWebsite}
+          onChange={(e) => {
+            handleItemChange(e);
+          }}
+          inputProps={{ "aria-label": "controlled" }}
+          disabled={!isEditable}
+        />
+      </div>
     </>
   );
 };
@@ -96,10 +108,14 @@ const ItemDescription = ({ setShowItemModal, product }) => {
   const [img, setImg] = useState();
 
   const handleItemChange = (e) => {
-    const { name, value } = e.target;
-    setitem({ ...item, [name]: value });
+    if (e.target.name === "addToWebsite") {
+      const { name, checked } = e.target;
+      setitem({ ...item, [name]: checked });
+    } else {
+      const { name, value } = e.target;
+      setitem({ ...item, [name]: value });
+    }
   };
-  
 
   return (
     <section className="bg-white rounded p-5 modal_bg">
@@ -130,7 +146,7 @@ const ItemDescription = ({ setShowItemModal, product }) => {
           />
         </div>
         <div className="d-flex flex-column align-items-start">
-          <h3 className="text-dgreen w-50 my-4">Product Image:</h3>
+          <h3 className="text-dgreen w-50 mb-4 mt-2">Product Image:</h3>
 
           <ImageInput
             setcardImage={setImg}
