@@ -14,8 +14,10 @@ const AddItem = ({ setShowModal }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // console.log(name, value);
     setItemData({ ...itemData, [name]: value });
   };
+  // console.log(itemData);
 
   const submit = async () => {
     const imgURL = await uploadImageAndGetURL("/shop/1", img);

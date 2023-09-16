@@ -1,7 +1,7 @@
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
-import { createNewUser } from './handlers/user'
+import { createNewUser, signin } from './handlers/user'
 
 
 const app = express()
@@ -16,5 +16,6 @@ app.get('/', (req, res) => {
 
 
 app.post('/user',createNewUser)
+app.post('/signin',signin)
 
 export default app
