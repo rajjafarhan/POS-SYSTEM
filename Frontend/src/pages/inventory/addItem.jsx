@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TextField } from "@mui/material";
 import ImageInput from "../../components/imageInput/imgInput";
 import { uploadImageAndGetURL } from "../../firebase/utils";
+import Checkbox from "@mui/material/Checkbox";
 
 const AddItem = ({ setShowModal }) => {
   const [itemData, setItemData] = useState({
@@ -9,17 +10,24 @@ const AddItem = ({ setShowModal }) => {
     qty: "",
     unitPrice: "",
     category: "",
+    addToWebsite: false,
   });
   const [img, setImg] = useState();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setItemData({ ...itemData, [name]: value });
+    if (e.target.name === "addToWebsite") {
+      const { name, checked } = e.target;
+      setItemData({ ...itemData, [name]: checked });
+    } else {
+      const { name, value } = e.target;
+      setItemData({ ...itemData, [name]: value });
+    }
   };
 
   const submit = async () => {
-    const imgURL = await uploadImageAndGetURL("/shop/1", img);
-    console.log(imgURL);
+    // const imgURL = await uploadImageAndGetURL("/shop/1", img);
+    // console.log(imgURL);
+    console.log(itemData);
   };
 
   return (
@@ -79,6 +87,17 @@ const AddItem = ({ setShowModal }) => {
               handleChange(e);
             }}
           />
+          <div className="d-flex justify-content-between mb-2 align-items-center">
+            <p className="fs-5 text-dgreen">Add product on website?</p>
+            <Checkbox
+              name="addToWebsite"
+              checked={itemData.addToWebsite}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          </div>
           <ImageInput type={"add"} setcardImage={setImg} />
         </div>
         <div className="d-flex justify-content-center mt-5">
