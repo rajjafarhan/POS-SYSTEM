@@ -85,7 +85,7 @@ export const products = [
     price: 12,
   },
 ];
-export const pData = [
+export let pData = [
   {
     id: 1,
     name: "Good Product blue 500gm",
@@ -304,7 +304,7 @@ export const pData = [
   },
   {
     id: 28,
-    name: "Good Product blue 500gm",
+    name: "bad Product blue 500gm",
     qty: 34,
     unitPrice: 20,
     category: "copper",
@@ -312,7 +312,7 @@ export const pData = [
   },
   {
     id: 29,
-    name: "Good Product blue 500gm",
+    name: "Bad Product blue 500gm",
     qty: 34,
     unitPrice: 20,
     category: "copper",
@@ -328,7 +328,7 @@ export const pData = [
   },
   {
     id: 31,
-    name: "Good Product blue 500gm",
+    name: "Good Product red 500gm",
     qty: 34,
     unitPrice: 20,
     category: "copper",
@@ -336,7 +336,7 @@ export const pData = [
   },
   {
     id: 32,
-    name: "Good Product blue 500gm",
+    name: "Good Product red 500gm",
     qty: 34,
     unitPrice: 20,
     category: "copper",

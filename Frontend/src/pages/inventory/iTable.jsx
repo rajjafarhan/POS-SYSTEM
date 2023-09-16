@@ -10,8 +10,9 @@ import {
   faTrash,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
+import { search } from "../../helpers/search";
 
-const InventoryTable = () => {
+const InventoryTable = ({ searchParam }) => {
   const [currItem, setCurrItem] = useState();
   const [showItemModal, setShowItemModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
@@ -25,7 +26,9 @@ const InventoryTable = () => {
     "View",
     "Delete",
   ];
-  let pages = Math.ceil(pData.length / 10);
+
+  const data = search(pData, searchParam);
+  let pages = Math.ceil(data.length / 10);
   let [curr, setcurr] = useState(1);
   const next = () => {
     setcurr(curr + 1);
@@ -33,7 +36,7 @@ const InventoryTable = () => {
   const prev = () => {
     setcurr(curr - 1);
   };
-  const currData = pData.slice((curr - 1) * 10, curr * 10);
+  const currData = data.slice((curr - 1) * 10, curr * 10);
 
   return (
     <div>
@@ -90,7 +93,7 @@ const InventoryTable = () => {
             <td className="p-2 fs-5 text-dgreen text-center">
               Total Records :
             </td>
-            <td className="p-2 fs-5 text-dgreen ">{pData.length}</td>
+            <td className="p-2 fs-5 text-dgreen ">{data.length}</td>
             <td></td>
             <td></td>
             <td></td>
