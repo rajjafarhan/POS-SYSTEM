@@ -9,6 +9,7 @@ import SearchBar from "../../components/searchBar/searchBar";
 const Inventory = () => {
   const [showModal, setShowModal] = useState(false);
   const [searchVal, setSearchVal] = useState("");
+  const [searchBy, setSearchBy] = useState("");
 
   return (
     <section className="d_main">
@@ -16,18 +17,19 @@ const Inventory = () => {
         <h1 className="x-font ">Inventory</h1>
         <SearchBar value={searchVal} setValue={setSearchVal} />
         <div className="d-flex justify-content-center align-items-center ">
-          <AddButton onChange={setShowModal} />
           <MySelect
-            name="Time"
-            // setter={setTimePeriod}
-            values={["jan", "feb", "mar"]}
-            // curr={timePeriod}
+            name="Search by"
+            setter={setSearchBy}
+            values={["name", "category"]}
+            curr={searchBy}
+          
           />
+          <AddButton onChange={setShowModal} />
         </div>
       </div>
       <div>
         <div className="pc_vendor justify-content-center align-items-start">
-          <InventoryTable searchParam={searchVal} />
+          <InventoryTable searchParam={searchVal} searchBy={searchBy} />
         </div>
       </div>
       {showModal && (

@@ -14,7 +14,6 @@ const MySelect = ({ name, setter, values, curr, id }) => {
           id="demo-simple-select"
           value={curr ? curr : ""}
           size="small"
-
           label="Age"
           onChange={(e) => {
             setter(e.target.value, id);

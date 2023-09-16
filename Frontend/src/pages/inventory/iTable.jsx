@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { search } from "../../helpers/search";
 
-const InventoryTable = ({ searchParam }) => {
+const InventoryTable = ({ searchParam, searchBy }) => {
   const [currItem, setCurrItem] = useState();
   const [showItemModal, setShowItemModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
@@ -27,7 +27,7 @@ const InventoryTable = ({ searchParam }) => {
     "Delete",
   ];
 
-  const data = search(pData, searchParam);
+  const data = search(pData, searchParam, searchBy);
   let pages = Math.ceil(data.length / 10);
   let [curr, setcurr] = useState(1);
   const next = () => {
