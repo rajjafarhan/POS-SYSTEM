@@ -10,8 +10,8 @@ const SettingsLayout = ({ children }) => {
       <div>
         <h1 className="x-font text-dgreen">Settings</h1>
       </div>
-      <div className="d-flex me-4 my-4">
-        <div className="bg-dgreen text-dgreen rounded snav_h shadow w-25">
+      <div className="d-flex set-mob me-4 my-4">
+        <div className="bg-dgreen setnav-mob text-dgreen rounded snav_h shadow mw-25">
           <div>
             <div className="my-4">
               <Link to={"/pos/settings/basicinfo"}>

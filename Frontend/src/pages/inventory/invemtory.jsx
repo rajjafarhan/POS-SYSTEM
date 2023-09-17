@@ -5,6 +5,7 @@ import { useState } from "react";
 import Modal from "../../components/modal/modal";
 import AddItem from "./addItem";
 import SearchBar from "../../components/searchBar/searchBar";
+import "./inventory.css";
 
 const Inventory = () => {
   const [showModal, setShowModal] = useState(false);
@@ -13,14 +14,14 @@ const Inventory = () => {
 
   return (
     <section className="d_main">
-      <div className="text-dgreen subheadiv d-flex justify-content-between my-3 align-items-center pe-5">
+      <div className="flex-mob text-dgreen subheadiv d-flex justify-content-between my-3 align-items-center pe-5">
         <h1 className="x-font ">Inventory</h1>
         <SearchBar
           value={searchVal}
           setValue={setSearchVal}
           width={"w-30rem"}
         />
-        <div className="d-flex justify-content-center align-items-center ">
+        <div className="d-flex bnts justify-content-center align-items-center ">
           <MySelect
             name="Search by"
             setter={setSearchBy}
@@ -31,7 +32,7 @@ const Inventory = () => {
         </div>
       </div>
       <div>
-        <div className="pc_vendor justify-content-center align-items-start">
+        <div className="d-flex t-div justify-content-center align-items-start">
           <InventoryTable searchParam={searchVal} searchBy={searchBy} />
         </div>
       </div>

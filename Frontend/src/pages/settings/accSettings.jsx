@@ -3,7 +3,7 @@ import DangerZone from "./dangerZone";
 
 const AccountSettings = () => {
   return (
-    <div className="ms-4 bg-lgreen rounded shadow w-75">
+    <div className="mms-4 bg-lgreen rounded shadow mw-75">
       <h2 className="m-4 x-font text-dgreen">Account Settings</h2>
       <div className="mx-4">
         <div className="d-flex flex-column my-3">

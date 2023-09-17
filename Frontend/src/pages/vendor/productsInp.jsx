@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Autocomplete from "@mui/material/Autocomplete";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
+import "./vendor.css";
 
 const ProductsInput = ({
   handleProductChange,
@@ -28,7 +29,7 @@ const ProductsInput = ({
   }, [product, qtyVal]);
 
   return (
-    <div className="d-flex flex-wrap justify-content-between align-items-center mt-3">
+    <div className="d-flex flex-wrap jf-between inp-mob  align-items-center mt-3">
       <div className="w-15rem">
         <Autocomplete
           value={product}

@@ -92,11 +92,11 @@ const VendorPage = () => {
   };
   return (
     <section className="d_main">
-      <div className="text-dgreen subheadiv d-flex justify-content-between my-3 align-items-center pe-5">
+      <div className="text-dgreen flex-mob subheadiv d-flex justify-content-between my-3 align-items-center pe-5">
         <h1 className="x-font ">Vendor Receipts</h1>
         <SearchBar width={"w-23rem"} />
 
-        <div className="d-flex justify-content-center align-items-center ">
+        <div className="d-flex justify-content-center bnts align-items-center ">
           <AddButton onChange={setModal} />
           <MySelect
             name="Time"
@@ -107,16 +107,11 @@ const VendorPage = () => {
         </div>
       </div>
       <div>
-        <div className="pc_vendor justify-content-center align-items-start">
+        <div className="d-flex t-div justify-content-center align-items-start">
           <Table
             headings={["Id", "Name", "Description", "Date", "Cost"]}
             data={rData}
           />
-        </div>
-        <div className="mob-vendor flex-wrap ">
-          <Receipt />
-          <Receipt />
-          <Receipt />
         </div>
       </div>
       {modal && (
