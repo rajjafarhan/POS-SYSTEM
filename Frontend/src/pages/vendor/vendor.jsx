@@ -14,6 +14,7 @@ import { rData } from "./data";
 import { products } from "./data";
 import VendorReceipt from "./receipt";
 import { ReceiptLayout } from "./table";
+import SearchBar from "../../components/searchBar/searchBar";
 import "./vendor.css";
 
 const VendorPage = () => {
@@ -85,6 +86,7 @@ const VendorPage = () => {
   const submit = () => {
     const obj = { ...receiptData, change, total };
     console.log({ ...obj, product });
+    console.log(receiptData.date.$d);
     setModal(false);
     setReceiptModal(true);
   };
@@ -92,6 +94,8 @@ const VendorPage = () => {
     <section className="d_main">
       <div className="text-dgreen subheadiv d-flex justify-content-between my-3 align-items-center pe-5">
         <h1 className="x-font ">Vendor Receipts</h1>
+        <SearchBar width={"w-23rem"} />
+
         <div className="d-flex justify-content-center align-items-center ">
           <AddButton onChange={setModal} />
           <MySelect
