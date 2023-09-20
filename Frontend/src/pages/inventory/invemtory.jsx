@@ -15,14 +15,17 @@ const Inventory = () => {
     <section className="d_main">
       <div className="text-dgreen subheadiv d-flex justify-content-between my-3 align-items-center pe-5">
         <h1 className="x-font ">Inventory</h1>
-        <SearchBar value={searchVal} setValue={setSearchVal} />
+        <SearchBar
+          value={searchVal}
+          setValue={setSearchVal}
+          width={"w-30rem"}
+        />
         <div className="d-flex justify-content-center align-items-center ">
           <MySelect
             name="Search by"
             setter={setSearchBy}
             values={["name", "category"]}
             curr={searchBy}
-          
           />
           <AddButton onChange={setShowModal} />
         </div>

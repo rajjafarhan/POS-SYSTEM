@@ -1,6 +1,6 @@
 import "./seachBar.css";
 
-const SearchBar = ({ value, setValue }) => {
+const SearchBar = ({ value, setValue, width }) => {
   return (
     <div className="s-div">
       <form class="form">
@@ -23,7 +23,7 @@ const SearchBar = ({ value, setValue }) => {
           </svg>
         </p>
         <input
-          class="input input-s w-30rem"
+          class={`input input-s ${width}`}
           placeholder="Search"
           value={value}
           onChange={(e) => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddButton from "../../components/addButton/addButton";
 import MySelect from "../../components/select/select";
 import Modal from "../../components/modal/modal";
@@ -11,8 +11,12 @@ import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import ProductsInput from "../vendor/productsInp";
 import { products } from "../vendor/data";
+import VendorReceipt from "../vendor/receipt";
+import { ReceiptLayout } from "../vendor/table";
+import SearchBar from "../../components/searchBar/searchBar";
 
 const Customer = () => {
+  const [receiptModal, setReceiptModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const tdate = new Date();
   const [receiptData, setReceiptData] = useState({
@@ -21,9 +25,7 @@ const Customer = () => {
     ),
     rName: "",
     rDesc: "",
-    total: 0,
     cash: "",
-    change: 0,
   });
   const [product, setProduct] = useState([]);
   const [timePeriod, setTimePeriod] = useState("jan");
@@ -81,19 +83,22 @@ const Customer = () => {
   const submit = () => {
     const obj = { ...receiptData, change, total };
     console.log({ ...obj, ...product });
+    setModal(false);
+    setReceiptModal(true);
   };
   return (
     <section>
       <div className="text-dgreen d-flex justify-content-between my-3 align-items-center px-5">
         <h1 className="x-font">Customer Receipts</h1>
+        <SearchBar width={"w-23rem"} />
         <div className="d-flex justify-content-center align-items-center ">
-          <AddButton onChange={setShowModal} />
           <MySelect
             name="Time"
             setter={setTimePeriod}
             values={["jan", "feb", "mar"]}
             curr={timePeriod}
           />
+          <AddButton onChange={setShowModal} />
         </div>
       </div>
       <div>
@@ -223,6 +228,13 @@ const Customer = () => {
               </div>
             </div>
           </section>
+        </Modal>
+      )}
+      {receiptModal && (
+        <Modal>
+          <ReceiptLayout setShowReceiptModal={setReceiptModal}>
+            <VendorReceipt data={{ ...receiptData, change, total, product }} />
+          </ReceiptLayout>
         </Modal>
       )}
     </section>
