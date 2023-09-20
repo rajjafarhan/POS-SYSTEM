@@ -6,14 +6,15 @@ export const createNewUser = async (req, res) => {
     const { username, password } = req.body;
     const hashedPassword = await hashPassword(password);
 
-    const shopsCollection = await database_connection();
-    await shopsCollection.insertOne({
+    const shopsCollection = await database_connection(['shops']);
+    // console.log(shopsCollection);
+    await shopsCollection[0].insertOne({
       username: username,
       password: hashedPassword,
     });
 
     // Find the newly inserted user based on the unique identifier (username)
-    const newUser = await shopsCollection.findOne({ username: username });
+    const newUser = await shopsCollection[0].findOne({ username: username });
 
     if (newUser) {
       const token = createJWT(newUser);
@@ -33,9 +34,9 @@ export const createNewUser = async (req, res) => {
 export const signin=async(req,res)=>{
     try{
         const {username,password}=req.body;
-        const shopsCollection = await database_connection();
+        const shopsCollection = await database_connection(['shops']);
 
-        const user=await shopsCollection.findOne({username:username});
+        const user=await shopsCollection[0].findOne({username:username});
         if(!user){
             return res.status(404).json({message:"User not found"});
         }

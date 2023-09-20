@@ -1,17 +1,21 @@
 import {Router} from 'express'
+import { createVendor, deleteAllVendors, deleteVendor, getAllVendors } from './handlers/vendor'
+import { get } from 'http'
+import { createCustomer, getAllCustomers } from './handlers/customer'
 
 
 const router = Router()
-//*****************VENDOR ******************** */
-router.get('/vendor', (req, res) => {})
-router.post('/vendor', (req, res) => {}) 
-router.delete('/vendor', (req, res) => {})
+//**************VENDOR*******************/
+router.get('/vendor/:setNo', getAllVendors)
+router.post('/vendor', createVendor) 
+router.delete('/vendor/:id', deleteVendor)
+router.delete('/vendor', deleteAllVendors)
 
 
-//*****************CUSTOMER ******************** */
+//*****************CUSTOMER************ */
 
-router.get('/customer', (req, res) => {})
-router.post('/customer', (req, res) => {})  
+router.get('/customer/:setNo',getAllCustomers)
+router.post('/customer', createCustomer)  
 router.delete('/customer', (req, res) => {})
 
 
@@ -31,4 +35,8 @@ router.post('/basicinfo',(req,res)=>{})
 
 //*****************Dashboard ******************** */
 
-router.get('/allsale',)
+router.get('/allsale',()=>{})
+
+
+
+export default router

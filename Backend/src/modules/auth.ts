@@ -11,7 +11,10 @@ export const comparePassword=(password,hash)=>{
  
  
  export const createJWT=(user)=>{
-     const token=jwt.sign({id:user.id,username:user.username},process.env.JWT_SECRET)
+    // console.log(user)
+    // console.log(user._id)
+
+     const token=jwt.sign({id:user._id,username:user.username},process.env.JWT_SECRET)
      return token 
  } //this function will create the jwt token and return it
 
@@ -28,6 +31,8 @@ export const protect=(req,res,next)=>{
     }
     try{
         const user=jwt.verify(token,process.env.JWT_SECRET)
+        
+        // console.log(user,"user")
         req.user=user
         next()
     }
