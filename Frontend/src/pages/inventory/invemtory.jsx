@@ -38,7 +38,7 @@ const Inventory = () => {
       </div>
       {showModal && (
         <Modal>
-          {" "}
+        
           <AddItem setShowModal={setShowModal} />
         </Modal>
       )}

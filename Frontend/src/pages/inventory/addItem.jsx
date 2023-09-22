@@ -15,6 +15,7 @@ const AddItem = ({ setShowModal }) => {
   const [img, setImg] = useState();
 
   const handleChange = (e) => {
+   
     if (e.target.name === "addToWebsite") {
       const { name, checked } = e.target;
       setItemData({ ...itemData, [name]: checked });
@@ -23,6 +24,7 @@ const AddItem = ({ setShowModal }) => {
       setItemData({ ...itemData, [name]: value });
     }
   };
+
 
   const submit = async () => {
     // const imgURL = await uploadImageAndGetURL("/shop/1", img);
