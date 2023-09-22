@@ -100,7 +100,9 @@ export const deleteCustomer = async (req, res) => {
 
 
     //////////////////////////////////////////////DELETE ALL CUSTOMERS////////////////////////////
-const deleteAllCustomers = async (req, res) => {
+
+
+export const deleteAllCustomers = async (req, res) => {
     try{
         const custCollection=await database_connection(['customer invoice']);
         const result = await custCollection[0].deleteMany({ userId: req.user.id });

@@ -1,7 +1,8 @@
 import {Router} from 'express'
 import { createVendor, deleteAllVendors, deleteVendor, getAllVendors } from './handlers/vendor'
 import { get } from 'http'
-import { createCustomer, getAllCustomers } from './handlers/customer'
+import { createCustomer, deleteAllCustomers, deleteCustomer, getAllCustomers } from './handlers/customer'
+import { createInventory, getAllInventory } from './handlers/inventory'
 
 
 const router = Router()
@@ -16,13 +17,14 @@ router.delete('/vendor', deleteAllVendors)
 
 router.get('/customer/:setNo',getAllCustomers)
 router.post('/customer', createCustomer)  
-router.delete('/customer', (req, res) => {})
+router.delete('/customer/:id', deleteCustomer)
+router.delete('/customer/', deleteAllCustomers)
 
 
 //*****************PRODUCT/INVENTORY ******************** */
 
-router.get('/product', (req, res) => {})    
-router.post('/product', (req, res) => {})
+router.get('/product', getAllInventory)    
+router.post('/product', createInventory)
 router.put('/product',  (req,res)=>{})
 router.delete('/product', (req, res) => {})
 
