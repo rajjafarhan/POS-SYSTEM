@@ -2,7 +2,7 @@ import {Router} from 'express'
 import { createVendor, deleteAllVendors, deleteVendor, getAllVendors } from './handlers/vendor'
 import { get } from 'http'
 import { createCustomer, deleteAllCustomers, deleteCustomer, getAllCustomers } from './handlers/customer'
-import { createInventory, getAllInventory } from './handlers/inventory'
+import { createInventory, deleteInventory, editInventory, getAllInventory } from './handlers/inventory'
 
 
 const router = Router()
@@ -25,8 +25,8 @@ router.delete('/customer/', deleteAllCustomers)
 
 router.get('/product', getAllInventory)    
 router.post('/product', createInventory)
-router.put('/product',  (req,res)=>{})
-router.delete('/product', (req, res) => {})
+router.put('/product/:id', editInventory  )
+router.delete('/product/:id', deleteInventory)
 
 //*****************BASICINFO ******************** */
 router.get('/basicinfo', (req, res) => {})

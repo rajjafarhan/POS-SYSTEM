@@ -61,17 +61,20 @@ export const createCustomer = async (req, res) => {
         product: product,
         rDesc: rDesc,
         rName: rName,
-        total: total}
+        total: total
+    }
 
     const result = await custCollection[0].insertOne(custData);
     if (result.acknowledged === true) {
-        return res.status(201).json({ message: 'Customer created successfully' });
+        return res.status(201).json({ message: 'Customer invoice created successfully' });
     
     }
     else {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+
+
 catch (error) {
     console.error('Error occurred:', error);
     return res.status(500).json({ error: 'Internal Server Error' });
