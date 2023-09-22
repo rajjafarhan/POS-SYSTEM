@@ -34,25 +34,24 @@ export const createInventory = async (req, res) => {
 //////////////////////////////////////GET ALL INVENTORY//////////////////////////////////////
 
 export const getAllInventory = async (req, res) => {
-    try {
-      const inventoryCollection = await database_connection(['inventory']);
-      const result = await inventoryCollection[0].find({userId:req.user.id}).toArray();
-      if(result.length===0){
-          return res.status(404).json({ error: 'No items in Inventory' });
-        }
-    return res.status(200).json(result);
-    }    
-    
-    catch (error) {
-      console.error('Error occurred:', error);
-      return res.status(500).json({ error: 'Internal Server Error' });
+  try {
+    const inventoryCollection = await database_connection(["inventory"]);
+    const result = await inventoryCollection[0]
+      .find({ userId: req.user.id })
+      .toArray();
+    if (result.length === 0) {
+      return res.status(404).json({ error: "No items in Inventory" });
     }
   
 
+} catch (error) {
+    console.error("Error fetching inventory:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+
 }
-
-
 /////////////////////////////////EDIT INVENTORY//////////////////////////////////////
+
 export const editInventory = async (req, res) => {
     try {
       const inventoryCollection = await database_connection(['inventory']);
@@ -90,7 +89,8 @@ export const editInventory = async (req, res) => {
       } else {
         return res.status(500).json({ error: 'Failed to update inventory item' });
       }
-    } catch (error) {
+    }
+     catch (error) {
       console.error('Error editing inventory item:', error);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -127,6 +127,5 @@ export const deleteInventory = async (req, res) => {
       return res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
 
 
