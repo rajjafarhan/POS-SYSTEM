@@ -3,10 +3,10 @@ import "./settings.css";
 
 const BasicInfo = () => {
   return (
-    <div className="ms-4 bg-lgreen rounded shadow w-75">
+    <div className="mms-4 bg-lgreen rounded shadow mw-75">
       <h2 className="m-4 x-font text-dgreen">Basic Info</h2>
       <div>
-        <div className="d-flex justify-content-around my-3">
+        <div className="d-flex fd-c justify-content-around mmy-3">
           <TextField
             className="bg-white rounded shadow textfield_w"
             id="outlined-search"
@@ -22,7 +22,7 @@ const BasicInfo = () => {
             type="search"
           />
         </div>
-        <div className="d-flex justify-content-around my-5">
+        <div className="d-flex fd-c justify-content-around mmy-5">
           <TextField
             className="bg-white rounded shadow textfield_w"
             id="outlined-search"

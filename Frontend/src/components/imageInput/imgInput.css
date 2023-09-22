@@ -2,6 +2,11 @@
     display: none;
 
   }
+  @media only screen and (max-width: 600px) {
+.picture{
+  width: 19rem !important;
+}
+  }
   
   .picture {
     width: 29rem;

@@ -21,7 +21,7 @@ export const ReceiptLayout = ({ children, setShowReceiptModal }) => {
 
 const Table = ({ headings, data }) => {
   const [showReceiptModal, setShowReceiptModal] = useState(false);
-  let total = 54;
+  let total = data.length;
   let pages = Math.ceil(total / 10);
   let [curr, setcurr] = useState(1);
   const next = () => {
@@ -30,6 +30,16 @@ const Table = ({ headings, data }) => {
   const prev = () => {
     setcurr(curr - 1);
   };
+  let rData = data.filter((d, index) => {
+    return index < 50;
+  });
+  if ((curr % 6) + 1 === 1) {
+    rData = data.filter((d, index) => {
+      return index >= 50;
+    });
+    console.log("lol");
+  }
+  const currData = rData.slice((curr - 1) * 10, curr * 10);
 
   return (
     <div>
@@ -46,7 +56,7 @@ const Table = ({ headings, data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((d, index) => {
+          {currData.map((d, index) => {
             return (
               <tr
                 key={index}
@@ -69,7 +79,7 @@ const Table = ({ headings, data }) => {
             <td className="p-2 fs-5 text-dgreen text-center">
               Total Records :
             </td>
-            <td className="p-2 fs-5 text-dgreen ">34</td>
+            <td className="p-2 fs-5 text-dgreen ">{data?.length}</td>
             <td className="p-2 fs-5 text-dgreen text-center">
               Page {curr} of {pages}
             </td>

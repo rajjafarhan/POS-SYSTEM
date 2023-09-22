@@ -10,7 +10,7 @@ const LoginSignup = () => {
     // return () => {
     //   document.body.classList.remove("no-overflow");
     // };
-  }, []); 
+  }, []);
   return (
     <>
       <FloatingBackground />

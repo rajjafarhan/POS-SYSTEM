@@ -31,3 +31,43 @@ fieldset{
     max-width: 40rem !important;
     
 }
+.mw-25{
+    width: 25%;
+}
+@media only screen and (max-width: 600px) {
+   .set-mob{
+    flex-direction: column !important;
+   }
+   .setnav-mob{
+    width: 100% !important;
+    height: 20rem !important;
+   }
+   .mw-75{
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin: 1rem 0;
+    padding-bottom: 1rem;
+   }
+   .fd-c{
+    flex-direction: column;
+    margin: 0 !important;
+   }
+   .textfield_w{
+    margin: 0.5rem 0 !important;
+   }
+
+  }
+
+.mw-75{
+    width: 75%;
+}
+.mms-4{
+margin-left: 1.5rem;
+}
+.mmy-3{
+ margin: 1rem 0;
+}
+.mmy-5{
+    margin: 2rem 0;
+}
+  

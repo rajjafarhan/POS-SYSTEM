@@ -64,3 +64,36 @@ button:disabled{
 .w-15rem{
     width: 17rem !important;
 }
+.jf-between{
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 600px) {
+  .flex-mob{
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .bnts{
+    margin: 1.5rem 0 !important;
+  }
+  .inp-mob{
+    justify-content: start !important;
+  }
+  .m2{
+    margin-right: 1rem;
+    margin-top: 1rem;
+  }
+  .input-s{
+    width: 15rem !important;
+  }
+  .t-div{
+      overflow-x: scroll !important;
+  }
+}
+
+
+
+
+
+  
