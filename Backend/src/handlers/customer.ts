@@ -12,15 +12,14 @@ export const getAllCustomers = async (req, res) => {
       return res.status(400).json({ error: "Invalid set number" });
     }
 
-    // Calculate the skip value based on the set number and items per page
     const skip = (setNo - 1) * itemsPerPage;
 
-    // Use an aggregation pipeline to fetch vendors for the specified set
+
     const customers = await custCollection[0]
       .aggregate([
-        { $match: { userId: req.user.id } }, // Match vendors belonging to the user
-        { $sort: { date: -1 } }, // Sort by date in descending order (most recent first)
-        { $skip: skip }, // Skip vendors for previous sets
+        { $match: { userId: req.user.id } }, 
+        { $sort: { date: -1 } }, 
+        { $skip: skip }, 
         { $limit: itemsPerPage }, // Limit to the current set of vendors
       ])
       .toArray();
@@ -49,7 +48,7 @@ export const createCustomer = async (req, res) => {
     const { cash, change, date, product, rDesc, rName, total } = req.body;
     const userId = req.user.id;
     const custData = {
-        userId: userId, // Associate the vendor with the user by including their ID
+        userId: userId, 
         cash: cash,
         change: change,
         date: new Date(date),

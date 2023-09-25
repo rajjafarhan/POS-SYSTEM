@@ -14,11 +14,23 @@ import AccountSettings from "./pages/settings/accSettings";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./global.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    },
+  },
+});
 const App = () => {
+
+ 
   return (
     <BrowserRouter>
-      <Routes>
+    <QueryClientProvider client={queryClient}>  
+     <Routes>
         <Route path="/auth" element={<LoginSignup />}>
           <Route path="login" element={<LoginFrame />} />
           <Route path="signup" element={<SignupFrame />} />
@@ -34,6 +46,7 @@ const App = () => {
           </Route>
         </Route>
       </Routes>
+    </QueryClientProvider>
     </BrowserRouter>
   );
 };
