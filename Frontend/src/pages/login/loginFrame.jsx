@@ -11,9 +11,8 @@ const LoginFrame = () => {
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (data, variables, context) => {
-
       localStorage.setItem("token", data.data.token);
-	    localStorage.setItem("name",data?.data?.name )
+      localStorage.setItem("name", data?.data?.name);
       navigate("/pos/dashboard");
       console.log(data);
     },

@@ -14,12 +14,11 @@ export const getAllCustomers = async (req, res) => {
 
     const skip = (setNo - 1) * itemsPerPage;
 
-
     const customers = await custCollection[0]
       .aggregate([
-        { $match: { userId: req.user.id } }, 
-        { $sort: { date: -1 } }, 
-        { $skip: skip }, 
+        { $match: { userId: req.user.id } },
+        { $sort: { date: -1 } },
+        { $skip: skip },
         { $limit: itemsPerPage }, // Limit to the current set of vendors
       ])
       .toArray();
@@ -48,30 +47,27 @@ export const createCustomer = async (req, res) => {
     const { cash, change, date, product, rDesc, rName, total } = req.body;
     const userId = req.user.id;
     const custData = {
-        userId: userId, 
-        cash: cash,
-        change: change,
-        date: new Date(date),
-        product: product,
-        rDesc: rDesc,
-        rName: rName,
-        total: total
-    }
+      userId: userId,
+      cash: cash,
+      change: change,
+      date: new Date(date),
+      product: product,
+      rDesc: rDesc,
+      rName: rName,
+      total: total,
+    };
 
     const result = await custCollection[0].insertOne(custData);
     if (result.acknowledged === true) {
-        return res.status(201).json({ message: 'Customer invoice created successfully' });
-    
+      return res
+        .status(201)
+        .json({ message: "Customer invoice created successfully" });
+    } else {
+      return res.status(500).json({ error: "Internal Server Error" });
     }
-    else {
-        return res.status(500).json({ error: 'Internal Server Error' });
-    }
-}
-
-
-catch (error) {
-    console.error('Error occurred:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

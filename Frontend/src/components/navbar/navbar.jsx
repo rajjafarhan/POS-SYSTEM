@@ -2,7 +2,7 @@ import "./sidebar.css";
 import SideBar from "./sidebar";
 
 const NavBar = () => {
-	const name = localStorage.getItem("name")
+  const name = localStorage.getItem("name");
   return (
     <div>
       <SideBar />

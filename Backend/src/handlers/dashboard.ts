@@ -1,5 +1,3 @@
-import {database_connection} from '../db'
+import { database_connection } from "../db";
 
-export const getSales = async (req, res ) => {
-	
-}
+export const getSales = async (req, res) => {};

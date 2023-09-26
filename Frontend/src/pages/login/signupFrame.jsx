@@ -9,8 +9,8 @@ const SignupFrame = () => {
     mutationFn: signup,
     onSuccess: (data, variables) => {
       localStorage.setItem("token", data.data.token);
-	    console.log(data?.data?.name)
-	    localStorage.setItem("name",data?.data?.name )
+      console.log(data?.data?.name);
+      localStorage.setItem("name", data?.data?.name);
       navigate("/pos/dashboard");
       console.log(data);
     },

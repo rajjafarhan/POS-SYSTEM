@@ -15,8 +15,8 @@ export const setBasicInfo = async (req, res) => {
           contactNo: req.body.contactNo,
         },
       },
-  );
-    console.log(row)
+    );
+    console.log(row);
     res
       .json({
         message: "ok",
@@ -36,8 +36,6 @@ export const setBasicInfo = async (req, res) => {
   }
 };
 
-
-
 export const setEmail = async (req, res) => {
   try {
     const id = new ObjectId(req?.user?.id);
@@ -49,7 +47,7 @@ export const setEmail = async (req, res) => {
           username: req.body.username,
         },
       },
-  );
+    );
     res
       .json({
         message: "ok",
@@ -129,8 +127,5 @@ export const deleteAccount = async (req, res) => {
       .end();
   }
 };
-
-
-
 
 ///bla bla bla
