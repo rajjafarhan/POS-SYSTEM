@@ -15,7 +15,41 @@ export const setBasicInfo = async (req, res) => {
           contactNo: req.body.contactNo,
         },
       },
-    );
+  );
+    console.log(row)
+    res
+      .json({
+        message: "ok",
+        row,
+      })
+      .status(200)
+      .end();
+  } catch (e) {
+    console.log(e);
+    res
+      .json({
+        message: "opps error",
+        e,
+      })
+      .status(500)
+      .end();
+  }
+};
+
+
+
+export const setEmail = async (req, res) => {
+  try {
+    const id = new ObjectId(req?.user?.id);
+    const infoCol = await database_connection(["shops"]);
+    const row = await infoCol[0].updateOne(
+      { _id: id },
+      {
+        $set: {
+          username: req.body.username,
+        },
+      },
+  );
     res
       .json({
         message: "ok",

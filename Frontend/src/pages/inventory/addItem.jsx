@@ -3,19 +3,26 @@ import { TextField } from "@mui/material";
 import ImageInput from "../../components/imageInput/imgInput";
 import { uploadImageAndGetURL } from "../../firebase/utils";
 import Checkbox from "@mui/material/Checkbox";
+import { useMutation } from "@tanstack/react-query";
+import { addInventory } from "../../functions/inventory";
 
 const AddItem = ({ setShowModal }) => {
+  const mutation = useMutation({
+    mutationFn: addInventory,
+    onSuccess: () => {
+      console.log("yayy added");
+    },
+  });
   const [itemData, setItemData] = useState({
-    name: "",
+    label: "",
     qty: "",
-    unitPrice: "",
+    price: "",
     category: "",
     addToWebsite: false,
   });
   const [img, setImg] = useState();
 
   const handleChange = (e) => {
-   
     if (e.target.name === "addToWebsite") {
       const { name, checked } = e.target;
       setItemData({ ...itemData, [name]: checked });
@@ -25,11 +32,10 @@ const AddItem = ({ setShowModal }) => {
     }
   };
 
-
-  const submit = async () => {
-    // const imgURL = await uploadImageAndGetURL("/shop/1", img);
-    // console.log(imgURL);
-    console.log(itemData);
+  const submit = async (e) => {
+    e.preventDefault();
+    const imgUrl = await uploadImageAndGetURL("/shop/1", img);
+    mutation.mutate({ ...itemData, imgUrl });
   };
 
   return (
@@ -47,7 +53,7 @@ const AddItem = ({ setShowModal }) => {
         <div className="d-flex flex-column pt-4">
           <TextField
             id="outlined-search"
-            name="name"
+            name="label"
             label="Name"
             type="search"
             className="my-2"
@@ -69,7 +75,7 @@ const AddItem = ({ setShowModal }) => {
           />
           <TextField
             id="outlined-search"
-            name="unitPrice"
+            name="price"
             label="Unit Price"
             type="search"
             className="my-2"
@@ -104,8 +110,8 @@ const AddItem = ({ setShowModal }) => {
         </div>
         <div className="d-flex justify-content-center mt-5">
           <button
-            onClick={() => {
-              submit();
+            onClick={(e) => {
+              submit(e);
             }}
             className="btn bg-dgreen text-white fs-5 px-4 py-2"
           >

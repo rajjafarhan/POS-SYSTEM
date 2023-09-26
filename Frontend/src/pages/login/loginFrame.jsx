@@ -2,8 +2,25 @@ import "./login.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { validateEmail, validatePass } from "../../helpers/validate";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "../../functions/signup";
+import { useNavigate } from "react-router-dom";
 
 const LoginFrame = () => {
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: (data, variables, context) => {
+
+      localStorage.setItem("token", data.data.token);
+	    localStorage.setItem("name",data?.data?.name )
+      navigate("/pos/dashboard");
+      console.log(data);
+    },
+    onError: (error, variables) => {
+      console.log(error);
+    },
+  });
   const [data, setData] = useState({ email: "", password: "" });
 
   const handleInputChange = (e) => {
@@ -14,6 +31,11 @@ const LoginFrame = () => {
     } else {
       console.log(validatePass(value));
     }
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    mutation.mutate(data);
   };
   return (
     <div className="bg-white shadow p-5  pt-5 mx-5 ">
@@ -57,7 +79,10 @@ const LoginFrame = () => {
               </div>
             </div>
             <div>
-              <button className=" my-3 w-50 mx-auto mustard std-btn">
+              <button
+                onClick={submit}
+                className=" my-3 w-50 mx-auto mustard std-btn"
+              >
                 Login
               </button>
               <p>

@@ -25,28 +25,26 @@ const queryClient = new QueryClient({
   },
 });
 const App = () => {
-
- 
   return (
     <BrowserRouter>
-    <QueryClientProvider client={queryClient}>  
-     <Routes>
-        <Route path="/auth" element={<LoginSignup />}>
-          <Route path="login" element={<LoginFrame />} />
-          <Route path="signup" element={<SignupFrame />} />
-        </Route>
-        <Route path="/pos" element={<Layout />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="vendor" element={<VendorPage />} />
-          <Route path="customer" element={<Customer />} />
-          <Route path="inventory" element={<Inventory />} />
-          <Route path="settings" element={<SettingsLayout />}>
-            <Route path="basicinfo" element={<BasicInfo />} />
-            <Route path="accsettings" element={<AccountSettings />} />
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/auth" element={<LoginSignup />}>
+            <Route path="login" element={<LoginFrame />} />
+            <Route path="signup" element={<SignupFrame />} />
           </Route>
-        </Route>
-      </Routes>
-    </QueryClientProvider>
+          <Route path="/pos" element={<Layout />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="vendor" element={<VendorPage />} />
+            <Route path="customer" element={<Customer />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="settings" element={<SettingsLayout />}>
+              <Route path="basicinfo" element={<BasicInfo />} />
+              <Route path="accsettings" element={<AccountSettings />} />
+            </Route>
+          </Route>
+        </Routes>
+      </QueryClientProvider>
     </BrowserRouter>
   );
 };

@@ -9,8 +9,7 @@ export const ReceiptLayout = ({ children, setShowReceiptModal }) => {
   return (
     <section>
       <button
-        onClick={() => setShowReceiptModal(false)
-        }
+        onClick={() => setShowReceiptModal(false)}
         className="text-dark btn-close border-0 bg-white fs-4 abs_tr"
         type="button"
         aria-label="Close"

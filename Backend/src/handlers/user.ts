@@ -3,18 +3,21 @@ import { database_connection } from "../db";
 
 export const createNewUser = async (req, res) => {
   try {
-    const { username, password } = req.body;
+	  console.log(req?.body)
+    const { email, password ,name,lname} = req.body;
     const hashedPassword = await hashPassword(password);
 
     const shopsCollection = await database_connection(["shops"]);
     // console.log(shopsCollection);
     await shopsCollection[0].insertOne({
-      username: username,
+      username : email,
       password: hashedPassword,
+      name,
+      lname
     });
 
     // Find the newly inserted user based on the unique identifier (username)
-    const newUser = await shopsCollection[0].findOne({ username: username });
+    const newUser = await shopsCollection[0].findOne({ username: email });
 
     if (newUser) {
       const token = createJWT(newUser);
@@ -31,10 +34,12 @@ export const createNewUser = async (req, res) => {
 
 export const signin = async (req, res) => {
   try {
-    const { username, password } = req.body;
+	  console.log(req.body)
+    const { email, password } = req.body;
     const shopsCollection = await database_connection(["shops"]);
 
-    const user = await shopsCollection[0].findOne({ username: username });
+    const user = await shopsCollection[0].findOne({ username: email });
+    console.log(user)
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -45,7 +50,8 @@ export const signin = async (req, res) => {
       return;
     } else {
       const token = createJWT(user);
-      return res.status(200).json({ token });
+      const {name,username,_id} = user
+      return res.status(200).json({ token,name, username,  id : _id });
     }
   } catch (error) {
     console.error("Error occurred:", error);

@@ -1,8 +1,23 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { validateEmail, validatePass } from "../../helpers/validate";
+import { useMutation } from "@tanstack/react-query";
+import { signup } from "../../functions/signup";
 
 const SignupFrame = () => {
+  const signupMutation = useMutation({
+    mutationFn: signup,
+    onSuccess: (data, variables) => {
+      localStorage.setItem("token", data.data.token);
+	    console.log(data?.data?.name)
+	    localStorage.setItem("name",data?.data?.name )
+      navigate("/pos/dashboard");
+      console.log(data);
+    },
+    onError: (error, variables) => {
+      console.log(error);
+    },
+  });
   const [data, setData] = useState({
     name: "",
     lname: "",
@@ -17,6 +32,11 @@ const SignupFrame = () => {
     } else {
       console.log(validatePass(value));
     }
+  };
+  const submit = (e) => {
+    e.preventDefault();
+    console.log("onsubmit");
+    signupMutation.mutate(data);
   };
 
   return (
@@ -76,7 +96,10 @@ const SignupFrame = () => {
             </div>
           </div>
           <div>
-            <button className=" my-3 w-50 mx-auto mustard std-btn">
+            <button
+              onClick={submit}
+              className=" my-3 w-50 mx-auto mustard std-btn"
+            >
               SignUp
             </button>
             <p>

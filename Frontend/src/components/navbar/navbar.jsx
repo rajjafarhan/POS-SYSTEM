@@ -2,6 +2,7 @@ import "./sidebar.css";
 import SideBar from "./sidebar";
 
 const NavBar = () => {
+	const name = localStorage.getItem("name")
   return (
     <div>
       <SideBar />
@@ -14,7 +15,7 @@ const NavBar = () => {
         <div className="d-flex align-items-center justify-content-around me-5">
           <img src="" alt="" />
           <h5 className="px-4 fs-4">
-            Hi, <span className="x-font text-yellow">Soban</span>
+            Hi, <span className="x-font text-yellow">{name ?? ""}</span>
           </h5>
           <div className="background_hm bg-yello">
             <button

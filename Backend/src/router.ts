@@ -6,6 +6,7 @@ import { createInventory, deleteInventory, editInventory, getAllInventory } from
 
 
 import {
+	setEmail,
   setBasicInfo,
   getBasicInfo,
   deleteAccount,
@@ -37,6 +38,7 @@ router.get("/basicinfo", getBasicInfo);
 router.put("/basicinfo", setBasicInfo);
 router.post("/basicinfo", (req, res) => {});
 router.delete("/deleteshop", deleteAccount);
+router.put("/basicinfo/email",setEmail)
 
 //*****************Dashboard ******************** */
 
