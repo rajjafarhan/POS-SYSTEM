@@ -3,8 +3,10 @@ import { useState } from "react";
 import { validateEmail, validatePass } from "../../helpers/validate";
 import { useMutation } from "@tanstack/react-query";
 import { signup } from "../../functions/signup";
+import { useNavigate } from "react-router-dom";
 
 const SignupFrame = () => {
+  const navigate = useNavigate();
   const signupMutation = useMutation({
     mutationFn: signup,
     onSuccess: (data, variables) => {
@@ -35,7 +37,7 @@ const SignupFrame = () => {
   };
   const submit = (e) => {
     e.preventDefault();
-    console.log("onsubmit");
+    // console.log("onsubmit");
     signupMutation.mutate(data);
   };
 
