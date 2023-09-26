@@ -1,5 +1,5 @@
 import axios from "axios";
-
+//mutattion
 export const postbasicinfo = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
@@ -10,6 +10,8 @@ export const postbasicinfo = (data) => {
     },
   });
 };
+
+//query react
 
 export const fetchBasicInfo = async () => {
   const token = localStorage.getItem("token");

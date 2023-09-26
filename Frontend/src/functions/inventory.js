@@ -9,3 +9,23 @@ export const addInventory = (data) => {
     },
   });
 };
+
+
+
+//fetch inventory
+export const fetchInventory = async () => {
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  const res = await axios.get("http://localhost:3000/api/product", {
+    headers: {
+      authorization: bearer,
+    },
+  });
+
+  return res;
+}
+
+
+
+
+
