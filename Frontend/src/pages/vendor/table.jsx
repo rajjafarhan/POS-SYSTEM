@@ -71,8 +71,12 @@ const Table = ({ offSet, total, headings, data }) => {
                 className="cursor-pointer nbg"
               >
                 <td className="p-3 text-center">{index + 1}</td>
-                <td className="p-3 text-center">{d.rName === "" ? "------" : d.rName }</td>
-                <td className="p-3 text-center">{d.rDesc === "" ? "------" : d.rDesc }</td>
+                <td className="p-3 text-center">
+                  {d.rName === "" ? "------" : d.rName}
+                </td>
+                <td className="p-3 text-center">
+                  {d.rDesc === "" ? "------" : d.rDesc}
+                </td>
                 <td className="p-3 text-center">{formatDate(d.date)}</td>
                 <td className="p-3 text-center">{d.total}</td>
               </tr>

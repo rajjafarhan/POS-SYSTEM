@@ -100,13 +100,17 @@ const VendorPage = () => {
       {
         product: "",
         productQty: "",
-        unitPrice: 0,
         totalPrice: 0,
       },
     ]);
   };
   const submit = () => {
     const obj = { ...receiptData, change, total };
+    product.forEach((prod) => {
+      delete prod.product.imgUrl;
+      delete prod.product.addToWebsite;
+      delete prod.product.userId;
+    });
     mutation.mutate({ ...obj, product });
     // console.log({ ...obj, product });
     //   console.log(receiptData.date.$d);

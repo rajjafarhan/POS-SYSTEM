@@ -166,7 +166,6 @@ const ItemDescription = ({ refetch, setShowItemModal, product }) => {
         <div className="d-flex justify-content-center mt-5">
           <button
             onClick={async (e) => {
-              console.log(img);
               e.preventDefault();
               setIsEditable(false);
               let image;

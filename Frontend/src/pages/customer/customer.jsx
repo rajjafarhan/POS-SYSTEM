@@ -1,21 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 import AddButton from "../../components/addButton/addButton";
 import MySelect from "../../components/select/select";
 import Modal from "../../components/modal/modal";
 import Table from "../vendor/table";
 import { TextField } from "@mui/material";
-import { rData } from "../vendor/data";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import ProductsInput from "../vendor/productsInp";
-import { products } from "../vendor/data";
 import VendorReceipt from "../vendor/receipt";
 import { ReceiptLayout } from "../vendor/table";
 import SearchBar from "../../components/searchBar/searchBar";
+import { useOutlet } from "react-router-dom";
+import {
+  fetchCustomerReceipt,
+  postCustomerReceipt,
+} from "../../functions/customer";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const Customer = () => {
+  const [offSet, setOffSet] = useState(1);
+  const { data, refetch } = useQuery({
+    queryKey: ["fetchCutomer", offSet],
+    queryFn: fetchCustomerReceipt,
+    enabled: false,
+  });
+  useEffect(() => {
+    refetch();
+  }, []);
+  const rData = data?.data?.customers;
+  const [products] = useOutletContext();
+  const mutation = useMutation({
+    mutationFn: postCustomerReceipt,
+    onSuccess: (data) => {
+      console.log(data, "added");
+    },
+  });
   const [receiptModal, setReceiptModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const tdate = new Date();
@@ -75,15 +97,20 @@ const Customer = () => {
       {
         product: "",
         productQty: "",
-        unitPrice: 0,
         totalPrice: 0,
       },
     ]);
   };
   const submit = () => {
     const obj = { ...receiptData, change, total };
-    console.log({ ...obj, ...product });
-    setModal(false);
+    console.log(product);
+    product.forEach((prod) => {
+      delete prod.product.imgUrl;
+      delete prod.product.addToWebsite;
+      delete prod.product.userId;
+    });
+    mutation.mutate({ ...obj, product });
+    setShowModal(false);
     setReceiptModal(true);
   };
   return (
@@ -106,6 +133,8 @@ const Customer = () => {
           <Table
             headings={["Id", "Name", "Description", "Date", "Amount"]}
             data={rData}
+            total={data?.data?.totalCount}
+            offSet={[offSet, setOffSet]}
           />
         </div>
       </div>
@@ -232,7 +261,10 @@ const Customer = () => {
       )}
       {receiptModal && (
         <Modal>
-          <ReceiptLayout setShowReceiptModal={setReceiptModal}>
+          <ReceiptLayout
+            setShowReceiptModal={setReceiptModal}
+            refetch={refetch}
+          >
             <VendorReceipt data={{ ...receiptData, change, total, product }} />
           </ReceiptLayout>
         </Modal>

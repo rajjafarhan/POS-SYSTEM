@@ -46,11 +46,15 @@ export const createCustomer = async (req, res) => {
     const custCollection = await database_connection(["customer invoice"]);
     const { cash, change, date, product, rDesc, rName, total } = req.body;
     const userId = req.user.id;
+    console.log(date);
+    const a = new Date(date).toDateString();
+    const a2 = new Date().toTimeString();
+    const a3 = a + " " + a2;
     const custData = {
       userId: userId,
       cash: cash,
       change: change,
-      date: new Date(date),
+      date: new Date(a3),
       product: product,
       rDesc: rDesc,
       rName: rName,

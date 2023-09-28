@@ -19,7 +19,6 @@ export const fetchInventory = async () => {
       authorization: bearer,
     },
   });
-  console.log(res);
 
   return res;
 };

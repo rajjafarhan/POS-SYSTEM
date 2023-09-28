@@ -40,7 +40,7 @@ const AddItem = ({ refetch, setShowModal }) => {
     console.log(num);
     const imgUrl = await uploadImageAndGetURL(`/shop/${num}`, img);
     mutation.mutate({ ...itemData, imgUrl });
-	  setShowModal(false)
+    setShowModal(false);
   };
 
   return (

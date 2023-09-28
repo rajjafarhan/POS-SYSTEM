@@ -20,7 +20,7 @@ export const getAllVendors = async (req, res) => {
     const vendors = await vendorcollection[0]
       .aggregate([
         { $match: { userId: req.user.id } }, // Match vendors belonging to the user
-        { $sort: { myDate: -1 } }, // Sort by date in descending order (most recent first)
+        { $sort: { date: -1 } }, // Sort by date in descending order (most recent first)
         { $skip: skip }, // Skip vendors for previous sets
         { $limit: itemsPerPage }, // Limit to the current set of vendors
       ])
@@ -52,18 +52,19 @@ export const createVendor = async (req, res) => {
     // Get the user's ID from the request (assuming it's available in req.user._id)
     const userId = req.user.id;
     // console.log(userId);
-    let myDate = new Date()
+    const a = new Date(date).toDateString();
+    const a2 = new Date().toTimeString();
+    const a3 = a + " " + a2;
 
     const vendorData = {
       userId: userId, // Associate the vendor with the user by including their ID
       cash: cash,
       change: change,
-      date: new Date(date),
+      date: new Date(a3),
       product: product,
       rDesc: rDesc,
       rName: rName,
       total: total,
-      myDate,
     };
 
     const result = await vendorcollection[0].insertOne(vendorData);
