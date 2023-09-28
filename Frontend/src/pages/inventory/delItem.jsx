@@ -1,4 +1,20 @@
-const DeleteItem = ({ currItem, setShowDelModal }) => {
+import { useMutation } from "@tanstack/react-query";
+import { deleteInventory } from "../../functions/inventory";
+
+const DeleteItem = ({ refetch, currItem, setShowDelModal }) => {
+  const mutation = useMutation({
+    mutationFn: deleteInventory,
+    onSuccess: (data) => {
+      console.log("yayy", data);
+      refetch();
+    },
+  });
+  console.log(currItem);
+  const submit = (e) => {
+    e.preventDefault();
+    mutation.mutate(currItem);
+    setShowDelModal(false);
+  };
   return (
     <section className="bg-white rounded p-5">
       <div>
@@ -19,7 +35,9 @@ const DeleteItem = ({ currItem, setShowDelModal }) => {
         </div>
         <hr />
         <div className="d-flex justify-content-around">
-          <button className="btn btn-danger fs-5 px-5">Yes</button>
+          <button onClick={submit} className="btn btn-danger fs-5 px-5">
+            Yes
+          </button>
           <button
             onClick={() => {
               setShowDelModal(false);

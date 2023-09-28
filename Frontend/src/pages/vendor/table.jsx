@@ -1,15 +1,19 @@
 import "./vendor.css";
+import { formatDate } from "../../helpers/dateFormatter";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../components/modal/modal";
 import VendorReceipt from "./receipt";
 
-export const ReceiptLayout = ({ children, setShowReceiptModal }) => {
+export const ReceiptLayout = ({ children, setShowReceiptModal, refetch }) => {
   return (
     <section>
       <button
-        onClick={() => setShowReceiptModal(false)}
+        onClick={() => {
+          setShowReceiptModal(false);
+          refetch();
+        }}
         className="text-dark btn-close border-0 bg-white fs-4 abs_tr"
         type="button"
         aria-label="Close"
@@ -19,27 +23,27 @@ export const ReceiptLayout = ({ children, setShowReceiptModal }) => {
   );
 };
 
-const Table = ({ headings, data }) => {
+const Table = ({ offSet, total, headings, data }) => {
+  const [currReceipt, setCurrReceipt] = useState({});
   const [showReceiptModal, setShowReceiptModal] = useState(false);
-  let total = data.length;
+  console.log(data);
   let pages = Math.ceil(total / 10);
   let [curr, setcurr] = useState(1);
   const next = () => {
     setcurr(curr + 1);
+    if (total > data?.length && (curr % 5) + 1 === 1) {
+      const [val, setOffset] = offSet;
+      setOffset(val + 1);
+    }
   };
   const prev = () => {
     setcurr(curr - 1);
+    if (total > data?.length && ((curr - 1) % 5) + 1 === 1) {
+      const [val, setOffset] = offSet;
+      setOffset(val - 1);
+    }
   };
-  let rData = data.filter((d, index) => {
-    return index < 50;
-  });
-  if ((curr % 6) + 1 === 1) {
-    rData = data.filter((d, index) => {
-      return index >= 50;
-    });
-    console.log("lol");
-  }
-  const currData = rData.slice((curr - 1) * 10, curr * 10);
+  const currData = data?.slice((curr - 1) * 10, curr * 10);
 
   return (
     <div>
@@ -56,20 +60,21 @@ const Table = ({ headings, data }) => {
           </tr>
         </thead>
         <tbody>
-          {currData.map((d, index) => {
+          {currData?.map((d, index) => {
             return (
               <tr
                 key={index}
                 onClick={() => {
                   setShowReceiptModal(true);
+                  setCurrReceipt(d);
                 }}
                 className="cursor-pointer nbg"
               >
-                <td className="p-3 text-center">{d.id}</td>
+                <td className="p-3 text-center">{index + 1}</td>
                 <td className="p-3 text-center">{d.rName}</td>
                 <td className="p-3 text-center">{d.rDesc}</td>
-                <td className="p-3 text-center">{d.rDate}</td>
-                <td className="p-3 text-center">{d.rCost}</td>
+                <td className="p-3 text-center">{formatDate(d.date)}</td>
+                <td className="p-3 text-center">{d.total}</td>
               </tr>
             );
           })}
@@ -79,7 +84,7 @@ const Table = ({ headings, data }) => {
             <td className="p-2 fs-5 text-dgreen text-center">
               Total Records :
             </td>
-            <td className="p-2 fs-5 text-dgreen ">{data?.length}</td>
+            <td className="p-2 fs-5 text-dgreen ">{total}</td>
             <td className="p-2 fs-5 text-dgreen text-center">
               Page {curr} of {pages}
             </td>
@@ -107,7 +112,7 @@ const Table = ({ headings, data }) => {
       {showReceiptModal && (
         <Modal>
           <ReceiptLayout setShowReceiptModal={setShowReceiptModal}>
-            <VendorReceipt />
+            <VendorReceipt data={currReceipt} />
           </ReceiptLayout>
         </Modal>
       )}

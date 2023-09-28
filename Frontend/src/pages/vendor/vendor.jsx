@@ -1,6 +1,7 @@
 import Receipt from "../../components/vendorReceipt/vendorRecipt";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import MySelect from "../../components/select/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddButton from "../../components/addButton/addButton";
 import Modal from "../../components/modal/modal";
 import { TextField } from "@mui/material";
@@ -10,14 +11,35 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import ProductsInput from "./productsInp";
 import Table from "./table";
-import { rData } from "./data";
-import { products } from "./data";
 import VendorReceipt from "./receipt";
 import { ReceiptLayout } from "./table";
 import SearchBar from "../../components/searchBar/searchBar";
 import "./vendor.css";
+import { useOutletContext } from "react-router-dom";
+import {
+  postVendorReceipt,
+  fetchVendorReceipts,
+} from "../../functions/vendorRec";
 
 const VendorPage = () => {
+  const [offSet, setOffSet] = useState(1);
+  const { data, refetch } = useQuery({
+    queryKey: ["fetchReceipt", offSet],
+    queryFn: fetchVendorReceipts,
+    enabled: false,
+  });
+  console.log(data);
+  useEffect(() => {
+    refetch();
+  }, []);
+  const rData = data?.data?.vendors;
+  const [products] = useOutletContext();
+  const mutation = useMutation({
+    mutationFn: postVendorReceipt,
+    onSuccess: (data) => {
+      console.log(data, "added");
+    },
+  });
   const [receiptModal, setReceiptModal] = useState(false);
   const [modal, setModal] = useState(false);
   const tdate = new Date();
@@ -85,8 +107,9 @@ const VendorPage = () => {
   };
   const submit = () => {
     const obj = { ...receiptData, change, total };
-    console.log({ ...obj, product });
-    console.log(receiptData.date.$d);
+    mutation.mutate({ ...obj, product });
+    // console.log({ ...obj, product });
+    //   console.log(receiptData.date.$d);
     setModal(false);
     setReceiptModal(true);
   };
@@ -111,6 +134,8 @@ const VendorPage = () => {
           <Table
             headings={["Id", "Name", "Description", "Date", "Cost"]}
             data={rData}
+            total={data?.data?.totalCount}
+            offSet={[offSet, setOffSet]}
           />
         </div>
       </div>
@@ -233,7 +258,10 @@ const VendorPage = () => {
       )}
       {receiptModal && (
         <Modal>
-          <ReceiptLayout setShowReceiptModal={setReceiptModal}>
+          <ReceiptLayout
+            setShowReceiptModal={setReceiptModal}
+            refetch={refetch}
+          >
             <VendorReceipt data={{ ...receiptData, change, total, product }} />
           </ReceiptLayout>
         </Modal>

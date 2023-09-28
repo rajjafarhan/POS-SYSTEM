@@ -3,7 +3,7 @@ export const search = (arr, query, searchBy) => {
     return arr;
   } else if (!searchBy) {
     const updatedArr = arr.filter((prod) => {
-      return prod.name.toLowerCase().includes(query.toLowerCase());
+      return prod?.label.toLowerCase().includes(query.toLowerCase());
     });
     return updatedArr;
   } else {

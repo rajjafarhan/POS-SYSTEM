@@ -1,5 +1,6 @@
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
+import { formatDate } from "../../helpers/dateFormatter";
 
 const styles = StyleSheet.create({
   page: {
@@ -80,7 +81,7 @@ const VendorReceipt = ({ data }) => {
                 marginBottom: "4px",
               }}
             >
-              8-30-2023 01:50:21 Am
+              {formatDate(data?.date)}
             </Text>
             <View
               wrap={true}

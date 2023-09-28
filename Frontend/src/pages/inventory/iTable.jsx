@@ -1,6 +1,5 @@
-import { pData } from "../vendor/data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../components/modal/modal";
 import ItemDescription from "./itemDesc";
 import DeleteItem from "./delItem";
@@ -12,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { search } from "../../helpers/search";
 
-const InventoryTable = ({ searchParam, searchBy }) => {
+const InventoryTable = ({ pData, refetch, searchParam, searchBy }) => {
   const [currItem, setCurrItem] = useState();
   const [showItemModal, setShowItemModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
@@ -27,8 +26,8 @@ const InventoryTable = ({ searchParam, searchBy }) => {
     "Delete",
   ];
 
-  const data = search(pData, searchParam, searchBy);
-  let pages = Math.ceil(data.length / 10);
+  const data = search(pData, searchParam, searchBy) ?? [];
+  let pages = Math.ceil(data?.length / 10);
   let [curr, setcurr] = useState(1);
   const next = () => {
     setcurr(curr + 1);
@@ -36,7 +35,8 @@ const InventoryTable = ({ searchParam, searchBy }) => {
   const prev = () => {
     setcurr(curr - 1);
   };
-  const currData = data.slice((curr - 1) * 10, curr * 10);
+
+  const currData = data?.slice((curr - 1) * 10, curr * 10);
 
   return (
     <div>
@@ -53,15 +53,15 @@ const InventoryTable = ({ searchParam, searchBy }) => {
           </tr>
         </thead>
         <tbody>
-          {currData.map((d, index) => {
+          {currData?.map((d, index) => {
             return (
               <tr key={index} className="cursor-pointer nbg z-0">
-                <td className="p-3 text-center">{d.id}</td>
-                <td className="p-3 text-center">{d.name}</td>
+                <td className="p-3 text-center">{index + 1}</td>
+                <td className="p-3 text-center">{d.label}</td>
                 <td className="p-3 text-center">{d.category}</td>
                 <td className="p-3 text-center">{d.qty}</td>
-                <td className="p-3 text-center">{d.unitPrice}</td>
-                <td className="p-3 text-center">{d.qty * d.unitPrice}</td>
+                <td className="p-3 text-center">{d.price}</td>
+                <td className="p-3 text-center">{d.qty * d.price}</td>
                 <td className="p- text-center text-danger fs-5">
                   <button
                     className="border-0 eye bg-transpaent p-2 rounded-circle text-dgreen bg-transparent "
@@ -93,7 +93,7 @@ const InventoryTable = ({ searchParam, searchBy }) => {
             <td className="p-2 fs-5 text-dgreen text-center">
               Total Records :
             </td>
-            <td className="p-2 fs-5 text-dgreen ">{data.length}</td>
+            <td className="p-2 fs-5 text-dgreen ">{data?.length}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -124,6 +124,7 @@ const InventoryTable = ({ searchParam, searchBy }) => {
       {showItemModal && (
         <Modal>
           <ItemDescription
+            refetch={refetch}
             product={currItem}
             setShowItemModal={setShowItemModal}
           />
@@ -131,7 +132,11 @@ const InventoryTable = ({ searchParam, searchBy }) => {
       )}
       {showDelModal && (
         <Modal>
-          <DeleteItem currItem={currItem} setShowDelModal={setShowDelModal} />
+          <DeleteItem
+            refetch={refetch}
+            currItem={currItem}
+            setShowDelModal={setShowDelModal}
+          />
         </Modal>
       )}
     </div>

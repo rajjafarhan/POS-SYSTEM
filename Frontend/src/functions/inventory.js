@@ -10,8 +10,6 @@ export const addInventory = (data) => {
   });
 };
 
-
-
 //fetch inventory
 export const fetchInventory = async () => {
   const token = localStorage.getItem("token");
@@ -21,11 +19,29 @@ export const fetchInventory = async () => {
       authorization: bearer,
     },
   });
+  console.log(res);
 
   return res;
-}
+};
 
+export const updateInventory = (data) => {
+  const id = data._id;
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  return axios.put(`http://localhost:3000/api/product/${id}`, data, {
+    headers: {
+      authorization: bearer,
+    },
+  });
+};
 
-
-
-
+export const deleteInventory = (data) => {
+  const id = data._id;
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  return axios.delete(`http://localhost:3000/api/product/${id}`, {
+    headers: {
+      authorization: bearer,
+    },
+  });
+};

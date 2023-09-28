@@ -1,4 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { uploadImageAndGetURL } from "../../firebase/utils.js";
+import { updateInventory } from "../../functions/inventory.js";
+import { useMutation } from "@tanstack/react-query";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import ImageInput from "../../components/imageInput/imgInput.jsx";
 import { useState } from "react";
@@ -10,16 +13,16 @@ const ItemAttribute = ({ handleItemChange, product, isEditable }) => {
       <div className="mt-3  d-flex justify-content-between align-items-center">
         <h3 className="text-dgreen w-35">Name</h3>
         {!isEditable ? (
-          <p className="fs-5 text-wrap w-65">{product.name}</p>
+          <p className="fs-5 text-wrap w-65">{product.label}</p>
         ) : (
           <input
-            name="name"
+            name="label"
             onChange={(e) => {
               handleItemChange(e);
             }}
             className="w-65 border-1 fs-5 p-2"
             type="text"
-            value={product.name}
+            value={product.label}
           />
         )}
       </div>
@@ -58,31 +61,29 @@ const ItemAttribute = ({ handleItemChange, product, isEditable }) => {
       <div className="mt-3  d-flex justify-content-between align-items-center">
         <h3 className="text-dgreen w-35">Unit Price</h3>
         {!isEditable ? (
-          <p className="fs-5 text-wrap w-65">{product.unitPrice}</p>
+          <p className="fs-5 text-wrap w-65">{product.price}</p>
         ) : (
           <input
-            name="unitPrice"
+            name="price"
             onChange={(e) => {
               handleItemChange(e);
             }}
             className="w-65 border-1 fs-5 p-2"
             type="text"
-            value={product.unitPrice}
+            value={product.price}
           />
         )}
       </div>
       <div className="mt-3  d-flex justify-content-between align-items-center">
         <h3 className="text-dgreen w-35">Total</h3>
         {!isEditable ? (
-          <p className="fs-5 text-wrap w-65">
-            {product.qty * product.unitPrice}
-          </p>
+          <p className="fs-5 text-wrap w-65">{product.qty * product.price}</p>
         ) : (
           <input
             className="w-65 border-1 fs-5 p-2"
             type="text"
             readOnly
-            value={product.qty * product.unitPrice}
+            value={product.qty * product.price}
           />
         )}
       </div>
@@ -102,7 +103,15 @@ const ItemAttribute = ({ handleItemChange, product, isEditable }) => {
   );
 };
 
-const ItemDescription = ({ setShowItemModal, product }) => {
+const ItemDescription = ({ refetch, setShowItemModal, product }) => {
+  const mutation = useMutation({
+    mutationFn: updateInventory,
+    onSuccess: (data) => {
+      console.log("yayyy", data);
+
+      refetch();
+    },
+  });
   const [isEditable, setIsEditable] = useState(false);
   const [item, setitem] = useState(product);
   const [img, setImg] = useState();
@@ -150,20 +159,25 @@ const ItemDescription = ({ setShowItemModal, product }) => {
 
           <ImageInput
             setcardImage={setImg}
-            img={
-              <img
-                src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
-                alt=""
-              />
-            }
+            img={<img src={item?.imgUrl} alt="" />}
             setIsEditable={setIsEditable}
           />
         </div>
         <div className="d-flex justify-content-center mt-5">
           <button
-            onClick={() => {
+            onClick={async (e) => {
+              console.log(img);
+              e.preventDefault();
               setIsEditable(false);
-              console.log(item);
+              let image;
+              if (img) {
+                let a = new Date();
+                const num = Math.round(
+                  Math.random() * 10000 + a.getMilliseconds()
+                );
+                image = await uploadImageAndGetURL(`/shop/${num}`, img);
+              }
+              mutation.mutate({ ...item, imgUrl: image ?? item.imgUrl });
             }}
             className="btn bg-dgreen text-white px-4 py-2"
             disabled={!isEditable}

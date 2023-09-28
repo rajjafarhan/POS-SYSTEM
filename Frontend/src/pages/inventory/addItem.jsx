@@ -6,11 +6,12 @@ import Checkbox from "@mui/material/Checkbox";
 import { useMutation } from "@tanstack/react-query";
 import { addInventory } from "../../functions/inventory";
 
-const AddItem = ({ setShowModal }) => {
+const AddItem = ({ refetch, setShowModal }) => {
   const mutation = useMutation({
     mutationFn: addInventory,
     onSuccess: () => {
       console.log("yayy added");
+      refetch();
     },
   });
   const [itemData, setItemData] = useState({
@@ -34,8 +35,12 @@ const AddItem = ({ setShowModal }) => {
 
   const submit = async (e) => {
     e.preventDefault();
-    const imgUrl = await uploadImageAndGetURL("/shop/1", img);
+    let a = new Date();
+    const num = Math.round(Math.random() * 10000 + a.getMilliseconds());
+    console.log(num);
+    const imgUrl = await uploadImageAndGetURL(`/shop/${num}`, img);
     mutation.mutate({ ...itemData, imgUrl });
+	  setShowModal(false)
   };
 
   return (
