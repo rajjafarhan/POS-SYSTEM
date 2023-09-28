@@ -20,9 +20,9 @@ export const createNewUser = async (req, res) => {
     const newUser = await shopsCollection[0].findOne({ username: email });
 
     if (newUser) {
-	    const {name} = newUser
+      const { name } = newUser;
       const token = createJWT(newUser);
-      return res.status(201).json({ token ,name});
+      return res.status(201).json({ token, name });
     } else {
       console.log("Error occurred while inserting the data");
       return res.status(500).send("Internal Server Error");

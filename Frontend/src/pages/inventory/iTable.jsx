@@ -54,10 +54,11 @@ const InventoryTable = ({ pData, refetch, searchParam, searchBy }) => {
         </thead>
         <tbody>
           {currData?.map((d, index) => {
+		  {console.log(d.label === "")}
             return (
               <tr key={index} className="cursor-pointer nbg z-0">
                 <td className="p-3 text-center">{index + 1}</td>
-                <td className="p-3 text-center">{d.label}</td>
+                <td className="p-3 text-center">{d.label === "" ? '------' : d.label}</td>
                 <td className="p-3 text-center">{d.category}</td>
                 <td className="p-3 text-center">{d.qty}</td>
                 <td className="p-3 text-center">{d.price}</td>

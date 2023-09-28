@@ -38,7 +38,7 @@ export const getAllInventory = async (req, res) => {
     if (result.length === 0) {
       return res.status(404).json({ error: "No items in Inventory" });
     }
-    res.status(200).json({result}).end()
+    res.status(200).json({ result }).end();
   } catch (error) {
     console.error("Error fetching inventory:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -69,13 +69,13 @@ export const editInventory = async (req, res) => {
       price: req.body.price,
       imgUrl: req.body.imgUrl,
     };
-console.log(req.params.id)
+    console.log(req.params.id);
     // Perform the update operation
     const result = await inventoryCollection[0].updateOne(
       { _id: new ObjectId(req.params.id) },
       { $set: updatedInventoryData },
     );
-    console.log(result)
+    console.log(result);
 
     if (result.modifiedCount === 1) {
       return res
@@ -109,7 +109,7 @@ export const deleteInventory = async (req, res) => {
 
     const result = await inventoryCollection[0].deleteOne({ _id: paramId });
 
-    console.log(result)
+    console.log(result);
     if (result.deletedCount === 1) {
       return res
         .status(200)

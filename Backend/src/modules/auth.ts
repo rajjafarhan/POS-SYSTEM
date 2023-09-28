@@ -21,17 +21,17 @@ export const createJWT = (user) => {
 }; //this function will create the jwt token and return it
 
 export const protect = (req, res, next) => {
-	const bearer = req.headers.authorization;
-	// console.log(bearer, "tokennnnnnnn")
-	if (!bearer) {
-		return res.status(401).json({message: "Unauthorized token not found"});
-	}
-	const [, token] = bearer.split(" ");
-	if (!token) {
-		return res.status(401).json({message: "Unauthorized token not found"});
-	}
-	try {
-		const user = jwt.verify(token, process.env.JWT_SECRET);
+  const bearer = req.headers.authorization;
+  // console.log(bearer, "tokennnnnnnn")
+  if (!bearer) {
+    return res.status(401).json({ message: "Unauthorized token not found" });
+  }
+  const [, token] = bearer.split(" ");
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized token not found" });
+  }
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
 
     // console.log(user,"user")
     req.user = user;
