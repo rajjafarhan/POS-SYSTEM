@@ -2,10 +2,22 @@ import { TextField } from "@mui/material";
 import DangerZone from "./dangerZone";
 import { useOutletContext } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { postEmail } from "../../functions/settings";
+import { postEmail, resetPassword } from "../../functions/settings";
+import {useState} from "react";
+import {validatePass , checkPass} from "../../helpers/validate";
 
 const AccountSettings = () => {
   const [basicInfo, setBasicInfo] = useOutletContext();
+	const [resetPass,setResetPass] = useState({
+		newPass:"",
+		confirmPass:""
+	})
+  const mutationPass = useMutation({
+    mutationFn: resetPassword,
+    onSuccess: () => {
+      alert("password changed Successfully!");
+    },
+  });
   const mutation = useMutation({
     mutationFn: postEmail,
     onSuccess: () => {
@@ -16,6 +28,10 @@ const AccountSettings = () => {
     const { name, value } = e.target;
     setBasicInfo({ ...basicInfo, [name]: value });
   };
+	const handlePassChange = (e) => {
+		const {name, value} = e.target
+		setResetPass({...resetPass, [name] : value})
+	}
   const submit = (e) => {
     e.preventDefault();
     mutation.mutate(basicInfo);
@@ -52,23 +68,37 @@ const AccountSettings = () => {
         <div className="d-flex flex-column justify-content-around my-3">
           <h3 className="x-font text-dgreen">Reset Password</h3>
           <TextField
+	  value={resetPass.newPass}
+	  onChange={handlePassChange}
             className="bg-white rounded shadow w-100 my-2"
             id="outlined-search"
             name="newPass"
             label="New Password"
             type="password"
           />
+	  <p className={`text-danger ${validatePass(resetPass.newPass) ? "d-none" : "d-block"} ` }>Passwords must be atleast 8 characters long.</p>
           <TextField
+	  value={resetPass.confirmPass}
+	  onChange={handlePassChange}
             className="bg-white rounded shadow w-100 my-2"
             id="outlined-search"
             name="confirmPass"
             label="Confirm Password"
             type="password"
           />
+	  <p className={`text-danger ${checkPass(resetPass.newPass, resetPass.confirmPass) ? "d-none" : "d-block"}`}>Passwords must match.</p>
         </div>
       </div>
       <div className="d-flex justify-content-center mt-4 mb-4">
-        <button className="btn px-5 py-2 shadow fs-5 bg-dgreen text-light">
+        <button className="btn px-5 py-2 shadow fs-5 bg-dgreen text-light" onClick={() => {
+		if (!validatePass(resetPass.newPass) || !checkPass(resetPass.confirmPass, resetPass.newPass)){
+			alert("Passwords Dont match!")
+			return
+		}
+		mutationPass.mutate({password:resetPass.newPass})
+		setResetPass({...resetPass, newPass:""})
+		setResetPass({...resetPass, confirmPass:""})
+	}}>
           {" "}
           Save
         </button>

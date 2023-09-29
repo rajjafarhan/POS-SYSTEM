@@ -1,10 +1,29 @@
 import Modal from "../../components/modal/modal";
 import { TextField } from "@mui/material";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import {deleteAccount} from "../../functions/settings";
+import { useNavigate } from "react-router-dom";
 
 const DangerZone = () => {
+	const navigate = useNavigate()
+	const mutation = useMutation({
+		mutationFn: deleteAccount,
+		onSuccess: (data) => {
+			alert("Account Deleted successfully!")
+			console.log(data)
+    localStorage.removeItem("token");
+    localStorage.removeItem("name");
+			navigate('/auth/login')
+
+		},
+		onError:()=>{
+			alert("Password is incorrect!")
+		}
+	})
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showPass, setShowPass] = useState(false);
+	const [password,setPassword] = useState("")
 
   return (
     <div className="shadow bg-dzone px-4 pb-4 mt-5 rounded mb-0 b-red">
@@ -72,9 +91,15 @@ const DangerZone = () => {
                       type="password"
                       className="mb-3 py-2 w-100 px-2"
                       placeholder="Password"
+			value={password}
+			onChange={(e) => {
+				setPassword(e.target.value)
+			}}
                     />
                     <div className="d-flex justify-content-center">
-                      <button className="btn btn-danger">Confirm</button>
+                      <button className="btn btn-danger " onClick={() => {
+			      mutation.mutate({password})
+		      }}>Confirm</button>
                     </div>{" "}
                   </>
                 )}

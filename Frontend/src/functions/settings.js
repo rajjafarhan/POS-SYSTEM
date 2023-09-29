@@ -28,10 +28,31 @@ export const fetchBasicInfo = async () => {
 export const postEmail = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  console.log(bearer);
   return axios.put("http://localhost:3000/api/basicinfo/email", data, {
     headers: {
       authorization: `Bearer ${token}`,
     },
   });
 };
+
+
+export const resetPassword = (data) => {
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  return axios.put("http://localhost:3000/api/basicinfo/password", data, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+
+export const deleteAccount = (data) => {
+  const token = localStorage.getItem("token");
+  const bearer = "Bearer " + token;
+  return axios.post("http://localhost:3000/api/deleteaccount", data, {
+    headers: {
+      authorization: bearer,
+    },
+  });
+}

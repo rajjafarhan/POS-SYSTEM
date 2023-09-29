@@ -24,7 +24,9 @@ import {
   setBasicInfo,
   getBasicInfo,
   deleteAccount,
+  resetPassword
 } from "./handlers/basicInfo";
+import {verifyPass} from "./middlewares/verifyPass";
 
 const router = Router();
 //**************VENDOR*******************/
@@ -51,9 +53,9 @@ router.delete("/product/:id", deleteInventory);
 router.get("/basicinfo", getBasicInfo);
 router.put("/basicinfo", setBasicInfo);
 router.post("/basicinfo", (req, res) => {});
-router.delete("/deleteshop", deleteAccount);
 router.put("/basicinfo/email", setEmail);
-
+router.put("/basicinfo/password", resetPassword)
+router.post("/deleteaccount",verifyPass, deleteAccount)
 //*****************Dashboard ******************** */
 
 router.get("/allsale", () => {});

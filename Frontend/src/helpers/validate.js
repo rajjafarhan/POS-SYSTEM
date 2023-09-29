@@ -9,3 +9,7 @@ export const validatePass = (pass) => {
 
   return passEx.test(pass);
 };
+
+export const checkPass = (pass1, pass2) => {
+	return pass1 === pass2
+}
