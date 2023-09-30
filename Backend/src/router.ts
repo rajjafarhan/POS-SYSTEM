@@ -24,13 +24,13 @@ import {
   setBasicInfo,
   getBasicInfo,
   deleteAccount,
-  resetPassword
+  resetPassword,
 } from "./handlers/basicInfo";
-import {verifyPass} from "./middlewares/verifyPass";
+import { verifyPass } from "./middlewares/verifyPass";
 
 const router = Router();
 //**************VENDOR*******************/
-router.get("/vendor/:setNo", getAllVendors);
+router.get("/vendor/:setNo/:query", getAllVendors);
 router.post("/vendor", createVendor);
 router.delete("/vendor/:id", deleteVendor);
 router.delete("/vendor", deleteAllVendors);
@@ -54,8 +54,8 @@ router.get("/basicinfo", getBasicInfo);
 router.put("/basicinfo", setBasicInfo);
 router.post("/basicinfo", (req, res) => {});
 router.put("/basicinfo/email", setEmail);
-router.put("/basicinfo/password", resetPassword)
-router.post("/deleteaccount",verifyPass, deleteAccount)
+router.put("/basicinfo/password", resetPassword);
+router.post("/deleteaccount", verifyPass, deleteAccount);
 //*****************Dashboard ******************** */
 
 router.get("/allsale", () => {});

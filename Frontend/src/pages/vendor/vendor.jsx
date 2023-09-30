@@ -23,16 +23,17 @@ import {
 
 const VendorPage = () => {
   const [offSet, setOffSet] = useState(1);
+  const [query, setQuery] = useState("");
   const { data, refetch } = useQuery({
-    queryKey: ["fetchReceipt", offSet],
+    queryKey: ["fetchReceipt", offSet,query],
     queryFn: fetchVendorReceipts,
     enabled: false,
   });
   console.log(data);
   useEffect(() => {
     refetch();
-  }, []);
-  const rData = data?.data?.vendors;
+  }, [query]);
+  const rData = data?.data?.vendors ?? [];
   const [products] = useOutletContext();
   const mutation = useMutation({
     mutationFn: postVendorReceipt,
@@ -121,7 +122,7 @@ const VendorPage = () => {
     <section className="d_main">
       <div className="text-dgreen flex-mob subheadiv d-flex justify-content-between my-3 align-items-center pe-5">
         <h1 className="x-font ">Vendor Receipts</h1>
-        <SearchBar width={"w-23rem"} />
+        <SearchBar value={query} setValue={setQuery} width={"w-23rem"} />
 
         <div className="d-flex justify-content-center bnts align-items-center ">
           <AddButton onChange={setModal} />

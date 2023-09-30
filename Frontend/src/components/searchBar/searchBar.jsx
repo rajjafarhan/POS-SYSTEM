@@ -1,6 +1,6 @@
 import "./seachBar.css";
 
-const SearchBar = ({ value, setValue, width }) => {
+const SearchBar = ({ refetch ,value, setValue, width }) => {
   return (
     <div className="s-div">
       <form class="form">

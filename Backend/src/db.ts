@@ -6,7 +6,6 @@ const url = process.env.DATABASE_URL;
 const client = new MongoClient(url, {
   serverApi: {
     version: ServerApiVersion.v1,
-    strict: true,
     deprecationErrors: true,
   },
 });
