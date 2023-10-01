@@ -1,0 +1,27 @@
+.dropdown-menu {
+    animation: 0.5s slideup;
+  }
+
+
+.borderNav:hover{
+
+    border-bottom: 2.5px solid rgb(225, 189, 56);
+    transition: 0.5s;
+    color: white;
+
+
+}
+  
+  @keyframes slideup {
+    from {
+      transform: translateY(10%);
+    }
+  
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  .boxshadow:hover{
+    box-shadow:0 4px 10px 0 rgba(0,0,0,0.2) ;
+  }

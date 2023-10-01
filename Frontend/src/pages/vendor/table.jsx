@@ -101,7 +101,7 @@ const Table = ({ offSet, total, headings, data }) => {
                 <FontAwesomeIcon icon={faArrowLeft} />
               </button>
             </td>
-            <td className="p-2 text-center" s>
+            <td className="p-2 text-center" >
               <button
                 onClick={next}
                 disabled={curr === pages}

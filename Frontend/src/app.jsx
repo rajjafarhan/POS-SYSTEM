@@ -15,6 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./global.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Website from "./pages/website/websitemain";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,6 +44,8 @@ const App = () => {
               <Route path="accsettings" element={<AccountSettings />} />
             </Route>
           </Route>
+          <Route path="/" element={<Website/>}/>
+         
         </Routes>
       </QueryClientProvider>
     </BrowserRouter>
