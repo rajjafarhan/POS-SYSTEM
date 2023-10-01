@@ -13,7 +13,7 @@ const SettingsLayout = ({ children }) => {
   const [basicInfo, setBasicInfo] = useState({});
   console.log(data);
   useEffect(() => {
-    setBasicInfo(data?.data?.row);
+    setBasicInfo(data?.data?.row ?? []);
   }, [data]);
   return (
     <div className="container settings_main">

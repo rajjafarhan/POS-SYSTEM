@@ -22,14 +22,14 @@ export const createJWT = (user) => {
 
 export const protect = (req, res, next) => {
   const bearer = req.headers.authorization;
-   console.log(bearer, "tokennnnnnnn")
+  console.log(bearer, "tokennnnnnnn");
   if (!bearer) {
-	  console.log("ol")
+    console.log("ol");
     return res.status(401).json({ message: "Unauthorized token not found" });
   }
   const [, token] = bearer.split(" ");
   if (!token) {
-	  console.log("ollll")
+    console.log("ollll");
     return res.status(401).json({ message: "Unauthorized token not found" });
   }
   try {

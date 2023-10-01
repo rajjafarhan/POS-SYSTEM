@@ -1,6 +1,6 @@
 import { database_connection } from "../db";
 import { ObjectId } from "mongodb";
-import {hashPassword} from "../modules/auth";
+import { hashPassword } from "../modules/auth";
 
 export const setBasicInfo = async (req, res) => {
   try {
@@ -113,7 +113,6 @@ export const deleteAccount = async (req, res) => {
     res
       .json({
         message: "deleted",
-        
       })
       .status(200)
       .end();
@@ -129,21 +128,21 @@ export const deleteAccount = async (req, res) => {
   }
 };
 
-
 export const resetPassword = async (req, res) => {
   try {
     const id = new ObjectId(req?.user?.id);
-    const infoCol = await database_connection([
-      "shops"
-    ]);
-    const pass = await hashPassword(req?.body?.password)
-    const results = await infoCol[0].updateOne({
-	_id : id
-    },{
-	    $set : {
-		    password: pass
-	    }
-    })
+    const infoCol = await database_connection(["shops"]);
+    const pass = await hashPassword(req?.body?.password);
+    const results = await infoCol[0].updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          password: pass,
+        },
+      },
+    );
     res
       .json({
         message: "ok",
@@ -162,6 +161,3 @@ export const resetPassword = async (req, res) => {
       .end();
   }
 };
-
-
-

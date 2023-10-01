@@ -7,6 +7,7 @@ export const getAllVendors = async (req, res) => {
   try {
     const vendorcollection = await database_connection(["vendor invoice"]);
     const setNo = parseInt(req.params.setNo);
+    const query = req.params.query
     const itemsPerPage = 50;
 
     if (setNo < 1) {
@@ -16,26 +17,51 @@ export const getAllVendors = async (req, res) => {
     // Calculate the skip value based on the set number and items per page
     const skip = (setNo - 1) * itemsPerPage;
 
-    // Use an aggregation pipeline to fetch vendors for the specified set
-    const vendors = await vendorcollection[0]
-      .aggregate([
-        { $match: { userId: req.user.id } }, // Match vendors belonging to the user
-        { $sort: { date: -1 } }, // Sort by date in descending order (most recent first)
-        { $skip: skip }, // Skip vendors for previous sets
-        { $limit: itemsPerPage }, // Limit to the current set of vendors
-      ])
-      .toArray();
-    const totalVendorCount = await vendorcollection[0].countDocuments({
-      userId: req.user.id,
-    });
+    if (query === "aisPsqSjMUDTj387Ol") {
+	    console.log("Invoked if")
+      const vendors = await vendorcollection[0]
+        .aggregate([
+          { $match: { userId: req.user.id } }, // Match vendors belonging to the user
+          { $sort: { date: -1 } }, // Sort by date in descending order (most recent first)
+          { $skip: skip }, // Skip vendors for previous sets
+          { $limit: itemsPerPage }, // Limit to the current set of vendors
+        ])
+        .toArray();
+      const totalVendorCount = await vendorcollection[0].countDocuments({
+        userId: req.user.id,
+      });
 
-    if (vendors.length === 0) {
-      return res.status(404).json({ message: "No vendors found for this set" });
+      if (vendors.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No vendors found for this set" });
+      }
+
+      return res
+        .status(200)
+        .json({ vendors: vendors, totalCount: totalVendorCount });
+    } else {
+      const vendors = await vendorcollection[0]
+        .find({ $text: { $search: query }, userId: req.user.id })
+        .sort({ date: -1 })
+        .limit(itemsPerPage)
+        .skip(skip)
+	.toArray();
+      const totalVendorCount = await vendorcollection[0].countDocuments({
+	      $text: {$search : query},
+        userId: req.user.id,
+      });
+
+      if (vendors.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No vendors found for this set" });
+      }
+
+      return res
+        .status(200)
+        .json({ vendors: vendors, totalCount: totalVendorCount });
     }
-
-    return res
-      .status(200)
-      .json({ vendors: vendors, totalCount: totalVendorCount });
   } catch (error) {
     console.error("Error fetching vendor invoices:", error);
     res.status(500).json({ error: "Internal Server Error" });
