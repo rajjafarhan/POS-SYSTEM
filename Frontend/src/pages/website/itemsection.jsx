@@ -5,45 +5,45 @@ const dataarr = [
   {
     title: 'Bath Tub',
     price: '20000',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quae.',
+    category:'plastic'
+     
+  }, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
+  }, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
+  }, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
+  }, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
+  }, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
+  }, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
+  }, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
   },
-  {
-    title: 'Bath Tub',
-    price: '20000',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quae.',
-  }, {
-    title: 'Bath Tub',
-    price: '20000',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quae.',
-  }, {
-    title: 'Bath Tub',
-    price: '20000',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quae.',
-  }, {
-    title: 'Bath Tub',
-    price: '20000',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quae.',
-  },, {
-    title: 'Bath Tub',
-    price: '20000',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quae.',
-  },, {
-    title: 'Bath Tub',
-    price: '20000',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quae.',
-  },, {
-    title: 'Bath Tub',
-    price: '20000',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, quae.',
-  },
+  
 ];
 
 const ItemsSection = () => {
@@ -59,21 +59,21 @@ const ItemsSection = () => {
 
   return (
     <>
-      <div className='container'>
+      <div className='container px-5'>
         <div className='row'>
           {dataarr.map((item, index) => (
             <div className='col-md-3 my-3' key={index}>
-              <div className='card'>
-                <img src={logo1} className='card-img-top' alt='no pic' />
-                <div className='card-body boxshadow' style={{ padding: 0 ,cursor:"pointer"}}>
+              <div className='card  img-zoom boxshadow ' style={{cursor:"pointer"}}>
+                <img src={logo1} className='card-img-top pb-1 ' alt='no pic' />
+                <div className='card-body ' style={{ padding: 0 ,cursor:"pointer"}}>
                   <div
-                    className='px-3 py-2'
+                    className='px-2 '
                     style={{ display: 'flex', justifyContent: 'space-between' }}
                   >
-                    <h5 className='card-title'style={{textTransform:"uppercase"}}>{item.title}</h5>
+                    <h5 className='card-title 'style={{textTransform:"uppercase",fontWeight:"bolder",fontFamily:" 'Playfair Display', sans-serif;"}}>{item.title}</h5>
                     <h5 className='card-title'>{item.price}</h5>
                   </div>
-                  <p className='card-text px-3 py-2'>{item.description}</p>
+                  <p className='card-text px-2  fs-5' style={{textTransform:"uppercase"}}> {item.category}</p>
                   <div
                     style={{
                       width: '100',

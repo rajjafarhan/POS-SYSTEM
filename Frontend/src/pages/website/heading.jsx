@@ -1,8 +1,8 @@
 const Heading = ({ heading }) => {
     return (
       <>
-        <div className="container d-flex justify-content-center p-2">
-          <h1  style={{fontFamily:"font-family: 'Poppins', sans-serif;" ,fontSize:"3rem", fontWeight:"15rem" }}>{heading}</h1>
+        <div className="container px-3 py-3 heading3">
+          <h3 className="" >{heading}</h3>
         </div>
       </>
     );

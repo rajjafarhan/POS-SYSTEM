@@ -14,8 +14,8 @@ const Showcase = () => {
         <VideoPlayer />
         <div className="overlay"></div>
         <div className="text">
-          <h2>Your Source for All </h2>
-          <h3>Things Ceramics and Sanitary.</h3>
+          <h2>Your Source for  </h2>
+          <h3>All Things Ceramics and Sanitary.</h3>
           <p>
           MS Enterprise is your trusted partner for all things sanitary and ceramics. With a wide array of products catering to various styles and preferences, we ensure you find exactly what you're looking for.
           </p>

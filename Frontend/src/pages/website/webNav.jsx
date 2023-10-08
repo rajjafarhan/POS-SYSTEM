@@ -27,7 +27,8 @@ const CustomNavbar = () => {
     top: '0',
     width: '100%',
     left: '0',
-    zIndex: '100'
+    zIndex: '100',
+    height:"3.5rem"
   };
 
 

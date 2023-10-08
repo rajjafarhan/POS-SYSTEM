@@ -1,0 +1,98 @@
+*{
+    margin:0;
+    padding: 0;
+}
+/* .banner{
+    width: 102%;
+    height: 90%;
+    background-image: url("https://assets-global.website-files.com/5f6b627361bad8cad0fc5c99/62447a59be68b1e934ae5685_image.jpg");
+     background-position: 50%;
+    background-size: cover;
+    position: absolute;
+    left: -1%;
+    right: -1%;
+}
+.c-mask{
+    z-index: 1;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+} */
+.banner{
+    /* background: linear-gradient(to right, #67b26f, #4ca2cd); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #43c6ac, #191654);
+    height: max-content;
+}
+
+.textbanner h2{
+    padding-top: 10%;
+    padding-bottom: 2%;
+    font-size: 2.8em;
+    font-weight: 700;
+    color: #07393c;
+    line-height: 1em;
+    text-transform: uppercase;
+}
+.textbanner h3{
+    font-size: 2em;
+    font-weight:600;
+    color: #a99604;
+    line-height: 1em;
+    text-transform: uppercase;
+  }
+  .textbanner h5{
+    font-size: 1.8em;
+    font-weight:400;
+    color: #07393c;
+    line-height: 1em;
+    /* textbanner-transform: uppercase; */
+  }
+  .bannerimg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bannerimg img{
+    height: 70%;
+
+  }
+  .textbanner a{
+    display: inline-block;
+    font-size: 1em;
+    background: #07393c;
+    margin-left: 3%;
+    padding: 10px 30px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 10px;
+    color: #fff7f7;
+    letter-spacing: 2px;
+    transition: 0.2s;
+  }
+  .textbanner a:hover
+  {
+    letter-spacing: 6px;
+    box-shadow: 0 0 5px 6px #2c666e;
+  }
+
+  @media (max-width:380px){
+    .textbanner h2{
+      
+      
+        font-size: 2em;
+        
+    
+
+    }
+    .textbanner h3{
+      font-size: 1.6em;
+      font-weight:600;
+      color: #a99604;
+      line-height: 1em;
+      text-transform: uppercase;
+    }
+
+  }
+ 
