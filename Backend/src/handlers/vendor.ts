@@ -7,7 +7,7 @@ export const getAllVendors = async (req, res) => {
   try {
     const vendorcollection = await database_connection(["vendor invoice"]);
     const setNo = parseInt(req.params.setNo);
-    const query = req.params.query
+    const query = req.params.query;
     const itemsPerPage = 50;
 
     if (setNo < 1) {
@@ -18,7 +18,7 @@ export const getAllVendors = async (req, res) => {
     const skip = (setNo - 1) * itemsPerPage;
 
     if (query === "aisPsqSjMUDTj387Ol") {
-	    console.log("Invoked if")
+      console.log("Invoked if");
       const vendors = await vendorcollection[0]
         .aggregate([
           { $match: { userId: req.user.id } }, // Match vendors belonging to the user
@@ -46,9 +46,9 @@ export const getAllVendors = async (req, res) => {
         .sort({ date: -1 })
         .limit(itemsPerPage)
         .skip(skip)
-	.toArray();
+        .toArray();
       const totalVendorCount = await vendorcollection[0].countDocuments({
-	      $text: {$search : query},
+        $text: { $search: query },
         userId: req.user.id,
       });
 

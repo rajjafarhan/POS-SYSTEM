@@ -5,19 +5,25 @@ import { validateEmail, validatePass } from "../../helpers/validate";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../functions/signup";
 import { useNavigate } from "react-router-dom";
+import {toast} from "react-toastify";
 
 const LoginFrame = () => {
   const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: login,
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data) => {
       localStorage.setItem("token", data.data.token);
       localStorage.setItem("name", data?.data?.name);
+        toast.success("Logged in successfully!")
       navigate("/pos/dashboard");
-      console.log(data);
     },
-    onError: (error, variables) => {
-      console.log(error);
+    onError: (error ) => {
+        if (error?.response?.data?.message === "User not found"){
+            toast.error("User not found!")
+        }
+        if (error?.response?.data?.message ==="Invalid credentials"){
+            toast.error("Incorrect Password!")
+        }
     },
   });
   const [data, setData] = useState({ email: "", password: "" });
@@ -34,6 +40,11 @@ const LoginFrame = () => {
 
   const submit = (e) => {
     e.preventDefault();
+      if (data.email === "" || data.password === "" ){
+          toast.error("Email or Password can't be empty!")
+          return
+      }
+      console.log(data)
     mutation.mutate(data);
   };
   return (
@@ -84,9 +95,6 @@ const LoginFrame = () => {
               >
                 Login
               </button>
-              <p>
-                Don't have an Account? <Link to={"/auth/signup"}>Sign Up</Link>
-              </p>
             </div>
           </form>
         </div>

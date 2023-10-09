@@ -8,18 +8,11 @@ import SearchBar from "../../components/searchBar/searchBar";
 import { useQuery } from "@tanstack/react-query";
 import { fetchInventory } from "../../functions/inventory";
 import "./inventory.css";
+import { useOutletContext } from "react-router-dom";
 
 const Inventory = () => {
-  const res = useQuery({
-    queryKey: ["fetchItems"],
-    queryFn: fetchInventory,
-    enabled: false,
-  });
-  const { refetch } = res;
-  useEffect(() => {
-    refetch();
-  }, []);
-  const pData = res?.data?.data?.result;
+	const [pData,refetch] = useOutletContext()
+
   const [showModal, setShowModal] = useState(false);
   const [searchVal, setSearchVal] = useState("");
   const [searchBy, setSearchBy] = useState("");

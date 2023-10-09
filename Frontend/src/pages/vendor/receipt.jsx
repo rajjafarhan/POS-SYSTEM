@@ -1,6 +1,6 @@
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
-import { formatDate } from "../../helpers/dateFormatter";
+import {useOutletContext} from "react-router-dom";
 
 const styles = StyleSheet.create({
   page: {
@@ -12,9 +12,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const VendorReceipt = ({ data }) => {
-  const l = "lol";
-  console.log(data);
+const VendorReceipt = ({ data ,type}) => {
+    const [,,basicInfoData]= useOutletContext()
+    console.log(basicInfoData)
+    const date = new Date(data?.date)
   return (
     <PDFViewer width={400} height={600}>
       <Document
@@ -46,10 +47,10 @@ const VendorReceipt = ({ data }) => {
                 marginTop: "10px",
               }}
             >
-              Vendor Receipt
+      {type}
             </Text>
             <Text style={{ textAlign: "center", fontSize: "16px" }}>
-              Subhan Bhai Shop
+      {basicInfoData?.shopName}
             </Text>
             <Text
               wrap={true}
@@ -59,7 +60,7 @@ const VendorReceipt = ({ data }) => {
                 marginTop: "4px",
               }}
             >
-              Address: North Karachi, L1, Karachi, Pakistan.
+              Address: {basicInfoData?.shopAdd}
             </Text>
             <Text
               wrap={true}
@@ -81,7 +82,7 @@ const VendorReceipt = ({ data }) => {
                 marginBottom: "4px",
               }}
             >
-              {formatDate(data?.date)}
+      {`${date?.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}
             </Text>
             <View
               wrap={true}
@@ -95,8 +96,10 @@ const VendorReceipt = ({ data }) => {
               }}
             >
               <View style={{ display: "flex", flexDirection: "row" }}>
-                <Text>QTY</Text>
-                <Text style={{ marginLeft: "5px" }}> PRODUCT</Text>
+                <Text>S.no</Text>
+                <Text style={{ marginLeft: "5px" ,width:"89px"}}> PRODUCT</Text>
+                <Text style={{ marginLeft: "5px" }}> Price</Text>
+                <Text style={{ marginLeft: "5px" }}> Qty</Text>
               </View>
               <Text>AMT</Text>
             </View>
@@ -104,7 +107,7 @@ const VendorReceipt = ({ data }) => {
             <Text style={{ margin: "0", padding: "0", fontSize: "12px" }}>
               -----------------------------------------------------
             </Text>
-            {data?.product.map((prod, index) => {
+            {data?.product?.map((prod, index) => {
               return (
                 <View
                   wrap={true}
@@ -117,11 +120,19 @@ const VendorReceipt = ({ data }) => {
                     marginBottom: "0px",
                   }}
                 >
-                  <View style={{ display: "flex", flexDirection: "row" }}>
+                  <View style={{ display: "flex", flexDirection: "row", fontSize:"10px" }}>
                     <Text>{index + 1}</Text>
-                    <Text style={{ marginLeft: "15px", width: "181px" }}>
+                    <Text style={{ marginLeft: "15px", width: "100px" }}>
                       {" "}
                       {prod?.product?.label}
+                    </Text>
+                    <Text style={{ marginLeft: "5px", width: "40px" }}>
+                      {" "}
+                      {prod?.product?.price}
+                    </Text>
+                    <Text style={{ marginLeft: "5px", width: "40px" }}>
+                      {" "}
+                      {prod?.productQty}
                     </Text>
                   </View>
                   <Text>{prod?.totalPrice}</Text>

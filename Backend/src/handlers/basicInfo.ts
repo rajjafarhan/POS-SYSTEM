@@ -11,7 +11,7 @@ export const setBasicInfo = async (req, res) => {
       {
         $set: {
           shopName: req.body.shopName,
-          ownerName: req.body.ownerName,
+          name: req.body.name,
           shopAdd: req.body.shopAdd,
           contactNo: req.body.contactNo,
         },

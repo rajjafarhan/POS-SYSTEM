@@ -14,6 +14,7 @@ export const createNewUser = async (req, res) => {
       password: hashedPassword,
       name,
       lname,
+      createdAt:new Date()
     });
 
     // Find the newly inserted user based on the unique identifier (username)
@@ -51,7 +52,7 @@ export const signin = async (req, res) => {
       return;
     } else {
       const token = createJWT(user);
-      const { name, username, _id } = user;
+      const { name, username, _id  } = user;
       return res.status(200).json({ token, name, username, id: _id });
     }
   } catch (error) {

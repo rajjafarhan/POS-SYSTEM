@@ -1,3 +1,4 @@
+import {ObjectId} from "mongodb";
 import { database_connection } from "../db";
 
 ///////////////////////////////////////////////////////get all customers
@@ -6,6 +7,7 @@ export const getAllCustomers = async (req, res) => {
   try {
     const custCollection = await database_connection(["customer invoice"]);
     const setNo = parseInt(req.params.setNo);
+    const query = req.params.query;
     const itemsPerPage = 50;
 
     if (setNo < 1) {
@@ -13,7 +15,7 @@ export const getAllCustomers = async (req, res) => {
     }
 
     const skip = (setNo - 1) * itemsPerPage;
-
+    if (query === "aisPsqSjMUDTj387Ol") {
     const customers = await custCollection[0]
       .aggregate([
         { $match: { userId: req.user.id } },
@@ -34,6 +36,29 @@ export const getAllCustomers = async (req, res) => {
     return res
       .status(200)
       .json({ customers: customers, totalCount: totalCustomerCount });
+    }else{
+      const customers = await custCollection[0]
+        .find({ $text: { $search: query }, userId: req.user.id })
+        .sort({ date: -1 })
+        .limit(itemsPerPage)
+        .skip(skip)
+        .toArray();
+      const totalCustomerCount = await custCollection[0].countDocuments({
+        $text: { $search: query },
+        userId: req.user.id,
+      });
+
+      if (customers.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No vendors found for this set" });
+      }
+
+      return res
+        .status(200)
+        .json({ customers: customers, totalCount: totalCustomerCount });
+         
+    }
   } catch (error) {
     console.error("Error fetching customer invoices:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -79,14 +104,15 @@ export const createCustomer = async (req, res) => {
 
 export const deleteCustomer = async (req, res) => {
   try {
+      const id = new ObjectId(`${req.params.id}`)
     const custCollection = await database_connection(["customer invoice"]);
-    const result = await custCollection[0].deleteOne({ _id: req.params.id });
+    const result = await custCollection[0].findOneAndDelete({ _id: id });
 
-    if (result.deletedCount === 1) {
-      return res.status(200).json({ message: "Customer deleted successfully" });
-    } else {
-      return res.status(404).json({ error: "Customer not found" });
+    if (!result) {
+      return res.status(404).json({ message: "Customer not found" });
     }
+
+    return res.status(200).json({ message: "Customer deleted successfully" });
   } catch (error) {
     console.error("Error deleting customer:", error);
     return res.status(500).json({ error: "Internal Server Error" });
