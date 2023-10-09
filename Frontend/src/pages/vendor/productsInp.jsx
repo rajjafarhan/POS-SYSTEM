@@ -16,6 +16,7 @@ const ProductsInput = ({
   products,
   id,
 }) => {
+  console.log(products)
   useEffect(() => {
     handleProductChange(
       {
@@ -38,7 +39,7 @@ const ProductsInput = ({
           }}
           disablePortal
           id="combo-box-demo"
-          options={products}
+          options={products??[]}
           renderInput={(params) => <TextField {...params} label="Product" />}
           size="small"
         />

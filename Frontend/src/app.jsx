@@ -14,7 +14,8 @@ import AccountSettings from "./pages/settings/accSettings";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./global.css";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Website from "./pages/website/websitemain";
 import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient({
@@ -26,28 +27,31 @@ const queryClient = new QueryClient({
     },
 });
 const App = () => {
-    return (
-        <BrowserRouter>
-            <QueryClientProvider client={queryClient}>
-                    <Routes>
-                        <Route path="/auth" element={<LoginSignup />}>
-                            <Route path="login" element={<LoginFrame />} />
-                            <Route path="signup" element={<SignupFrame />} />
-                        </Route>
-                        <Route path="/pos" element={<Layout />}>
-                            <Route path="dashboard" element={<Dashboard />} />
-                            <Route path="vendor" element={<VendorPage />} />
-                            <Route path="customer" element={<Customer />} />
-                            <Route path="inventory" element={<Inventory />} />
-                            <Route path="settings" element={<SettingsLayout />}>
-                                <Route path="basicinfo" element={<BasicInfo />} />
-                                <Route path="accsettings" element={<AccountSettings />} />
-                            </Route>
-                        </Route>
-                    </Routes>
-            </QueryClientProvider>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/auth" element={<LoginSignup />}>
+            <Route path="login" element={<LoginFrame />} />
+            <Route path="signup" element={<SignupFrame />} />
+          </Route>
+          <Route path="/pos" element={<Layout />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="vendor" element={<VendorPage />} />
+            <Route path="customer" element={<Customer />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="settings" element={<SettingsLayout />}>
+              <Route path="basicinfo" element={<BasicInfo />} />
+              <Route path="accsettings" element={<AccountSettings />} />
+            </Route>
+          </Route>
+          <Route path="/" element={<Website/>}/>
+         
+        </Routes>
+      </QueryClientProvider>
+    </BrowserRouter>
+  );
+ 
 };
 
 const container = document.getElementById("root");

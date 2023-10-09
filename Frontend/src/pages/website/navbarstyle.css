@@ -1,0 +1,75 @@
+.dropdown-menu {
+    animation: 0.5s slideup;
+  }
+
+
+.borderNav:hover{
+
+    border-bottom: 2.5px solid white;
+    transition: 0.5s;
+    color: white;
+
+
+}
+  
+  @keyframes slideup {
+    from {
+      transform: translateY(10%);
+    }
+  
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  .boxshadow:hover{
+    box-shadow:0 4px 10px 0 rgba(0,0,0,0.2) ;
+  }
+
+
+ /* Add this CSS to your stylesheet */
+.img-zoom {
+  transition: transform 0.2s ease; /* Add a smooth transition effect */
+}
+
+.img-zoom:hover {
+  transform: scale(1.1); /* Increase the scale (zoom in) on hover */
+}
+
+
+
+
+
+.heading3 h3 {
+  overflow: hidden;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 2.5em;
+  font-weight: 600;
+  color:rgba(52, 32, 1, 0.795) ;
+}
+
+.heading3 h3:before,
+.heading3 h3:after {
+  content: '';
+  display: inline-block;
+  height: 2px;  
+  position: relative;
+  top: -2px;
+  vertical-align: middle;
+}
+
+.heading3 h3:before {
+  background-color:  rgba(94, 51, 1, 0.676);
+  left: -.5em;
+  margin-left: -100%;
+  width: 100%;
+}
+
+.heading3 h3:after {
+  background-color:  rgba(76, 42, 3, 0.676);
+  left: .5em;
+  margin-right: -100%;
+  width: 100%;
+}
