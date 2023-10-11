@@ -16,7 +16,7 @@ const ItemAttribute = ({handleItemChange, product, isEditable}) => {
             <div className="mt-3  d-flex justify-content-between align-items-center">
                 <h3 className="text-dgreen w-35">Name</h3>
                 {!isEditable ? (
-                    <p className="fs-5 text-wrap w-65">{product.label}</p>
+                    <p className="fs-5 text-wrap w-65">{product?.label}</p>
                 ) : (
                     <input
                         name="label"
@@ -25,7 +25,7 @@ const ItemAttribute = ({handleItemChange, product, isEditable}) => {
                         }}
                         className="w-65 border-1 fs-5 p-2"
                         type="text"
-                        value={product.label}
+                        value={product?.label}
                     />
                 )}
             </div>
@@ -48,7 +48,7 @@ const ItemAttribute = ({handleItemChange, product, isEditable}) => {
             <div className="mt-3  d-flex justify-content-between align-items-center">
                 <h3 className="text-dgreen w-35">Qty</h3>
                 {!isEditable ? (
-                    <p className="fs-5 text-wrap w-65">{product.qty}</p>
+                    <p className="fs-5 text-wrap w-65">{product?.qty}</p>
                 ) : (
                     <input
                         name="qty"
@@ -57,36 +57,52 @@ const ItemAttribute = ({handleItemChange, product, isEditable}) => {
                         }}
                         className="w-65 border-1 fs-5 p-2"
                         type="text"
-                        value={product.qty}
+                        value={product?.qty}
                     />
                 )}
             </div>
             <div className="mt-3  d-flex justify-content-between align-items-center">
-                <h3 className="text-dgreen w-35">Unit Price</h3>
+                <h3 className="text-dgreen w-35">Cost Price</h3>
                 {!isEditable ? (
-                    <p className="fs-5 text-wrap w-65">{product.price}</p>
+                    <p className="fs-5 text-wrap w-65">{product?.costPrice}</p>
                 ) : (
                     <input
-                        name="price"
+                        name="costPrice"
                         onChange={(e) => {
                             handleItemChange(e);
                         }}
                         className="w-65 border-1 fs-5 p-2"
                         type="text"
-                        value={product.price}
+                        value={product?.costPrice}
+                    />
+                )}
+            </div>
+            <div className="mt-3  d-flex justify-content-between align-items-center">
+                <h3 className="text-dgreen w-35">Selling Price</h3>
+                {!isEditable ? (
+                    <p className="fs-5 text-wrap w-65">{product?.sellingPrice}</p>
+                ) : (
+                    <input
+                        name="sellingPrice"
+                        onChange={(e) => {
+                            handleItemChange(e);
+                        }}
+                        className="w-65 border-1 fs-5 p-2"
+                        type="text"
+                        value={product?.sellingPrice}
                     />
                 )}
             </div>
             <div className="mt-3  d-flex justify-content-between align-items-center">
                 <h3 className="text-dgreen w-35">Total</h3>
                 {!isEditable ? (
-                    <p className="fs-5 text-wrap w-65">{product.qty * product.price}</p>
+                    <p className="fs-5 text-wrap w-65">{product?.qty * product?.costPrice}</p>
                 ) : (
                     <input
                         className="w-65 border-1 fs-5 p-2"
                         type="text"
                         readOnly
-                        value={product.qty * product.price}
+                        value={product?.qty * product?.costPrice}
                     />
                 )}
             </div>
@@ -107,6 +123,7 @@ const ItemAttribute = ({handleItemChange, product, isEditable}) => {
 };
 
 const ItemDescription = ({refetch, setShowItemModal, product}) => {
+    console.log(product)
     const mutation = useMutation({
         mutationFn: updateInventory,
     onSuccess: () => {

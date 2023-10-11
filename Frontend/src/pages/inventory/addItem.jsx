@@ -26,7 +26,8 @@ const AddItem = ({refetch, setShowModal}) => {
     const [itemData, setItemData] = useState({
         label: "",
         qty: "",
-        price: "",
+        costPrice:"",
+        sellingPrice:"",
         category: "",
         addToWebsite: false,
     });
@@ -69,8 +70,12 @@ const AddItem = ({refetch, setShowModal}) => {
             toast.error("Product Quantity can't be empty! ")
             return
         }
-        if (itemData?.price === "") {
-            toast.error("Product price can't be empty! ")
+        if (itemData?.costPrice === "") {
+            toast.error("Product Cost price can't be empty! ")
+            return
+        }
+        if (itemData?.sellingPrice === "") {
+            toast.error("Product selling price can't be empty! ")
             return
         }
         if (itemData?.category === "") {
@@ -127,11 +132,22 @@ const AddItem = ({refetch, setShowModal}) => {
                     />
                     <TextField
                         id="outlined-search"
-                        name="price"
-                        label="Unit Price"
-                        type="search"
+                        name="costPrice"
+                        label="Cost Price"
+                        type="number"
                         className="my-2"
-                        value={itemData.unitPrice}
+                        value={itemData.costPrice}
+                        onChange={(e) => {
+                            handleChange(e);
+                        }}
+                    />
+                    <TextField
+                        id="outlined-search"
+                        name="sellingPrice"
+                        label="Selling Price"
+                        type="number"
+                        className="my-2"
+                        value={itemData.sellingPrice}
                         onChange={(e) => {
                             handleChange(e);
                         }}

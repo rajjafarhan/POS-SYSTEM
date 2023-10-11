@@ -233,6 +233,7 @@ const VendorPage = () => {
                                             products={products}
                                             unitPrice={prod?.unitPrice ? prod?.unitPrice : 0}
                                             totalPrice={prod?.totalPrice ? prod?.totalPrice : 0}
+                                    type={"vendor"}
                                             id={index}
                                         />
                                     </div>

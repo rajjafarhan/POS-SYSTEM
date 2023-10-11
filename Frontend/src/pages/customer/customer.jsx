@@ -233,6 +233,7 @@ const Customer = () => {
                                             unitPrice={prod?.unitPrice ? prod?.unitPrice : 0}
                                             totalPrice={prod?.totalPrice ? prod?.totalPrice : 0}
                                             id={index}
+                                    type={"customer"}
                                         />
                                     </div>
                                 );
