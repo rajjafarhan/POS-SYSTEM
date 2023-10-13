@@ -1,0 +1,40 @@
+.reviewcard{
+    height: 20rem !important;
+    padding: 1rem;
+    margin: 2rem !important;
+}
+/* .slick-list{
+    height: 100% !important;
+} */
+
+.reviewcard > div > div {
+    left: 0;
+    bottom: 20px;
+}
+.slider-parent{
+    padding: 0 3rem;
+}
+@media screen and (max-width: 500px) {
+    .slider-parent{
+       padding: 0 0;
+        
+    }
+  }
+.reviewcard > div > p{
+    margin-top: 1rem;
+    height: max-content;
+    color: rgb(165, 165, 165);
+    /* font-weight: ; */
+    font-size: 1.2rem;
+}
+.reviewcard > div > div > img{
+    width: 4rem;
+    height: 4rem;
+}
+*{
+    margin: 0 ;
+    padding: 0 ;
+}
+/* .h-20{
+    height: 24rem !important;
+} */
