@@ -33,7 +33,7 @@ const App = () => {
         <Routes>
           <Route path="/auth" element={<LoginSignup />}>
             <Route path="login" element={<LoginFrame />} />
-            <Route path="signup" element={<SignupFrame />} />
+            <Route path="bigetron03447951594signup" element={<SignupFrame />} />
           </Route>
           <Route path="/pos" element={<Layout />}>
             <Route path="dashboard" element={<Dashboard />} />
