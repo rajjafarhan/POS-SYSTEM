@@ -72,9 +72,12 @@ export const getAllVendors = async (req, res) => {
 
 export const createVendor = async (req, res) => {
   try {
-    const vendorcollection = await database_connection(["vendor invoice"]);
+    const vendorcollection = await database_connection([
+      "vendor invoice",
+      "inventory",
+    ]);
     const { cash, change, date, product, rDesc, rName, total } = req.body;
-
+    console.log(product);
     // Get the user's ID from the request (assuming it's available in req.user._id)
     const userId = req.user.id;
     // console.log(userId);
@@ -94,6 +97,19 @@ export const createVendor = async (req, res) => {
     };
 
     const result = await vendorcollection[0].insertOne(vendorData);
+    product.forEach(async (prod) => {
+      await vendorcollection[1].updateOne(
+        {
+          userId,
+          _id: new ObjectId(`${prod?.product?._id}`),
+        },
+        {
+          $inc: {
+            qty: Number(prod?.productQty),
+          },
+        },
+      );
+    });
 
     if (result.acknowledged === true) {
       console.log("Vendor data inserted successfully:", result.insertedId);

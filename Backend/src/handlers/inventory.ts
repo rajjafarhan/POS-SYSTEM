@@ -5,7 +5,16 @@ import { ObjectId } from "mongodb";
 
 export const createInventory = async (req, res) => {
   const inventoryCollection = await database_connection(["inventory"]);
-  const { addToWebsite, category, label, qty, costPrice,sellingPrice, imgUrl } = req.body;
+  const {
+    addToWebsite,
+    category,
+    label,
+    qty,
+    costPrice,
+    sellingPrice,
+    imgUrl,
+  } = req.body;
+  console.log(req.body);
   const userId = req.user.id;
   console.log(userId);
   const inventoryData = {

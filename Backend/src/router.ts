@@ -26,7 +26,7 @@ import {
   resetPassword,
 } from "./handlers/basicInfo";
 import { verifyPass } from "./middlewares/verifyPass";
-import {getStates,  getProfit, getYears  } from "./handlers/dashboard";
+import { getStates, getProfit, getYears } from "./handlers/dashboard";
 
 const router = Router();
 //**************VENDOR*******************/
@@ -57,9 +57,9 @@ router.put("/basicinfo/password", resetPassword);
 router.post("/deleteaccount", verifyPass, deleteAccount);
 //*****************Dashboard ******************** */
 
-router.get("/dashboard/getprofit/:month/:year",getProfit)
-router.get("/dashboard/getstates/:year",getStates)
-router.get("/dashboard/years",getYears)
+router.get("/dashboard/getprofit/:month/:year", getProfit);
+router.get("/dashboard/getstates/:year", getStates);
+router.get("/dashboard/years", getYears);
 
 router.get("/allsale", () => {});
 

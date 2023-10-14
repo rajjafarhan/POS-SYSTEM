@@ -40,32 +40,29 @@ const options = {
   },
 };
 
+export const BarChart = ({ barChartData, MONTHS }) => {
+  const [sales, cost, months] = barChartData ?? [];
+  console.log(barChartData);
+  let monthsArr = [];
+  if (months) {
+    monthsArr = MONTHS?.slice(months[0], months[0] + months.length);
+  }
 
-
-export const BarChart = ({barChartData, MONTHS}) => {
-    const [sales, cost, months] = barChartData ?? []
-    console.log(barChartData)
-    let monthsArr = []
-    if (months){
-         monthsArr =MONTHS?.slice(months[0],months[0] + months.length )
-
-    }
-
-    const chartData = {
-        labels : monthsArr,
-        datasets: [
-            {
-                label: "Sales",
-                data:sales ?? [],
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
-            },
-            {
-                label: "Expense",
-                data: cost ?? [],
-                backgroundColor: "rgba(53, 162, 235, 0.5)",
-            },
-        ],
-    };
+  const chartData = {
+    labels: monthsArr,
+    datasets: [
+      {
+        label: "Sales",
+        data: sales ?? [],
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+      {
+        label: "Expense",
+        data: cost ?? [],
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+    ],
+  };
   return <Bar options={options} data={chartData} />;
 };
 

@@ -1,5 +1,5 @@
-import {Route, Routes, BrowserRouter} from "react-router-dom";
-import {createRoot} from "react-dom/client";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { createRoot } from "react-dom/client";
 import LoginSignup from "./pages/login/auth";
 import LoginFrame from "./pages/login/loginFrame";
 import SignupFrame from "./pages/login/signupFrame";
@@ -16,15 +16,15 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./global.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Website from "./pages/website/websitemain";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            staleTime: Infinity,
-            cacheTime: Infinity,
-        },
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      cacheTime: Infinity,
     },
+  },
 });
 const App = () => {
   return (
@@ -45,13 +45,11 @@ const App = () => {
               <Route path="accsettings" element={<AccountSettings />} />
             </Route>
           </Route>
-          <Route path="/" element={<Website/>}/>
-         
+          <Route path="/" element={<Website />} />
         </Routes>
       </QueryClientProvider>
     </BrowserRouter>
   );
- 
 };
 
 const container = document.getElementById("root");

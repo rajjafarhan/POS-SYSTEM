@@ -30,15 +30,13 @@ export const fetchVendorReceipts = async ({ queryKey }) => {
   return res;
 };
 
-
-
 export const deleteVendorReceipt = (data) => {
-    const {id} = data
+  const { id } = data;
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  return axios.delete(`http://localhost:3000/api/vendor/${id}`,  {
+  return axios.delete(`http://localhost:3000/api/vendor/${id}`, {
     headers: {
-      authorization:bearer,
+      authorization: bearer,
     },
   });
 };

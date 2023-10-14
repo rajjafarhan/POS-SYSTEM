@@ -11,7 +11,7 @@ import "./inventory.css";
 import { useOutletContext } from "react-router-dom";
 
 const Inventory = () => {
-	const [pData,refetch] = useOutletContext()
+  const [pData, refetch] = useOutletContext();
 
   const [showModal, setShowModal] = useState(false);
   const [searchVal, setSearchVal] = useState("");

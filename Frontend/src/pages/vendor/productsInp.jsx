@@ -15,33 +15,31 @@ const ProductsInput = ({
   totalPrice,
   products,
   id,
-    type
+  type,
 }) => {
-  console.log(products)
+  console.log(products);
   useEffect(() => {
-      if (type === "vendor"){
-          handleProductChange(
-              {
-                  target: {
-                      name: "totalPrice",
-                      value: product && qtyVal ? product?.costPrice * qtyVal : 0,
-                  },
-              },
-              id
-          );
-          
-      }else{
-          handleProductChange(
-              {
-                  target: {
-                      name: "totalPrice",
-                      value: product && qtyVal ? product?.sellingPrice * qtyVal : 0,
-                  },
-              },
-              id
-          );
-
-      }
+    if (type === "vendor") {
+      handleProductChange(
+        {
+          target: {
+            name: "totalPrice",
+            value: product && qtyVal ? product?.costPrice * qtyVal : 0,
+          },
+        },
+        id
+      );
+    } else {
+      handleProductChange(
+        {
+          target: {
+            name: "totalPrice",
+            value: product && qtyVal ? product?.sellingPrice * qtyVal : 0,
+          },
+        },
+        id
+      );
+    }
   }, [product, qtyVal]);
 
   return (
@@ -54,7 +52,7 @@ const ProductsInput = ({
           }}
           disablePortal
           id="combo-box-demo"
-          options={products??[]}
+          options={products ?? []}
           renderInput={(params) => <TextField {...params} label="Product" />}
           size="small"
         />
