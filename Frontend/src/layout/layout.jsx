@@ -9,10 +9,10 @@ import { ToastContainer } from "react-toastify";
 import { fetchBasicInfo } from "../functions/settings";
 
 const Layout = ({ children }) => {
-  const {refetch, data } = useQuery(["fetchInventory"], fetchInventory);
-    const basicInfo = useQuery(["basicInfo"], fetchBasicInfo);
-    const refetchBasicInfo = basicInfo?.refetch
-    const basicInfoData = basicInfo?.data?.data?.row
+  const { refetch, data } = useQuery(["fetchInventory"], fetchInventory);
+  const basicInfo = useQuery(["basicInfo"], fetchBasicInfo);
+  const refetchBasicInfo = basicInfo?.refetch;
+  const basicInfoData = basicInfo?.data?.data?.row;
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
       <ToastContainer />
       <NavBar />
       {children}
-      <Outlet context={[data?.data?.result ?? [],refetch,basicInfoData]} />
+      <Outlet context={[data?.data?.result ?? [], refetch, basicInfoData]} />
       <Footer />
     </div>
   );

@@ -4,7 +4,7 @@ export const postbasicinfo = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   console.log(bearer);
-  return axios.put("http://localhost:3000/api/basicinfo", data, {
+  return axios.put("https://posbackend-f3it.onrender.com/api/basicinfo", data, {
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -16,11 +16,14 @@ export const postbasicinfo = (data) => {
 export const fetchBasicInfo = async () => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  const res = await axios.get("http://localhost:3000/api/basicinfo", {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await axios.get(
+    "https://posbackend-f3it.onrender.com/api/basicinfo",
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   return res;
 };
@@ -28,29 +31,41 @@ export const fetchBasicInfo = async () => {
 export const postEmail = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  return axios.put("http://localhost:3000/api/basicinfo/email", data, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
+  return axios.put(
+    "https://posbackend-f3it.onrender.com/api/basicinfo/email",
+    data,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
 };
 
 export const resetPassword = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  return axios.put("http://localhost:3000/api/basicinfo/password", data, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
+  return axios.put(
+    "https://posbackend-f3it.onrender.com/api/basicinfo/password",
+    data,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
 };
 
 export const deleteAccount = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  return axios.post("http://localhost:3000/api/deleteaccount", data, {
-    headers: {
-      authorization: bearer,
-    },
-  });
+  return axios.post(
+    "https://posbackend-f3it.onrender.com/api/deleteaccount",
+    data,
+    {
+      headers: {
+        authorization: bearer,
+      },
+    }
+  );
 };

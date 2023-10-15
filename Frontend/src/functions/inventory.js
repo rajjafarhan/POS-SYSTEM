@@ -3,7 +3,7 @@ import axios from "axios";
 export const addInventory = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  return axios.post("http://localhost:3000/api/product", data, {
+  return axios.post("https://posbackend-f3it.onrender.com/api/product", data, {
     headers: {
       authorization: bearer,
     },
@@ -14,7 +14,7 @@ export const addInventory = (data) => {
 export const fetchInventory = async () => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  const res = await axios.get("http://localhost:3000/api/product", {
+  const res = await axios.get("https://posbackend-f3it.onrender.com/api/product", {
     headers: {
       authorization: bearer,
     },
@@ -27,7 +27,7 @@ export const updateInventory = (data) => {
   const id = data._id;
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  return axios.put(`http://localhost:3000/api/product/${id}`, data, {
+  return axios.put(`https://posbackend-f3it.onrender.com/api/product/${id}`, data, {
     headers: {
       authorization: bearer,
     },
@@ -38,7 +38,7 @@ export const deleteInventory = (data) => {
   const id = data._id;
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  return axios.delete(`http://localhost:3000/api/product/${id}`, {
+  return axios.delete(`https://posbackend-f3it.onrender.com/api/product/${id}`, {
     headers: {
       authorization: bearer,
     },

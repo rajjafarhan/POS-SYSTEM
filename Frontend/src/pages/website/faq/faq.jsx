@@ -81,7 +81,7 @@ const FaqSection = () => {
                   data-bs-target={`#collapse${index}`}
                   aria-expanded="false"
                   aria-controls={`collapse${index}`}
-                  style={{height:"3rem"}}
+                  style={{ height: "3rem" }}
                 >
                   {faq.question}
                 </button>

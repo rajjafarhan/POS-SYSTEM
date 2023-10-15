@@ -5,7 +5,7 @@ import { validateEmail, validatePass } from "../../helpers/validate";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../functions/signup";
 import { useNavigate } from "react-router-dom";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 const LoginFrame = () => {
   const navigate = useNavigate();
@@ -14,16 +14,16 @@ const LoginFrame = () => {
     onSuccess: (data) => {
       localStorage.setItem("token", data.data.token);
       localStorage.setItem("name", data?.data?.name);
-        toast.success("Logged in successfully!")
+      toast.success("Logged in successfully!");
       navigate("/pos/dashboard");
     },
-    onError: (error ) => {
-        if (error?.response?.data?.message === "User not found"){
-            toast.error("User not found!")
-        }
-        if (error?.response?.data?.message ==="Invalid credentials"){
-            toast.error("Incorrect Password!")
-        }
+    onError: (error) => {
+      if (error?.response?.data?.message === "User not found") {
+        toast.error("User not found!");
+      }
+      if (error?.response?.data?.message === "Invalid credentials") {
+        toast.error("Incorrect Password!");
+      }
     },
   });
   const [data, setData] = useState({ email: "", password: "" });
@@ -40,11 +40,11 @@ const LoginFrame = () => {
 
   const submit = (e) => {
     e.preventDefault();
-      if (data.email === "" || data.password === "" ){
-          toast.error("Email or Password can't be empty!")
-          return
-      }
-      console.log(data)
+    if (data.email === "" || data.password === "") {
+      toast.error("Email or Password can't be empty!");
+      return;
+    }
+    console.log(data);
     mutation.mutate(data);
   };
   return (

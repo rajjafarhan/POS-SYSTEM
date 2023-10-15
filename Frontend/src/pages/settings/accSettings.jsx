@@ -9,7 +9,6 @@ import LoaderLayout from "../../components/loaders/loaderLayout";
 import GeneralLoader from "../../components/loaders/generalLoader";
 import { toast } from "react-toastify";
 
-
 const AccountSettings = () => {
   const [basicInfo, setBasicInfo] = useOutletContext();
   const [resetPass, setResetPass] = useState({
@@ -19,30 +18,29 @@ const AccountSettings = () => {
   const mutationPass = useMutation({
     mutationFn: resetPassword,
     onSuccess: () => {
-        toast.success("Password changed successfully!")
+      toast.success("Password changed successfully!");
     },
-    onError:()=>{
-        toast.error("Ops error! Password could not be changed.")
-    }
+    onError: () => {
+      toast.error("Ops error! Password could not be changed.");
+    },
   });
   const mutation = useMutation({
     mutationFn: postEmail,
     onSuccess: () => {
-        toast.success("Email Saved successfully!")
+      toast.success("Email Saved successfully!");
     },
-    onError:()=>{
-        toast.error("Ops error! Email could not be Saved.")
-    }
+    onError: () => {
+      toast.error("Ops error! Email could not be Saved.");
+    },
   });
 
-    if (mutation.isLoading || mutationPass.isLoading){
-        return (
-
-            <LoaderLayout>
-                <GeneralLoader />
-            </LoaderLayout>
-        )
-    }
+  if (mutation.isLoading || mutationPass.isLoading) {
+    return (
+      <LoaderLayout>
+        <GeneralLoader />
+      </LoaderLayout>
+    );
+  }
   const handleChange = (e) => {
     const { name, value } = e.target;
     setBasicInfo({ ...basicInfo, [name]: value });

@@ -11,7 +11,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { search } from "../../helpers/search";
 
-
 const InventoryTable = ({ pData, refetch, searchParam, searchBy }) => {
   const [currItem, setCurrItem] = useState();
   const [showItemModal, setShowItemModal] = useState(false);
@@ -22,7 +21,7 @@ const InventoryTable = ({ pData, refetch, searchParam, searchBy }) => {
     "Category",
     "Qty",
     "Cost Price",
-      "Selling Price",
+    "Selling Price",
     "Total Cost",
     "View",
     "Delete",
