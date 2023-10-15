@@ -15,18 +15,33 @@ const ProductsInput = ({
   totalPrice,
   products,
   id,
+    type
 }) => {
   console.log(products)
   useEffect(() => {
-    handleProductChange(
-      {
-        target: {
-          name: "totalPrice",
-          value: product && qtyVal ? product?.price * qtyVal : 0,
-        },
-      },
-      id
-    );
+      if (type === "vendor"){
+          handleProductChange(
+              {
+                  target: {
+                      name: "totalPrice",
+                      value: product && qtyVal ? product?.costPrice * qtyVal : 0,
+                  },
+              },
+              id
+          );
+          
+      }else{
+          handleProductChange(
+              {
+                  target: {
+                      name: "totalPrice",
+                      value: product && qtyVal ? product?.sellingPrice * qtyVal : 0,
+                  },
+              },
+              id
+          );
+
+      }
   }, [product, qtyVal]);
 
   return (
@@ -52,7 +67,7 @@ const ProductsInput = ({
           // label="Unit Price"
           type="number"
           disabled
-          value={product?.price}
+          value={type === "vendor" ? product?.costPrice : product?.sellingPrice}
           size="small"
         />
       </div>

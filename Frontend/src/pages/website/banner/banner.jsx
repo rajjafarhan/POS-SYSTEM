@@ -1,6 +1,5 @@
 import "./banner.css"
 import img2 from  "../../../../assets/logo1.png"
-// import { Link } from "react-router-dom";
 const Banner=()=>{
     return(
         <>

@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { search } from "../../helpers/search";
 
+
 const InventoryTable = ({ pData, refetch, searchParam, searchBy }) => {
   const [currItem, setCurrItem] = useState();
   const [showItemModal, setShowItemModal] = useState(false);
@@ -20,8 +21,9 @@ const InventoryTable = ({ pData, refetch, searchParam, searchBy }) => {
     "Name",
     "Category",
     "Qty",
-    "Unit Price",
-    "Total Price",
+    "Cost Price",
+      "Selling Price",
+    "Total Cost",
     "View",
     "Delete",
   ];
@@ -60,10 +62,11 @@ const InventoryTable = ({ pData, refetch, searchParam, searchBy }) => {
                 <td className="p-3 text-center">
                   {d.label === "" ? "------" : d.label}
                 </td>
-                <td className="p-3 text-center">{d.category}</td>
-                <td className="p-3 text-center">{d.qty}</td>
-                <td className="p-3 text-center">{d.price}</td>
-                <td className="p-3 text-center">{d.qty * d.price}</td>
+                <td className="p-3 text-center">{d?.category}</td>
+                <td className="p-3 text-center">{d?.qty}</td>
+                <td className="p-3 text-center">{d?.costPrice}</td>
+                <td className="p-3 text-center">{d?.sellingPrice}</td>
+                <td className="p-3 text-center">{d?.qty * d.costPrice}</td>
                 <td className="p- text-center text-danger fs-5">
                   <button
                     className="border-0 eye bg-transpaent p-2 rounded-circle text-dgreen bg-transparent "

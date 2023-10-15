@@ -8,7 +8,7 @@ const CustomNavbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
-        setNavbarBackground('#888888'); 
+        setNavbarBackground('rgb(166, 111, 1)'); 
       } else {
         setNavbarBackground('transparent');
       }

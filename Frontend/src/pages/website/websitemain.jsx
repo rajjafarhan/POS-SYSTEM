@@ -8,6 +8,7 @@ import Banner from './banner/banner'
 import ContactUs from './contactUs/contactUs'
 import SimpleSlider from './reviewCard/simpleSlider'
 import ReviewCard from './reviewCard/reviewCard'
+import Map from './map/map'
 
 const reviews = [
   {
@@ -69,6 +70,8 @@ const Website = () => {
       <FaqSection />
       {/* <Banner/> */}
       <ContactUs />
+      <Heading heading="Where you can find us?"/>
+      <Map />
     </div>
   )
 }

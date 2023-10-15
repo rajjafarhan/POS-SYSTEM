@@ -35,7 +35,6 @@ export const postEmail = (data) => {
   });
 };
 
-
 export const resetPassword = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
@@ -44,8 +43,7 @@ export const resetPassword = (data) => {
       authorization: `Bearer ${token}`,
     },
   });
-}
-
+};
 
 export const deleteAccount = (data) => {
   const token = localStorage.getItem("token");
@@ -55,4 +53,4 @@ export const deleteAccount = (data) => {
       authorization: bearer,
     },
   });
-}
+};

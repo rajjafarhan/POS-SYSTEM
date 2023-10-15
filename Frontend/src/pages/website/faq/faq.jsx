@@ -6,40 +6,40 @@ const filteredFaqs = [
  
 
     {
-      question: "What is the purpose of IdeaVault?",
+      question: "What products do you offer at MS Enterprise?",
       answer:
-        " IdeaVault aims to provide a platform for users to share their business ideas and connect with potential investors or partners.",
+        " We offer a wide range of sanitary and ceramics products, including faucets, sinks, toilets, bathtubs, tiles, and much more. Explore our extensive catalog to find the perfect items for your home or project.",
     },
     {
-      question: "Who can use IdeaVault?",
+      question: "Are your products of high quality?",
       answer:
-        "IdeaVault is designed for two primary user types: investors and idea posters. Investors are individuals or organizations looking to fund or collaborate on innovative business ideas, while idea posters are users who share their business plans seeking financial assistance or partnerships.",
+        "Yes, at MS Enterprise, we prioritize quality. We source products from reputable manufacturers known for their durability and reliability. Our commitment to quality ensures that you receive products that stand the test of time.",
     },
     {
-      question: "How can I share my business idea on IdeaVault?",
+      question: "Do you offer delivery services?",
       answer:
-        "To share your business idea on IdeaVault, you can fill out a form providing details such as your business idea summary, funding amount required, business plan, revenue model, contact information, and legal status. Once submitted, your idea will be visible to interested investors.",
+        "Yes, we offer delivery services for all our products. We have a dedicated delivery team that ensures your products are delivered to your doorstep in a timely and efficient manner. ",
     },
     {
-      question: "Can investors provide feedback on posted ideas?",
+      question: "What payment methods do you accept?",
       answer:
-        " Yes, investors can provide feedback on the posted ideas. IdeaVault encourages collaboration and interaction between users, and the platform includes a commenting system that allows users to provide feedback, suggestions, and insights to help refine the ideas further.",
+        " We accept various payment methods, including credit/debit cards, cash, and digital payment platforms. You can choose the option that best suits your preferences.",
     },
     {
-      question: " Is there a ranking system for posted ideas on IdeaVault?",
+      question: "  Can I return or exchange a product if I'm not satisfied?",
       answer:
-        "Yes, IdeaVault includes a ranking system where users can upvote or downvote posted ideas. The most popular and trending ideas will be showcased on a promotional section, increasing their visibility to potential investors and partners..",
+        " Yes, we have a return and exchange policy. If you're not satisfied with a product, please contact our customer support, and we'll guide you through the return or exchange process.",
     },
     {
       question:
-        "How can I ensure the confidentiality of my business idea when sharing it on IdeaVault?",
+        "Is there a warranty for your products?",
       answer:
-        "IdeaVault prioritizes the confidentiality of your business ideas. When sharing your idea, you have the option to include a non-disclosure agreement (NDA) that potential investors must agree to before accessing detailed information. This helps protect your intellectual property and ensures that investors respect the confidentiality of your idea",
+        "Many of our products come with warranties. The duration and terms of warranties may vary depending on the product. Please check the product details or contact our team for warranty information.",
     },
     {
-      question: "Can I edit or update my posted business idea on IdeaVault?",
+      question: "How can I get in touch with MS Enterprise for inquiries and support?",
       answer:
-        "Yes, you can edit or update your posted business idea on IdeaVault. As the idea poster, you have the flexibility to refine and improve your business plan based on feedback received from investors or other users. Simply access your posted idea and make the necessary updates to reflect any changes or enhancements.",
+        "You can contact us through our website, by phone, or by visiting our physical store. Our team is here to assist you with any questions or concerns",
     },
   ];
 

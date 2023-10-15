@@ -5,7 +5,6 @@ import {
   deleteVendor,
   getAllVendors,
 } from "./handlers/vendor";
-import { get } from "http";
 import {
   createCustomer,
   deleteAllCustomers,
@@ -27,6 +26,7 @@ import {
   resetPassword,
 } from "./handlers/basicInfo";
 import { verifyPass } from "./middlewares/verifyPass";
+import {getStates,  getProfit, getYears  } from "./handlers/dashboard";
 
 const router = Router();
 //**************VENDOR*******************/
@@ -37,7 +37,7 @@ router.delete("/vendor", deleteAllVendors);
 
 //*****************CUSTOMER************ */
 
-router.get("/customer/:setNo", getAllCustomers);
+router.get("/customer/:setNo/:query", getAllCustomers);
 router.post("/customer", createCustomer);
 router.delete("/customer/:id", deleteCustomer);
 router.delete("/customer/", deleteAllCustomers);
@@ -52,11 +52,14 @@ router.delete("/product/:id", deleteInventory);
 //*****************BASICINFO ******************** */
 router.get("/basicinfo", getBasicInfo);
 router.put("/basicinfo", setBasicInfo);
-router.post("/basicinfo", (req, res) => {});
 router.put("/basicinfo/email", setEmail);
 router.put("/basicinfo/password", resetPassword);
 router.post("/deleteaccount", verifyPass, deleteAccount);
 //*****************Dashboard ******************** */
+
+router.get("/dashboard/getprofit/:month/:year",getProfit)
+router.get("/dashboard/getstates/:year",getStates)
+router.get("/dashboard/years",getYears)
 
 router.get("/allsale", () => {});
 

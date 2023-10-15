@@ -42,11 +42,37 @@ const dataarr = [
     price: '20000',
     category:'plastic'
      
+  },, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
+  }, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
+  }, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
+  }, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
+  }, {
+    title: 'Bath Tub',
+    price: '20000',
+    category:'plastic'
+     
   },
   
 ];
 
 const ItemsSection = () => {
+  const [whatsappNumber, setWhatsappNumber] = useState('03363453451');
   const getRandomColor = () => {
     
     const letters = '0123456789ABCDEF';
@@ -56,6 +82,12 @@ const ItemsSection = () => {
     }
     return color;
   };
+  const openWhatsappChat = () => {
+    if (whatsappNumber) {
+      const whatsappLink = `https://wa.me/${whatsappNumber}`;
+      window.open(whatsappLink, '_blank'); 
+    }
+  };
 
   return (
     <>
@@ -63,7 +95,9 @@ const ItemsSection = () => {
         <div className='row'>
           {dataarr.map((item, index) => (
             <div className='col-md-3 my-3' key={index}>
-              <div className='card  img-zoom boxshadow ' style={{cursor:"pointer"}}>
+              <div className='mx-2'>
+
+              <div className='card  img-zoom boxshadow ' style={{cursor:"pointer"}} onClick={openWhatsappChat} >
                 <img src={logo1} className='card-img-top pb-1 ' alt='no pic' />
                 <div className='card-body ' style={{ padding: 0 ,cursor:"pointer"}}>
                   <div
@@ -89,6 +123,7 @@ const ItemsSection = () => {
                     <a href='/'>Buy Now</a>
                   </div>
                 </div>
+              </div>
               </div>
             </div>
           ))}

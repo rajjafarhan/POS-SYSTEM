@@ -23,7 +23,7 @@
   }
   
   .boxshadow:hover{
-    box-shadow:0 4px 10px 0 rgba(0,0,0,0.2) ;
+    box-shadow:0 4px 10px 0 rgb(166, 111, 1) ;
   }
 
 
@@ -47,7 +47,7 @@
   letter-spacing: 3px;
   font-size: 2.5em;
   font-weight: 600;
-  color:rgba(52, 32, 1, 0.795) ;
+  color:rgb(166, 111, 1) ;
 }
 
 .heading3 h3:before,
@@ -61,17 +61,46 @@
 }
 
 .heading3 h3:before {
-  background-color:  rgba(94, 51, 1, 0.676);
+  background-color:  rgb(166, 111, 1);
   left: -.5em;
   margin-left: -100%;
   width: 100%;
 }
 
 .heading3 h3:after {
-  background-color:  rgba(76, 42, 3, 0.676);
+  background-color: rgb(166, 111, 1);
   left: .5em;
   margin-right: -100%;
   width: 100%;
+}
+
+
+.bgpic{
+  background-image: url("https://www.maisonvalentina.net/blog/wp-content/uploads/2015/07/cover1.jpg");
+  /* background-image: url("https://www.aonehouse.com/wp-content/uploads/2014/06/homepage.png"); */
+  background-size: cover;
+  position: relative;
+  top: 0;
+  right: 0;
+  width: 100%;
+  min-height: 100vh;
+   background-position: center;
+  background-repeat: no-repeat; /* Do not repeat the image */
+  /* opacity: .9; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.item-bg{
+
+  height: 88vh;
+  background-color: antiquewhite;
+  margin-top: 3rem;
+  /* margin-bottom: 5rem; */
+  overflow-y: scroll;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)
 }
 
 

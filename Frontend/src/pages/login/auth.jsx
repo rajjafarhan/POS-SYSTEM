@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import img from "../../../assets/auth.svg";
 import FloatingBackground from "./floatingBg";
+import { ToastContainer } from "react-toastify";
 
 const LoginSignup = () => {
   useEffect(() => {
@@ -13,6 +14,7 @@ const LoginSignup = () => {
   }, []);
   return (
     <>
+      <ToastContainer />
       <FloatingBackground />
       <div className="w-100 hv-100 d-flex justify-content-center flex-wrap align-items-center ">
         <div className="w-37rem  d-flex justify-content-center align-items-center flex-column">

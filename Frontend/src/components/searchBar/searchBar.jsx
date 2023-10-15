@@ -1,9 +1,9 @@
 import "./seachBar.css";
 
-const SearchBar = ({ refetch ,value, setValue, width }) => {
+const SearchBar = ({ refetch, value, setValue, width }) => {
   return (
     <div className="s-div">
-      <form class="form">
+      <form className="form">
         <p>
           <svg
             width="17"
@@ -23,7 +23,7 @@ const SearchBar = ({ refetch ,value, setValue, width }) => {
           </svg>
         </p>
         <input
-          class={`input input-s ${width}`}
+          className={`input input-s ${width}`}
           placeholder="Search"
           value={value}
           onChange={(e) => {
@@ -32,22 +32,7 @@ const SearchBar = ({ refetch ,value, setValue, width }) => {
           required=""
           type="text"
         />
-        <p class="reset">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            ></path>
-          </svg>
-        </p>
+        
       </form>
     </div>
   );

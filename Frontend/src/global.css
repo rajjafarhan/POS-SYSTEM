@@ -115,3 +115,9 @@ p{
     border-bottom: 2px solid  #2c698d !important;
 
 }
+.min-h{
+    min-height: 100vh !important;
+}
+.w-12{
+    width: 12% !important;
+}

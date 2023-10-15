@@ -37,7 +37,7 @@ const ContactUs = () => {
                 height:'30rem'
               }}
             >
-              <div className='d-flex flex-column '>
+              <div className='d-flex flex-column  slideup-animation'>
                 <div className='d-flex gap-3 my-2  border-bottom border-3'>
                   <div
                     style={{
@@ -56,7 +56,7 @@ const ContactUs = () => {
                   </div>
                   <div className='d-flex flex-column g-1 '>
                     <h4 style={{color:"rgb(2, 150, 179)",fontWeight:"bolder"}}>Address</h4>
-                    <p style={{color:"white",fontWeight:"bolder"}}>123, Main Road, New City, My Country 123456</p>
+                    <p style={{color:"white",fontWeight:"bolder"}}>123, Main Road, New City, My Country </p>
                   </div>
                 </div>
 
@@ -104,7 +104,7 @@ const ContactUs = () => {
                 </div>
               </div>
             </div>
-            <div className='col-md-6'>
+            <div  className='col-md-6 '>
 
 
                         <form>
@@ -112,7 +112,7 @@ const ContactUs = () => {
                 <div style={{
                     height:'29rem',
                     backgroundColor:'white'
-                }} className='d-flex flex-column m-5 p-5 shadow-lg'>
+                }} className='d-flex  flex-column my-5 p-5 shadow-lg slideup-animation'>
                     <h2 style={{color:"rgb(2, 150, 179)"}} className='py-2'>Send Message</h2>
                     <div className='d-flex flex-column gap-4'>
                     <TextField fullWidth label=" Full Name" id="fullWidth" />
