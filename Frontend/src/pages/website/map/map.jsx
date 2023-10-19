@@ -11,11 +11,11 @@ const Map = () => {
   // Create a custom icon
   const customIcon = new L.Icon({
     iconUrl: mapicon,
-    iconSize: [25, 25], // Adjust the size as needed
+    iconSize: [50,50], 
   });
 
   return (
-    <MapContainer center={[45.4, -75.7]} zoom={10} scrollWheelZoom={false}>
+    <MapContainer center={[24.830078698172297, 67.16768615767192]} zoom={12} scrollWheelZoom={false}>
         
       {shopData.features.map((park) => (
         <Marker

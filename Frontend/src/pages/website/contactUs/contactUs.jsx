@@ -111,8 +111,11 @@ const ContactUs = () => {
 
                 <div style={{
                     height:'29rem',
-                    backgroundColor:'white'
-                }} className='d-flex  flex-column my-5 p-5 shadow-lg slideup-animation'>
+                    backgroundColor:'white',
+                    boxShadow:" 0 0 8px 6px rgb(166, 111, 1)",
+                    borderRadius:"1rem"
+
+                }} className='d-flex  flex-column my-5 p-5  slideup-animation'>
                     <h2 style={{color:"rgb(2, 150, 179)"}} className='py-2'>Send Message</h2>
                     <div className='d-flex flex-column gap-4'>
                     <TextField fullWidth label=" Full Name" id="fullWidth" />

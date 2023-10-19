@@ -68,7 +68,7 @@
 }
 
 .heading3 h3:after {
-  background-color: rgb(166, 111, 1);
+  background-color:  rgb(166, 111, 1);
   left: .5em;
   margin-right: -100%;
   width: 100%;
@@ -104,4 +104,27 @@
 }
 
 
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    background-color: gray !important; 
+  }
+  .colorfixed{
+    background-color: gray !important;
+  }
+  .spaceneeded{
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+.space{
+  margin-left: 2rem;
+  margin-right: 1rem;
+
+}
+
+button.slick-arrow{
+  display: none !important;
+}
 

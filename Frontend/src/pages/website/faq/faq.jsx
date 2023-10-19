@@ -8,7 +8,7 @@ const filteredFaqs = [
     {
       question: "What products do you offer at MS Enterprise?",
       answer:
-        " We offer a wide range of sanitary and ceramics products, including faucets, sinks, toilets, bathtubs, tiles, and much more. Explore our extensive catalog to find the perfect items for your home or project.",
+        " We offer a wide range of sanitary and ceramics products, including faucets, sinks, toilets, bathtubs and much more. Explore our extensive catalog to find the perfect items for your home or project.",
     },
     {
       question: "Are your products of high quality?",
@@ -28,7 +28,7 @@ const filteredFaqs = [
     {
       question: "  Can I return or exchange a product if I'm not satisfied?",
       answer:
-        " Yes, we have a return and exchange policy. If you're not satisfied with a product, please contact our customer support, and we'll guide you through the return or exchange process.",
+        " Yes, we have a return and exchange policy. If you're not satisfied with a product that is not from China, please contact our customer support, and we'll guide you through the return or exchange process. Please note that items originating from China are not eligible for return or exchange.",
     },
     {
       question:
@@ -37,7 +37,7 @@ const filteredFaqs = [
         "Many of our products come with warranties. The duration and terms of warranties may vary depending on the product. Please check the product details or contact our team for warranty information.",
     },
     {
-      question: "How can I get in touch with MS Enterprise for inquiries and support?",
+      question: "How can I get in touch with MS Enterprise ?",
       answer:
         "You can contact us through our website, by phone, or by visiting our physical store. Our team is here to assist you with any questions or concerns",
     },

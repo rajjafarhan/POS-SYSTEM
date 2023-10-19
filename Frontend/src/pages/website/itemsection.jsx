@@ -46,7 +46,7 @@ const dataarr = [
 ];
 
 const ItemsSection = () => {
-  const [whatsappNumber, setWhatsappNumber] = useState('03363453451');
+  const [whatsappNumber, setWhatsappNumber] = useState('+923358782828');
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -80,6 +80,7 @@ const ItemsSection = () => {
                     <h5
                       className="card-title "
                       style={{
+                        fontSize: "1rem",
                         textTransform: "uppercase",
                         fontWeight: "bolder",
                         fontFamily: " 'Playfair Display', sans-serif;",
@@ -87,10 +88,14 @@ const ItemsSection = () => {
                     >
                       {item.title}
                     </h5>
-                    <h5 className="card-title">{item.price}</h5>
+                    <h6 className="card-title"   style={{
+                        fontSize: "1rem",
+                        fontWeight: "bolder",
+                        fontFamily: " 'Playfair Display', sans-serif;",
+                      }}>{item.price}</h6>
                   </div>
                   <p
-                    className="card-text px-2  fs-5"
+                    className="card-text px-2  fs-6"
                     style={{ textTransform: "uppercase" }}
                   >
                     {" "}

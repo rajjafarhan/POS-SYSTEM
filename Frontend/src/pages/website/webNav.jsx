@@ -8,7 +8,7 @@ const CustomNavbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
-        setNavbarBackground("#888888");
+        setNavbarBackground("rgb(166, 111, 1)");
       } else {
         setNavbarBackground("transparent");
       }
@@ -27,14 +27,16 @@ const CustomNavbar = () => {
     top: "0",
     width: "100%",
     left: "0",
-    zIndex: "100",
+    zIndex: "1000",
     height: "3.5rem",
+    padding:"0",
+    margin:"0"
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark" style={navbarStyle}>
-      <div className="container">
-        <a className="navbar-brand text-black" href="#">
+    <nav className="navbar navbar-expand-lg navbar-dark " style={navbarStyle}>
+      <div className="container-fluid colorfixed">
+        <a className="navbar-brand text-black space  spaceneeded" href="#">
           <img src={logo1} alt="ooo" style={{ width: "5rem" }} />
         </a>
         <button
