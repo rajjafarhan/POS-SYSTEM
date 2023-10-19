@@ -105,8 +105,7 @@ const ContactUs = () => {
             <div  className='col-md-6 '>
 
 
-                        <form>
-
+                        <form action="https://formsubmit.co/siddiquiusman328@gmail.com" method="POST">
                 <div style={{
                     height:'29rem',
                     backgroundColor:'white',
@@ -116,10 +115,10 @@ const ContactUs = () => {
                 }} className='d-flex  flex-column my-5 p-5  slideup-animation'>
                     <h2 style={{color:"rgb(2, 150, 179)"}} className='py-2'>Send Message</h2>
                     <div className='d-flex flex-column gap-4'>
-                    <TextField fullWidth label=" Full Name" id="fullWidth" />
-                    <TextField fullWidth label=" Email" id="fullWidth" />
-                    <TextField fullWidth label="Message" id="fullWidth" />
-                    <button className='submitCon'> <BsFillSendFill className='mx-1'/>Submit</button> 
+                    <TextField fullWidth label=" Full Name" name="name" id="fullWidth" />
+                    <TextField fullWidth label=" Email" name="email" id="fullWidth" />
+                    <TextField fullWidth label="Message" name="message" id="fullWidth" />
+                    <button type='submit' className='cursor-pointer submitCon z-4'> <BsFillSendFill className='mx-1'/>Submit</button> 
                     </div>
                    
 

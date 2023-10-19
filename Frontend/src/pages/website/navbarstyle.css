@@ -127,4 +127,10 @@
 button.slick-arrow{
   display: none !important;
 }
+.cursor-pointer{
+    cursor: pointer !important;
+}
 
+.z-4{
+    z-index: 4;
+}
