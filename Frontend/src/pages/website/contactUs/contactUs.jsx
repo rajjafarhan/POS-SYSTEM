@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 const ContactUs = () => {
   return (
     <>
-      <div className='container-fluid contactus'>
+      <div id="contactus" className='container-fluid contactus'>
         <div className='laycontactUs'></div>
         <div className='d-flex flex-column container  '>
           <h1
