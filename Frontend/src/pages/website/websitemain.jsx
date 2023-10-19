@@ -11,71 +11,80 @@ import ReviewCard from './reviewCard/reviewCard'
 import Map from './map/map'
 import Footer from './footer/footer'
 import MyCircularProgress from './circleCount/progress'
+import avatar1 from "../../../assets/avatar1.png"
+import avatar2 from "../../../assets/avatar2.jpg"
+import avatar3 from "../../../assets/avatar3.png"
+import avatar4 from "../../../assets/avatar4.jpg"
+import avatar5 from "../../../assets/avatar5.jpg"
+import avatar6 from "../../../assets/avatar6.jpg"
+import avatar7 from "../../../assets/avatar7.avif"
+import avatar8 from "../../../assets/avatar8.jpg"
+import avatar9 from "../../../assets/avatar9.jpg"
 
 const reviews = [
   {
-    name: 'John Doe',
+    name: 'Ahmed Ali',
     reviewBody:
     "I can't thank MS Enterprise enough for transforming my home. Their exquisite ceramics added a touch of elegance that I never thought was possible. ",
     starCount: 5,
-    imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
+    imgSrc: avatar1
   },
   {
-    name: 'John Doe',
+    name: 'Muhammad Sufiyan',
     reviewBody:
       "My house feels like a work of art thanks to MS Enterprise's incredible range of ceramics. I highly recommend them! ",
     starCount: 5,
-    imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
+    imgSrc: avatar2
   },
   {
-    name: 'John Doe',
+    name: 'Usman ',
     reviewBody:
     "MS Enterprise has truly elevated the aesthetics of my home with their ceramics and sanitary items.",
     starCount: 5,
-    imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
+    imgSrc: avatar3
   },
   {
-    name: 'John Doe',
+    name: 'Zainab Fatima',
     reviewBody:
     "My family and I are amazed at the impact MS Enterprise's ceramics and sanitary items have had on our home. ",
     starCount: 5,
-    imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
+    imgSrc: avatar4
   }
   ,
   {
-    name: 'John Doe',
+    name: 'Laiba Asif',
     reviewBody:
     "My home renovation wouldn't have been the same without MS Enterprise's ceramics and sanitary items.",
     starCount: 5,
-    imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
+    imgSrc: avatar5
   },
   {
-    name: 'John Doe',
+    name: 'Uzair Waqar',
     reviewBody:
     "Their sanitary items are not only beautiful but also high-performing. I'm beyond satisfied!",
     starCount: 5,
-    imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
+    imgSrc: avatar6
   },
   {
-    name: 'John Doe',
+    name: 'Shahzaib Khan',
     reviewBody:
     "I was skeptical about renovating my kitchen, but MS Enterprise's ceramics breathed new life into the space. ",
     starCount: 5,
-    imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
+    imgSrc: avatar7
   },
   {
-    name: 'John Doe',
+    name: 'Hamna Imran',
     reviewBody:
     "Thanks to MS Enterprise, my home now feels like a dream. The ceramics and sanitary items have made a world of difference.",
     starCount: 5,
-    imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
+    imgSrc: avatar8
   },
   {
-    name: 'John Doe',
+    name: 'Khaula ',
     reviewBody:
     "I owe my beautiful home to MS Enterprise. I've received countless compliments from friends and family",
     starCount: 5,
-    imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
+    imgSrc:avatar9
   }
 ]
 
