@@ -16,15 +16,13 @@ const ContactUs = () => {
         <div className='laycontactUs'></div>
         <div className='d-flex flex-column container  '>
           <h1
-            className='d-flex justify-content-center my-3'
+            className='d-flex justify-content-center my-2 mx-auto'
             style={{ fontSize: '3.5rem' ,color:"white"}}
           >
             Contact Us
           </h1>
           <p style={{color:'white'}} className='d-flex justify-content-center fs-6'>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, ex?
-            Tempore eaque molestiae atque ab laudantium magnam fugit corporis
-            amet.
+          Get in touch with us for all your inquiries and needs at MS Enterprise
           </p>
         </div>
 
@@ -56,7 +54,7 @@ const ContactUs = () => {
                   </div>
                   <div className='d-flex flex-column g-1 '>
                     <h4 style={{color:"rgb(2, 150, 179)",fontWeight:"bolder"}}>Address</h4>
-                    <p style={{color:"white",fontWeight:"bolder"}}>123, Main Road, New City, My Country </p>
+                    <p style={{color:"white",fontWeight:"bold",fontSize:"1rem"}}>Plot 356,36/C Korangi #5 </p>
                   </div>
                 </div>
 
@@ -78,7 +76,7 @@ const ContactUs = () => {
                   </div>
                   <div className='d-flex flex-column g-1'>
                     <h4 style={{color:"rgb(2, 150, 179)",fontWeight:"bolder"}}>Phone</h4>
-                    <p style={{color:"white",fontWeight:"bolder"}}>12345678</p>
+                    <p style={{color:"white",fontWeight:"bolder"}}>03358782828</p>
                   </div>
                 </div>
                 <div className='d-flex gap-3 my-2  border-bottom border-3'>
@@ -99,7 +97,7 @@ const ContactUs = () => {
                   </div>
                   <div className='d-flex flex-column g-1'>
                     <h4 style={{color:"rgb(2, 150, 179)",fontWeight:"bolder"}}>Email</h4>
-                    <p style={{color:"white",fontWeight:"bolder"}}>rajja@gmail.com</p>
+                    <p style={{color:"white",fontWeight:"bolder",fontSize:"1rem",wordWrap:"break-word"}}>Muhammadsoban075@gmail .com</p>
                   </div>
                 </div>
               </div>

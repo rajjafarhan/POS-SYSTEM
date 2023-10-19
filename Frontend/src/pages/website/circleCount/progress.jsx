@@ -70,7 +70,7 @@ const increment = duration / steps; // Calculate the increment
                 clearInterval(interval);
                 return totalCount;
               } else {
-                return prevProgress + 2; // Increment by 1
+                return prevProgress + 1; // Increment by 1
               }
             });
           }, increment);

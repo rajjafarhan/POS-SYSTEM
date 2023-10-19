@@ -4,6 +4,7 @@ import cors from "cors";
 import { createNewUser, signin } from "./handlers/user";
 import { protect } from "./modules/auth";
 import router from "./router";
+import {getWebsiteProducts} from "./handlers/inventory";
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", protect, router);
+app.get("/website/getproducts/:id",getWebsiteProducts)
 app.post("/user", createNewUser);
 app.post("/signin", signin);
 

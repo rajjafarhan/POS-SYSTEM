@@ -16,28 +16,28 @@ const reviews = [
   {
     name: 'John Doe',
     reviewBody:
-    "I can't thank MS Enterprise enough for transforming my home. Their exquisite ceramics added a touch of elegance that I never thought was possible. I'm in love with their sanitary items too!",
+    "I can't thank MS Enterprise enough for transforming my home. Their exquisite ceramics added a touch of elegance that I never thought was possible. ",
     starCount: 5,
     imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
   },
   {
     name: 'John Doe',
     reviewBody:
-      "My house feels like a work of art thanks to MS Enterprise's incredible range of ceramics. The sanitary items they offer are both stylish and practical. I highly recommend them! ",
+      "My house feels like a work of art thanks to MS Enterprise's incredible range of ceramics. I highly recommend them! ",
     starCount: 5,
     imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
   },
   {
     name: 'John Doe',
     reviewBody:
-    "MS Enterprise has truly elevated the aesthetics of my home with their ceramics and sanitary items. It's like living in a designer space every day.",
+    "MS Enterprise has truly elevated the aesthetics of my home with their ceramics and sanitary items.",
     starCount: 5,
     imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
   },
   {
     name: 'John Doe',
     reviewBody:
-    "My family and I are amazed at the impact MS Enterprise's ceramics and sanitary items have had on our home. The quality and beauty of their products are unmatched.",
+    "My family and I are amazed at the impact MS Enterprise's ceramics and sanitary items have had on our home. ",
     starCount: 5,
     imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
   }
@@ -45,35 +45,35 @@ const reviews = [
   {
     name: 'John Doe',
     reviewBody:
-    "My home renovation wouldn't have been the same without MS Enterprise's ceramics and sanitary items. They've added so much charm and functionality to our living space.",
+    "My home renovation wouldn't have been the same without MS Enterprise's ceramics and sanitary items.",
     starCount: 5,
     imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
   },
   {
     name: 'John Doe',
     reviewBody:
-    "MS Enterprise's ceramics have transformed my bathroom into a luxurious spa, and their sanitary items are not only beautiful but also high-performing. I'm beyond satisfied!",
+    "Their sanitary items are not only beautiful but also high-performing. I'm beyond satisfied!",
     starCount: 5,
     imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
   },
   {
     name: 'John Doe',
     reviewBody:
-    "I was skeptical about renovating my kitchen, but MS Enterprise's ceramics breathed new life into the space. Their sanitary items have also simplified my daily routines.",
+    "I was skeptical about renovating my kitchen, but MS Enterprise's ceramics breathed new life into the space. ",
     starCount: 5,
     imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
   },
   {
     name: 'John Doe',
     reviewBody:
-    "Thanks to MS Enterprise, my home now feels like a dream. The ceramics and sanitary items have made a world of difference. I couldn't be happier with my choice.",
+    "Thanks to MS Enterprise, my home now feels like a dream. The ceramics and sanitary items have made a world of difference.",
     starCount: 5,
     imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
   },
   {
     name: 'John Doe',
     reviewBody:
-    "I owe my beautiful home to MS Enterprise. Their ceramics and sanitary items are top-notch. I've received countless compliments from friends and family. Thanks, MS Enterprise!",
+    "I owe my beautiful home to MS Enterprise. I've received countless compliments from friends and family",
     starCount: 5,
     imgSrc: 'https://wallpaperaccess.com/full/1128282.jpg'
   }
@@ -86,7 +86,7 @@ const Website = () => {
       <WebNavbar />
       <Showcase />
       <Heading style="  color:'rgba(52, 32, 1, 0.795)' " heading='OUR ITEMS' />
-      <ItemsSection />
+      
       <div className='container my-4'>
       <Heading
         style="  color:'rgba(52, 32, 1, 0.795)' "
@@ -125,10 +125,10 @@ const Website = () => {
           )
         })}
       </SimpleSlider>
-      <Heading style="color:'white'" heading='FAQs' />
-      <FaqSection />
       {/* <Banner/> */}
       <ContactUs />
+      <Heading style="color:'white'" heading='FAQs' />
+      <FaqSection />
       <Heading heading="Where you can find us?"/>
       <Map />
       <Footer/>
