@@ -1,124 +1,71 @@
-import React, { useEffect, useState } from "react";
-import logo1 from "../../../assets/MSimg1.avif";
+import React, {useEffect, useState} from "react";
+import {fetchWebsiteProducts} from '../../functions/website'
+import {search} from "../../helpers/search.js";
+import SearchBar from '../../components/searchBar/searchBar.jsx'
+import MySelect from '../../components/select/select'
+import Pagination from '@mui/material/Pagination';
+import ItemCard from './itemCard/itemCard.jsx'
+import {useQuery} from "@tanstack/react-query";
 
-const dataarr = [
-  {
-    title: 'Bath Tub',
-    price: '20000',
-    category:'plastic'
-     
-  }, {
-    title: 'Bath Tub',
-    price: '20000',
-    category:'plastic'
-     
-  }, {
-    title: 'Bath Tub',
-    price: '20000',
-    category:'plastic'
-     
-  }, {
-    title: 'Bath Tub',
-    price: '20000',
-    category:'plastic'
-     
-  }, {
-    title: 'Bath Tub',
-    price: '20000',
-    category:'plastic'
-     
-  }, {
-    title: 'Bath Tub',
-    price: '20000',
-    category:'plastic'
-     
-  }, {
-    title: 'Bath Tub',
-    price: '20000',
-    category:'plastic'
-     
-  }, {
-    title: 'Bath Tub',
-    price: '20000',
-    category:'plastic'
-     
-  },
-];
 
 const ItemsSection = () => {
-  const [whatsappNumber, setWhatsappNumber] = useState('03363453451');
-  const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
-  const openWhatsappChat = () => {
-    if (whatsappNumber) {
-      const whatsappLink = `https://wa.me/${whatsappNumber}`;
-      window.open(whatsappLink, '_blank'); 
-    }
-  };
+    const products = useQuery(['fetchWebsiteProducts'], fetchWebsiteProducts)
+    const dataarr = products?.data?.data?.data ?? []
+    const categories = products?.data?.data?.categories ?? []
 
-  return (
-    <>
-      <div className="container px-5">
-        <div className="row">
-          {dataarr.map((item, index) => (
-            <div className='col-md-3 my-3' key={index}>
-              <div className='mx-2'>
+    const [query, setQuery] = useState('')
+    const [category, setCategory] = useState('All')
+    const [whatsappNumber, setWhatsappNumber] = useState('03363453451');
+    const openWhatsappChat = () => {
+        if (whatsappNumber) {
+            const whatsappLink = `https://wa.me/${whatsappNumber}`;
+            window.open(whatsappLink, '_blank');
+        }
+    };
+    let filteredData = dataarr;
 
-              <div className='card  img-zoom boxshadow ' style={{cursor:"pointer"}} onClick={openWhatsappChat} >
-                <img src={logo1} className='card-img-top pb-1 ' alt='no pic' />
-                <div className='card-body ' style={{ padding: 0 ,cursor:"pointer"}}>
-                  <div
-                    className="px-2 "
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <h5
-                      className="card-title "
-                      style={{
-                        textTransform: "uppercase",
-                        fontWeight: "bolder",
-                        fontFamily: " 'Playfair Display', sans-serif;",
-                      }}
-                    >
-                      {item.title}
-                    </h5>
-                    <h5 className="card-title">{item.price}</h5>
-                  </div>
-                  <p
-                    className="card-text px-2  fs-5"
-                    style={{ textTransform: "uppercase" }}
-                  >
-                    {" "}
-                    {item.category}
-                  </p>
-                  <div
-                    style={{
-                      width: "100",
-                      backgroundColor: getRandomColor(),
-                      color: "white",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "2rem",
-                      borderRadius: "3px",
-                    }}
-                  >
-                    <a href="/">Buy Now</a>
-                  </div>
+    if (category !== "All") {
+        const d = dataarr.filter((prod) => {
+            return prod?.category === category
+        })
+        filteredData = d
+
+    }
+    const data = search(filteredData, query) ?? [];
+    let pages = Math.ceil(dataarr?.length / 16);
+    let [curr, setcurr] = useState(1);
+    const currData = data?.slice((curr - 1) * 16, curr * 16);
+
+    return (
+        <>
+            <div className="container px-5">
+                <div className='row '>
+                    <div className='col-md-9 my-2'>
+                        <SearchBar value={query} setValue={setQuery} width={'w-2rem'} />
+                    </div>
+                    <div className='col-md-3 my-2'>
+                        <MySelect
+                            name='Category'
+                            setter={setCategory}
+                            values={["All", ...categories]}
+                            curr={category}
+                        />
+                    </div>
                 </div>
-              </div>
-              </div>
+                <div className="row">
+                    {currData.map((item, index) => (
+                        <ItemCard item={item} key={index} openWhatsappChat={openWhatsappChat} />
+                    ))}
+                </div>
+                <div className="d-flex justify-content-end my-4">
+                    <Pagination onChange={(e, val) => {
+                        setcurr(val)
+                    }} color="primary" count={pages} />
+
+                </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 };
 
 export default ItemsSection;
