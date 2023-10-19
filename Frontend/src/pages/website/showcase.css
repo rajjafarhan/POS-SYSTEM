@@ -152,3 +152,30 @@
     
   
     /* //////////////////////////SHOWCASE END///////////////// */
+
+
+
+
+/* For WebKit based browsers */
+.item-bg::-webkit-scrollbar {
+  width: 5px;
+}
+
+.item-bg::-webkit-scrollbar-track {
+  background: lightyellow
+}
+
+.item-bg::-webkit-scrollbar-thumb {
+  background: lightyellow
+}
+
+.item-bg::-webkit-scrollbar-thumb:hover {
+  background: lightyellow
+}
+
+/* For Firefox */
+.item-bg{
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
