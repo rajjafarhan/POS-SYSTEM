@@ -3,7 +3,8 @@
     height: 70vh;
     display: flex;
     margin: auto;
-    border:2px solid rgb(2, 91, 70);
+    /* border:2px solid rgb(2, 91, 70); */
+    box-shadow:0 0 8px 1px rgb(166, 111, 1)
    
   }
 
