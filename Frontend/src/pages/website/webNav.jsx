@@ -66,7 +66,7 @@ const CustomNavbar = () => {
                 className="nav-link active text-light mx-5 fw-bold borderNav"
                 aria-current="page"
                 href="#"
-              >
+              ><i className="fa-solid fa-house mx-2"></i>
                 Home
               </a>
       </Link>
@@ -76,7 +76,7 @@ const CustomNavbar = () => {
               <a
                 className="nav-link text-light fw-bold borderNav mx-5"
                 href="#aboutus"
-              >
+              ><i className="fa-solid fa-circle-info mx-2"></i>
                 About Us
               </a>
             </li>
@@ -84,7 +84,7 @@ const CustomNavbar = () => {
               <a
                 className="nav-link text-light fw-bold borderNav mx-5"
                 href="#contactus"
-              >
+              ><i className="fa-solid fa-phone mx-2"></i>
                 Contact Us
               </a>
             </li>
@@ -94,7 +94,7 @@ const CustomNavbar = () => {
               <a
                 className="nav-link text-light fw-bold borderNav mx-5"
                 href="#"
-              >
+              ><i className="fa-solid fa-cubes-stacked mx-2"></i>
                 Products
               </a>
       </Link>

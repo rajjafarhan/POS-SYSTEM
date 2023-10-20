@@ -34,7 +34,7 @@ const ItemCard = ({item, openWhatsappChat}) => {
                             >
                                 {item?.label}
                             </h5>
-                            <h5 className="card-title ">{item?.sellingPrice}rs</h5>
+                            <h5 style={{fontSize:"15px",fontWeight:"bold"}} className="card-title ">{item?.sellingPrice} PKR</h5>
                         </div>
                         <p
                             className="card-text px-2  "
@@ -53,6 +53,7 @@ const ItemCard = ({item, openWhatsappChat}) => {
                                 alignItems: "center",
                                 height: "2rem",
                                 borderRadius: "3px",
+                                marginTop:"3px"
                             }}
                         >
                             <p >Buy Now</p>
