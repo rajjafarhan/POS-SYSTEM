@@ -17,10 +17,10 @@ const Footer = () => {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-sm-4 col-md-3 items">
-              <h3 style={{fontSize:"2rem",fontWeight:"3rem"}} className="f-caprasimo text-white"> MS <span className="text-mustard f-caprasimo">ENTERPRISE</span></h3>
+              <h3 style={{fontSize:"1.5rem",fontWeight:"3rem"}} className="f-caprasimo text-white"> MS <span className="text-mustard f-caprasimo">ENTERPRISE</span></h3>
               <ul>
                 
-              <li  style={{fontSize:"1rem",color:"white",fontWeight:"4rem"}}> <a href="/"> Ceramics and Sanitary</a></li>
+              <li  style={{fontSize:"1rem",color:"black",fontWeight:"4rem"}}> <Link style={{color:"black"}} href="/"> Ceramics and Sanitary</Link></li>
 
                 <li><Link to={'/'}><img style={{height:"7rem",width:"50%"}} src={logo} alt="" /></Link></li>
               </ul>

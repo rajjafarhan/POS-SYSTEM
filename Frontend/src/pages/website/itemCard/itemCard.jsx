@@ -12,7 +12,7 @@ const ItemCard = ({item, openWhatsappChat}) => {
     };
     return (
 
-        <div className='col-md-3 my-3' >
+        <div className='col-md-4 col-lg-3 my-3' >
             <div className='mx-2'>
 
                 <div className='card  img-zoom boxshadow ' style={{cursor: "pointer"}} onClick={openWhatsappChat} >
@@ -28,7 +28,7 @@ const ItemCard = ({item, openWhatsappChat}) => {
                                     textTransform: "uppercase",
                                     fontWeight: "bolder",
                                     fontFamily: " 'Playfair Display', sans-serif;",
-                                    height:"40px",
+                                    height:"45px",
                                     fontSize:"15px"
                                 }}
                             >

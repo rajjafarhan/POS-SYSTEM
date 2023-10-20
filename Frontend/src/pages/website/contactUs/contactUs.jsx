@@ -97,7 +97,7 @@ const ContactUs = () => {
                   </div>
                   <div className='d-flex flex-column g-1'>
                     <h4 style={{color:"rgb(2, 150, 179)",fontWeight:"bolder"}}>Email</h4>
-                    <p style={{color:"white",fontWeight:"bolder",fontSize:"1rem",wordWrap:"break-word"}}>Muhammadsoban075@gmail .com</p>
+                    <p style={{color:"white",fontWeight:"bolder",fontSize:"1rem",wordWrap:"break-word"}}> <a href='mailto:muhammadsoban075@gmail.com'>Muhammadsoban075@gmail .com</a></p>
                   </div>
                 </div>
               </div>

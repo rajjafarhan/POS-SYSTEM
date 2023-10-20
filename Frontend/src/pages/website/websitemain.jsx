@@ -141,6 +141,7 @@ const Website = () => {
                     style="  color:'rgba(52, 32, 1, 0.795)' "
                     heading='Our Progress'
                 />
+                <div className='container d-flex justify-content-center '><p style={{width:"90%", fontWeight:"bold",color:"rgba(52, 32, 1, 0.795)"}} className='text-center mb-4 fs-5'>Every step in our journey with MS Enterprise has been a testament to progress and growth. We're committed to reaching new heights and delivering excellence with every project!</p></div>
                 <div className="row my-2">
                     <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", gap: "1rem"}} className="col-md-4  ">
                         <MyCircularProgress totalCount={500} />
