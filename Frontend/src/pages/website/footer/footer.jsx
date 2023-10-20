@@ -3,6 +3,13 @@ import "./footer.css";
 import logo from "../../../../assets/logo1.png";
 import { Link } from "react-router-dom";
 
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  
+    faArrowRight 
+  } from "@fortawesome/free-solid-svg-icons";
+
 const Footer = () => {
   return (
     <div className="footer-clean anim  my-2">
@@ -33,14 +40,11 @@ const Footer = () => {
               <ul>
                 <li> <Link className="text-black fs-5 " to={`/`}>Popular category  </Link></li>
                 <li><Link className="text-black fs-5" to={`/`}> Place your Order</Link> </li>
-                {/* <li><Link className="text-black " to={`/`}> Art & Craft</Link></li>
-                <li><Link className="text-black " to={`/`}> Technology</Link></li>
-                <li><Link className="text-black " to={`/`}> Business</Link></li>
-                <li><Link className="text-black " to={`/`}> Travel</Link></li> */}
+              
               </ul>
             </div>
             <div className="col-lg-3 items socials">
-              <a href="/"><i style={{color:"blue"}} className="fa-brands fa-facebook"></i></a>
+              <a href="/"><FontAwesomeIcon icon={faArrowRight} /></a>
               <a href="/"><i style={{color:"red"}} className="fa-brands fa-instagram"></i></a>
               <a href="/"><i style={{color:"yellow"}} className="fa-brands fa-snapchat"></i></a>
               <a href="/"><i style={{color:"blue"}} className="fa-brands fa-twitter"></i></a>

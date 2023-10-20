@@ -19,24 +19,26 @@ const ItemCard = ({item, openWhatsappChat}) => {
                     <img width={"180px"} height={"150px"} src={item?.imgUrl === "" ? logo1 : item?.imgUrl} className='card-img-top pb-1 ' alt='no pic' />
                     <div className='card-body ' style={{padding: 0, cursor: "pointer"}}>
                         <div
-                            className="px-2 "
+                            className="px-2 mt-2"
                             style={{display: "flex", justifyContent: "space-between"}}
                         >
                             <h5
-                                className="card-title "
+                                className="card-title  "
                                 style={{
                                     textTransform: "uppercase",
                                     fontWeight: "bolder",
                                     fontFamily: " 'Playfair Display', sans-serif;",
+                                    height:"40px",
+                                    fontSize:"15px"
                                 }}
                             >
                                 {item?.label}
                             </h5>
-                            <h5 className="card-title">{item?.sellingPrice}rs</h5>
+                            <h5 className="card-title ">{item?.sellingPrice}rs</h5>
                         </div>
                         <p
-                            className="card-text px-2  fs-5"
-                            style={{textTransform: "uppercase"}}
+                            className="card-text px-2  "
+                            style={{textTransform: "uppercase",fontSize:"14px",fontWeight:"bold"}}
                         >
                             {" "}
                             {item?.category}

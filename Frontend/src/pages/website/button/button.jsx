@@ -8,7 +8,7 @@ const Button =({text})=>{
     return(
         <>
 
-        <div className="d-flex justify-content-center ">
+        <div className="d-flex justify-content-center my-5 ">
 
         <button className="myexplorebutton"><a className="mytextstyle mx-2" href="/">{text} <FontAwesomeIcon icon={faArrowRight} /></a></button>
         </div>
