@@ -1,4 +1,5 @@
 import Showcase from './bgVideo'
+import { Link } from 'react-router-dom';
 import {Helmet} from "react-helmet";
 import {fetchWebsiteProducts} from '../../functions/website'
 import WebNavbar from './webNav'
@@ -132,7 +133,10 @@ const Website = () => {
                         <ItemCard item={item} key={index} openWhatsappChat={openWhatsappChat} />
                     ))}
                 </div>
+        <Link to={'item'}>
+
                 <Button text="Explore Now" />
+        </Link>
             </div>
 
 

@@ -105,7 +105,7 @@ const ContactUs = () => {
             <div  className='col-md-6 '>
 
 
-                        <form action="https://formsubmit.co/siddiquiusman328@gmail.com" method="POST">
+                        <form action="https://formsubmit.co/muhammadsoban075@gmail.com" method="POST">
                 <div style={{
                     height:'29rem',
                     backgroundColor:'white',
