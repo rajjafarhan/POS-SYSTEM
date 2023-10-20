@@ -106,7 +106,7 @@ const Website = () => {
   }
     const dataarr = products?.data?.data?.data ?? []
     const currData = dataarr?.slice(0,8)
-    const whatsappNumber = "03447951594"
+    const whatsappNumber = "+923358782828"
     const openWhatsappChat = () => {
         if (whatsappNumber) {
             const whatsappLink = `https://wa.me/${whatsappNumber}`;
