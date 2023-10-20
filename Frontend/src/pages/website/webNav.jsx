@@ -75,7 +75,7 @@ const CustomNavbar = () => {
             <li className="nav-item ">
               <a
                 className="nav-link text-light fw-bold borderNav mx-5"
-                href="#"
+                href="#aboutus"
               >
                 About Us
               </a>
@@ -83,7 +83,7 @@ const CustomNavbar = () => {
             <li className="nav-item">
               <a
                 className="nav-link text-light fw-bold borderNav mx-5"
-                href="#"
+                href="#contactus"
               >
                 Contact Us
               </a>

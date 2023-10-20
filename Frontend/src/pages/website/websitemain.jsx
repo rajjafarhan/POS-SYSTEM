@@ -100,7 +100,7 @@ const Website = () => {
       <Button text="Explore Now"/>
       
       
-      <div className='container my-4'>
+      <div id="aboutus" className='container my-4'>
       <Heading
         style="  color:'rgba(52, 32, 1, 0.795)' "
         heading='Our Progress'
