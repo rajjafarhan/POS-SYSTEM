@@ -1,6 +1,6 @@
 const ReviewCard = ({ reviewBody, imgSrc, name, starCount }) => {
     return (
-      <div className="reviewcard bg-light shadow-lg ">
+      <div className="reviewcard bg-light shadow-lg  my-3">
         <div className="h-100 w-100 container position-relative">
           <p>{reviewBody}</p>
           <div className="position-absolute d-flex  align-items-center">

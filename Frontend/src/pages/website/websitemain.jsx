@@ -20,6 +20,8 @@ import avatar6 from "../../../assets/avatar6.jpg"
 import avatar7 from "../../../assets/avatar7.avif"
 import avatar8 from "../../../assets/avatar8.jpg"
 import avatar9 from "../../../assets/avatar9.jpg"
+import Button from './button/button'
+
 
 const reviews = [
   {
@@ -95,6 +97,8 @@ const Website = () => {
       <WebNavbar />
       <Showcase />
       <Heading style="  color:'rgba(52, 32, 1, 0.795)' " heading='OUR ITEMS' />
+      <Button text="Explore Now"/>
+      
       
       <div className='container my-4'>
       <Heading
