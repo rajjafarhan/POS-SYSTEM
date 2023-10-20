@@ -9,7 +9,7 @@
   }
   .anim{
     
-    background: linear-gradient(45deg, rgb(215, 144, 3), #f4dea5,rgb(166, 111, 1));
+    background: linear-gradient(45deg, rgb(51, 44, 31), #f4dea5,rgb(166, 111, 1));
     background-size: 600% 600%;
     animation: gradientAnimation 10s ease infinite;
   }
