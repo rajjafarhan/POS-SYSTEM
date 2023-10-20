@@ -6,15 +6,25 @@ import MySelect from '../../components/select/select'
 import Pagination from '@mui/material/Pagination';
 import ItemCard from './itemCard/itemCard.jsx'
 import {useQuery} from "@tanstack/react-query";
+import LoaderLayout from "../../components/loaders/loaderLayout";
+import GeneralLoader from "../../components/loaders/generalLoader";
 
 
 const ItemsSection = () => {
     const products = useQuery(['fetchWebsiteProducts'], fetchWebsiteProducts)
+    const [query, setQuery] = useState('')
+    const [category, setCategory] = useState('All')
+    let [curr, setcurr] = useState(1);
+  if (products?.isLoading) {
+    return (
+      <LoaderLayout>
+        <GeneralLoader />
+      </LoaderLayout>
+    );
+  }
     const dataarr = products?.data?.data?.data ?? []
     const categories = products?.data?.data?.categories ?? []
 
-    const [query, setQuery] = useState('')
-    const [category, setCategory] = useState('All')
     const whatsappNumber='03358782828';
     const openWhatsappChat = () => {
         if (whatsappNumber) {
@@ -33,7 +43,6 @@ const ItemsSection = () => {
     }
     const data = search(filteredData, query) ?? [];
     let pages = Math.ceil(dataarr?.length / 16);
-    let [curr, setcurr] = useState(1);
     const currData = data?.slice((curr - 1) * 16, curr * 16);
 
     return (
