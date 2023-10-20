@@ -1,9 +1,11 @@
 import Showcase from './bgVideo'
+import {fetchWebsiteProducts} from '../../functions/website'
 import WebNavbar from './webNav'
 import Heading from './heading.jsx'
 import ItemsSection from './itemsection'
 import FaqSection from './faq/faq'
-
+import {useQuery} from "@tanstack/react-query";
+import ItemCard from './itemCard/itemCard.jsx'
 import Banner from './banner/banner'
 import ContactUs from './contactUs/contactUs'
 import SimpleSlider from './reviewCard/simpleSlider'
@@ -89,12 +91,30 @@ const reviews = [
 ]
 
 const Website = () => {
+    const products = useQuery(['fetchWebsiteProducts'], fetchWebsiteProducts)
+    const dataarr = products?.data?.data?.data ?? []
+    const currData = dataarr?.slice(0,8)
+    const whatsappNumber = "03447951594"
+    const openWhatsappChat = () => {
+        if (whatsappNumber) {
+            const whatsappLink = `https://wa.me/${whatsappNumber}`;
+            window.open(whatsappLink, '_blank');
+        }
+    };
   return (
     <div style={{backgroundColor:""}}>
      
       <WebNavbar />
       <Showcase />
       <Heading style="  color:'rgba(52, 32, 1, 0.795)' " heading='OUR ITEMS' />
+      <div className='container'>
+
+                <div className="row">
+                    {currData.map((item, index) => (
+                        <ItemCard item={item} key={index} openWhatsappChat={openWhatsappChat} />
+                    ))}
+                </div>
+      </div>
       
       <div id="aboutus" className='container my-4'>
       <Heading

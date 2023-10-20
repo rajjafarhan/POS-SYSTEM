@@ -53,7 +53,7 @@ const ItemCard = ({item, openWhatsappChat}) => {
                                 borderRadius: "3px",
                             }}
                         >
-                            <a href="/">Buy Now</a>
+                            <p >Buy Now</p>
                         </div>
                     </div>
                 </div>
