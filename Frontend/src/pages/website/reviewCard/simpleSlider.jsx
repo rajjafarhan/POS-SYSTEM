@@ -43,7 +43,7 @@ const SimpleSlider = ({ children }) => {
   };
 
   return (
-    <div className="slider-parent">
+    <div  className="slider-parent">
       <Slider className="h-20" {...settings}>
         {children}
       </Slider>

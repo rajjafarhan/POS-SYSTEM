@@ -22,24 +22,24 @@ const Footer = () => {
                 
               <li  style={{fontSize:"1rem",color:"white",fontWeight:"4rem"}}> <a href="/"> Ceramics and Sanitary</a></li>
 
-                <li><a href="/"><img style={{height:"7rem",width:"50%"}} src={logo} alt="" /></a></li>
+                <li><Link to={'/'}><img style={{height:"7rem",width:"50%"}} src={logo} alt="" /></Link></li>
               </ul>
             </div>
             <div className="col-sm-4 col-md-3 items">
               <h3 className="fs-4">HOME</h3>
               <ul>
-                <li><a className="fs-5" href="/">About Us</a></li>
-                <li><a className="fs-5" href="/">Contact Us</a></li>
-                <li><a className="fs-5" href="/">Reviews</a></li>
-                <li><a className="fs-5" href="/">Faqs</a></li>
-                <li><a className="fs-5" href="/">Our Location</a></li>
+                <li><a className="fs-5" href="#aboutus">About Us</a></li>
+                <li><a className="fs-5" href="#contactus">Contact Us</a></li>
+                <li><a className="fs-5" href="#reviews">Reviews</a></li>
+                <li><a className="fs-5" href="#faqs">Faqs</a></li>
+                <li><a className="fs-5" href="#location">Our Location</a></li>
               </ul>
             </div>
             <div className="col-sm-4 col-md-3 items">
               <h3 className="fs-4">OUR ITEM&apos;S </h3>
               <ul>
-                <li> <Link className="text-black fs-5 " to={`/`}>Popular category  </Link></li>
-                <li><Link className="text-black fs-5" to={`/`}> Place your Order</Link> </li>
+                <li> <Link className="text-black fs-5 " to={`/item`}>Popular category  </Link></li>
+                <li><Link className="text-black fs-5" to={`/item`}> Place your Order</Link> </li>
               
               </ul>
             </div>
