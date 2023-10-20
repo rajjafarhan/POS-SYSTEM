@@ -15,7 +15,7 @@ const ItemsSection = () => {
 
     const [query, setQuery] = useState('')
     const [category, setCategory] = useState('All')
-    const [whatsappNumber, setWhatsappNumber] = useState('03363453451');
+    const whatsappNumber='03358782828';
     const openWhatsappChat = () => {
         if (whatsappNumber) {
             const whatsappLink = `https://wa.me/${whatsappNumber}`;
