@@ -1,4 +1,5 @@
 import Showcase from './bgVideo'
+import {Helmet} from "react-helmet";
 import {fetchWebsiteProducts} from '../../functions/website'
 import WebNavbar from './webNav'
 import Heading from './heading.jsx'
@@ -13,6 +14,8 @@ import ReviewCard from './reviewCard/reviewCard'
 import Map from './map/map'
 import Footer from './footer/footer'
 import MyCircularProgress from './circleCount/progress'
+import LoaderLayout from '../../components/loaders/loaderLayout'
+import GeneralLoader from '../../components/loaders/generalLoader'
 import avatar1 from "../../../assets/avatar1.png"
 import avatar2 from "../../../assets/avatar2.jpg"
 import avatar3 from "../../../assets/avatar3.png"
@@ -94,6 +97,13 @@ const reviews = [
 
 const Website = () => {
     const products = useQuery(['fetchWebsiteProducts'], fetchWebsiteProducts)
+  if (products?.isLoading) {
+    return (
+      <LoaderLayout>
+        <GeneralLoader />
+      </LoaderLayout>
+    );
+  }
     const dataarr = products?.data?.data?.data ?? []
     const currData = dataarr?.slice(0,8)
     const whatsappNumber = "+923358782828"
@@ -106,6 +116,12 @@ const Website = () => {
   return (
     <div style={{backgroundColor:""}}>
      
+      <Helmet>
+                <meta charSet="utf-8" />
+                <title>MS Enterprise</title>
+      <link rel="icon" type="image/png" href="../../../assets/logo1.png" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            </Helmet>
       <WebNavbar />
       <Showcase />
       <Heading style="  color:'rgba(52, 32, 1, 0.795)' " heading='OUR ITEMS' />

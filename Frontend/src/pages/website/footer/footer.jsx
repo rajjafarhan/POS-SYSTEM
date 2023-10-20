@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  
+    
     faArrowRight 
   } from "@fortawesome/free-solid-svg-icons";
 
@@ -44,7 +44,7 @@ const Footer = () => {
               </ul>
             </div>
             <div className="col-lg-3 items socials">
-              <a href="/"><FontAwesomeIcon icon={faArrowRight} /></a>
+              <a href="/"><i style={{color:"red"}} className="fa-brands fa-facebook"></i></a>
               <a href="/"><i style={{color:"red"}} className="fa-brands fa-instagram"></i></a>
               <a href="/"><i style={{color:"yellow"}} className="fa-brands fa-snapchat"></i></a>
               <a href="/"><i style={{color:"blue"}} className="fa-brands fa-twitter"></i></a>
