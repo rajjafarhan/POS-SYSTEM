@@ -66,7 +66,7 @@ const CustomNavbar = () => {
                 className="nav-link active text-light mx-5 fw-bold borderNav"
                 aria-current="page"
                 href="#"
-              >
+              ><i class="fa-solid fa-house"></i>
                 Home
               </a>
       </Link>

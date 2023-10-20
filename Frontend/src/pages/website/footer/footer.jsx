@@ -12,7 +12,7 @@ import {
 
 const Footer = () => {
   return (
-    <div className="footer-clean anim  my-2">
+    <div className="footer-clean anim  my-2 mt-5">
       <footer className="">
         <div className="container">
           <div className="row justify-content-center">
