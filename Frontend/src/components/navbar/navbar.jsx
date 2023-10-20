@@ -1,4 +1,5 @@
 import "./sidebar.css";
+import { Link } from "react-router-dom";
 import SideBar from "./sidebar";
 
 const NavBar = () => {
@@ -8,9 +9,12 @@ const NavBar = () => {
       <SideBar />
       <nav className="d-flex bg-dgreen justify-content-between align-items-center py-3 text-light">
         <div className="ms-5">
+      <Link to={'/pos/dashboard'}>
+
           <h2 className="x-font">
             POS <span className="text-yellow">System</span>
           </h2>
+      </Link>
         </div>
         <div className="d-flex align-items-center justify-content-around me-5">
           <img src="" alt="" />
