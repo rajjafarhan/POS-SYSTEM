@@ -28,7 +28,7 @@ const Showcase = () => {
         </div>
         <ul className="social">
           <li>
-      <a href="/">
+      <a href="https://www.facebook.com/sobi.rider">
       <img src="https://i.ibb.co/x7P24fL/facebook.png" alt="Facebook" />
       </a>
 
