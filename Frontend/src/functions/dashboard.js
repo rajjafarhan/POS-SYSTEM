@@ -5,7 +5,7 @@ export const fetchDashboardData = async ({ queryKey }) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   const res = await axios.get(
-    `https://posbackend-f3it.onrender.com/api/dashboard/getstates/${year}`,
+    `https://backend-ten-amber.vercel.app/api/dashboard/getstates/${year}`,
     {
       headers: {
         authorization: bearer,
@@ -22,7 +22,7 @@ export const fetchMonthStates = async ({ queryKey }) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   const res = await axios.get(
-    `https://posbackend-f3it.onrender.com/api/dashboard/getprofit/${month}/${year}`,
+    `https://backend-ten-amber.vercel.app/api/dashboard/getprofit/${month}/${year}`,
     {
       headers: {
         authorization: bearer,
@@ -34,7 +34,7 @@ export const fetchMonthStates = async ({ queryKey }) => {
 export const fetchYears = async () => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  const res = await axios.get("https://posbackend-f3it.onrender.com/api/dashboard/years", {
+  const res = await axios.get("https://backend-ten-amber.vercel.app/api/dashboard/years", {
     headers: {
       authorization: bearer,
     },

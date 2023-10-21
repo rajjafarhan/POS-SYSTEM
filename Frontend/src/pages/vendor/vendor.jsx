@@ -135,7 +135,7 @@ const VendorPage = () => {
       ...prevComp,
       {
         product: "",
-        productQty: 0,
+        productQty: "1",
         totalPrice: 0,
       },
     ]);

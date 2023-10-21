@@ -17,7 +17,8 @@ export const checkPass = (pass1, pass2) => {
 export const validateProducts = (products) => {
   let isValid = true;
   products.forEach((prod) => {
-    if (prod?.product === "" || prod?.productQty === "") {
+      console.log(prod?.product)
+    if (prod?.product === "" || !prod?.product || prod?.productQty === "") {
       isValid = false;
     }
     if (isValid) {
