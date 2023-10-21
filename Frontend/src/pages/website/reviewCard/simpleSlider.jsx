@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import "../reviewcard/reviewcard.css";
+import "../reviewCard/reviewCard.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
