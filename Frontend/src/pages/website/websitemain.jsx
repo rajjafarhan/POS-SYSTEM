@@ -137,6 +137,10 @@ const Website = () => {
 
                 <Button text="Explore Now" />
         </Link>
+        <Link to={'/pos/dashboard'}>
+
+                <Button text="Explore Now" />
+        </Link>
             </div>
 
 
