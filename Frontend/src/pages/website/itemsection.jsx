@@ -9,6 +9,17 @@ import {useQuery} from "@tanstack/react-query";
 import LoaderLayout from "../../components/loaders/loaderLayout";
 import GeneralLoader from "../../components/loaders/generalLoader";
 
+const getUniqueItems = (arr) => {
+    let uniqueItems = []
+    arr.forEach((elem)=> {
+        if (!uniqueItems.includes(elem.toLowerCase())){
+            uniqueItems.push(elem.toLowerCase())
+        }
+    })
+    console.log("uniquee",uniqueItems)
+
+    return uniqueItems;
+}
 
 const ItemsSection = () => {
     const products = useQuery(['fetchWebsiteProducts'], fetchWebsiteProducts)
@@ -23,7 +34,9 @@ const ItemsSection = () => {
     );
   }
     const dataarr = products?.data?.data?.data ?? []
-    const categories = products?.data?.data?.categories ?? []
+    
+    const rawCategories = products?.data?.data?.categories ?? []
+    const categories = getUniqueItems(rawCategories)
 
     const whatsappNumber='03358782828';
     const openWhatsappChat = () => {
@@ -36,7 +49,7 @@ const ItemsSection = () => {
 
     if (category !== "All") {
         const d = dataarr.filter((prod) => {
-            return prod?.category === category
+            return prod?.category.toLowerCase() === category.toLowerCase()
         })
         filteredData = d
 

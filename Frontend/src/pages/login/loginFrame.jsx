@@ -16,6 +16,7 @@ const LoginFrame = () => {
       localStorage.setItem("name", data?.data?.name);
       toast.success("Logged in successfully!");
       navigate("/pos/dashboard");
+        location.reload()
     },
     onError: (error) => {
       if (error?.response?.data?.message === "User not found") {
