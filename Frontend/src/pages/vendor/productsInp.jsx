@@ -1,4 +1,5 @@
 import { TextField } from "@mui/material";
+import { matchSorter } from 'match-sorter';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Autocomplete from "@mui/material/Autocomplete";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -41,8 +42,10 @@ const ProductsInput = ({
       );
     }
   }, [product, qtyVal]);
+    const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue ,  { keys: ['label'], threshold: 0.2  });
 
   return (
+    
     <div className="d-flex flex-wrap jf-between inp-mob  align-items-center mt-3">
       <div className="w-15rem">
         <Autocomplete
@@ -51,6 +54,7 @@ const ProductsInput = ({
             setProduct(val, id);
           }}
           disablePortal
+      filterOptions={filterOptions}
           id="combo-box-demo"
           options={products ?? []}
           renderInput={(params) => <TextField {...params} label="Product" />}
