@@ -10,13 +10,15 @@ import {
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { search } from "../../helpers/search";
+import { fuzzySearch } from "../../helpers/search";
 
-const InventoryTable = ({ pData, refetch, searchParam, searchBy }) => {
+
+const InventoryTable = ({ curr, setcurr, pData, refetch, searchParam}) => {
   const [currItem, setCurrItem] = useState();
   const [showItemModal, setShowItemModal] = useState(false);
   const [showDelModal, setShowDelModal] = useState(false);
   const headings = [
-    "Id",
+    "No.",
     "Name",
     "Category",
     "Qty",
@@ -27,9 +29,8 @@ const InventoryTable = ({ pData, refetch, searchParam, searchBy }) => {
     "Delete",
   ];
 
-  const data = search(pData, searchParam, searchBy) ?? [];
+  const data = fuzzySearch(pData, searchParam) ?? [];
   let pages = Math.ceil(data?.length / 10);
-  let [curr, setcurr] = useState(1);
   const next = () => {
     setcurr(curr + 1);
   };
@@ -57,7 +58,9 @@ const InventoryTable = ({ pData, refetch, searchParam, searchBy }) => {
           {currData?.map((d, index) => {
             return (
               <tr key={index} className="cursor-pointer nbg z-0">
-                <td className="p-3 text-center">{index + 1}</td>
+                <td className="p-3 text-center">
+{index !== 9 ? `${curr-1}${index+1}` : `${curr*10}` }
+                </td>
                 <td className="p-3 text-center">
                   {d.label === "" ? "------" : d.label}
                 </td>

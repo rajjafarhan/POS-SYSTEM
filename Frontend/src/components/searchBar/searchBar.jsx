@@ -1,6 +1,6 @@
 import "./seachBar.css";
 
-const SearchBar = ({ refetch, value, setValue, width }) => {
+const SearchBar = ({text, setcurr, refetch, value, setValue, width }) => {
   return (
     <div className="s-div">
       <form className="form">
@@ -24,9 +24,12 @@ const SearchBar = ({ refetch, value, setValue, width }) => {
         </p>
         <input
           className={`input input-s ${width}`}
-          placeholder="Search"
+          placeholder={text ? text : "Search"}
           value={value}
           onChange={(e) => {
+              if (setcurr){
+                  setcurr(1)
+              }
             setValue(e.target.value);
           }}
           required=""

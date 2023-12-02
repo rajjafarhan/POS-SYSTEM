@@ -1,3 +1,5 @@
+import {matchSorter} from 'match-sorter';
+
 export const search = (arr, query, searchBy) => {
   if (!query) {
     return arr;
@@ -5,6 +7,7 @@ export const search = (arr, query, searchBy) => {
     const updatedArr = arr.filter((prod) => {
       return prod?.label.toLowerCase().includes(query.toLowerCase());
     });
+      console.log(updatedArr)
     return updatedArr;
   } else {
     const updatedArr = arr.filter((prod) => {
@@ -13,3 +16,7 @@ export const search = (arr, query, searchBy) => {
     return updatedArr;
   }
 };
+
+ export const fuzzySearch = (options,  inputValue ) => {
+    return matchSorter(options, inputValue, { keys: ['label','category'] });
+  };

@@ -15,7 +15,7 @@ const Inventory = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [searchVal, setSearchVal] = useState("");
-  const [searchBy, setSearchBy] = useState("");
+  let [curr, setcurr] = useState(1);
 
   return (
     <section className="d_main">
@@ -25,14 +25,10 @@ const Inventory = () => {
           value={searchVal}
           setValue={setSearchVal}
           width={"w-30rem"}
+      text={"Search by name or category."}
+            setcurr={setcurr}
         />
         <div className="d-flex bnts justify-content-center align-items-center ">
-          <MySelect
-            name="Search by"
-            setter={setSearchBy}
-            values={["label", "category"]}
-            curr={searchBy}
-          />
           <AddButton onChange={setShowModal} />
         </div>
       </div>
@@ -40,9 +36,10 @@ const Inventory = () => {
         <div className="d-flex t-div justify-content-center align-items-start">
           <InventoryTable
             pData={pData}
+      curr={curr}
+      setcurr={setcurr}
             refetch={refetch}
             searchParam={searchVal}
-            searchBy={searchBy}
           />
         </div>
       </div>
