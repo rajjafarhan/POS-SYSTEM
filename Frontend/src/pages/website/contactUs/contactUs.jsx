@@ -17,12 +17,12 @@ const ContactUs = () => {
         <div className='d-flex flex-column container  '>
           <h1
             className='d-flex justify-content-center my-2 mx-auto'
-            style={{ fontSize: '3.5rem' ,color:"white"}}
+            style={{ fontSize: '3.5rem', color: "white" }}
           >
             Contact Us
           </h1>
-          <p style={{color:'white'}} className='d-flex justify-content-center fs-5'>
-          Get in touch with us for all your inquiries and needs at MS Enterprise
+          <p style={{ color: 'white' }} className='d-flex justify-content-center fs-5'>
+            Get in touch with us for all your inquiries and needs at MS Enterprise
           </p>
         </div>
 
@@ -32,7 +32,7 @@ const ContactUs = () => {
               className='col-md-6 d-flex'
               style={{
                 alignItems: 'center',
-                height:'30rem'
+                height: '30rem'
               }}
             >
               <div className='d-flex flex-column  slideup-animation'>
@@ -53,8 +53,8 @@ const ContactUs = () => {
                     />
                   </div>
                   <div className='d-flex flex-column g-1 '>
-                    <h4 style={{color:"rgb(2, 150, 179)",fontWeight:"bolder"}}>Address</h4>
-                    <p style={{color:"white",fontWeight:"bold",fontSize:"1rem"}}>Plot 356,36/C Korangi #5 </p>
+                    <h4 style={{ color: "rgb(2, 150, 179)", fontWeight: "bolder" }}>Address</h4>
+                    <p style={{ color: "white", fontWeight: "bold", fontSize: "1rem" }}>Plot 356,36/C Korangi #5 </p>
                   </div>
                 </div>
 
@@ -75,8 +75,8 @@ const ContactUs = () => {
                     />
                   </div>
                   <div className='d-flex flex-column g-1'>
-                    <h4 style={{color:"rgb(2, 150, 179)",fontWeight:"bolder"}}>Phone</h4>
-                    <p style={{color:"white",fontWeight:"bolder"}}>03358782828</p>
+                    <h4 style={{ color: "rgb(2, 150, 179)", fontWeight: "bolder" }}>Phone</h4>
+                    <p style={{ color: "white", fontWeight: "bolder" }}>03358782828</p>
                   </div>
                 </div>
                 <div className='d-flex gap-3 my-2  border-bottom border-3'>
@@ -96,36 +96,36 @@ const ContactUs = () => {
                     />
                   </div>
                   <div className='d-flex flex-column g-1'>
-                    <h4 style={{color:"rgb(2, 150, 179)",fontWeight:"bolder"}}>Email</h4>
-                    <p style={{color:"white",fontWeight:"bolder",fontSize:"1rem",wordWrap:"break-word"}}> <a href='mailto:muhammadsoban075@gmail.com'>Muhammadsoban075@gmail .com</a></p>
+                    <h4 style={{ color: "rgb(2, 150, 179)", fontWeight: "bolder" }}>Email</h4>
+                    <p style={{ color: "white", fontWeight: "bolder", fontSize: "1rem", wordWrap: "break-word" }}> <a href='mailto:muhammadsoban075@gmail.com'>Muhammadsoban075@gmail .com</a></p>
                   </div>
                 </div>
               </div>
             </div>
-            <div  className='col-md-6 '>
+            <div className='col-md-6 '>
 
 
-                        <form action="https://formsubmit.co/muhammadsoban075@gmail.com" method="POST">
+              <form action="https://formsubmit.co/muhammadsoban075@gmail.com" method="POST">
                 <div style={{
-                    height:'29rem',
-                    backgroundColor:'white',
-                    boxShadow:" 0 0 8px 6px rgb(166, 111, 1)",
-                    borderRadius:"1rem"
+                  height: '29rem',
+                  backgroundColor: 'white',
+                  boxShadow: " 0 0 8px 6px rgb(166, 111, 1)",
+                  borderRadius: "1rem"
 
                 }} className='d-flex  flex-column my-5 p-5  slideup-animation'>
-                    <h2 style={{color:"rgb(2, 150, 179)"}} className='py-2'>Send Message</h2>
-                    <div className='d-flex flex-column gap-4'>
+                  <h2 style={{ color: "rgb(2, 150, 179)" }} className='py-2'>Send Message</h2>
+                  <div className='d-flex flex-column gap-4'>
                     <TextField fullWidth label=" Full Name" name="name" id="fullWidth" />
                     <TextField fullWidth label=" Email" name="email" id="fullWidth" />
                     <TextField fullWidth label="Message" name="message" id="fullWidth" />
-                    <button type='submit' className='cursor-pointer submitCon z-4'> <BsFillSendFill className='mx-1'/>Submit</button> 
-                    </div>
-                   
+                    <button type='submit' className='cursor-pointer submitCon z-4'> <BsFillSendFill className='mx-1' />Submit</button>
+                  </div>
+
 
 
 
                 </div>
-                        </form>
+              </form>
             </div>
           </div>
         </div>

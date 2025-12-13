@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import "./showcase.css";
 import video from "../../../assets/ceramics.mp4";
 
@@ -22,31 +22,18 @@ const Showcase = () => {
             ceramics. With a wide array of products catering to various styles
             and preferences, we ensure you find exactly what you're looking for.
           </p>
-      <Link to={'/item'}>
-      Explore
-      </Link>
+          <Link to={'/item'}>
+            Explore
+          </Link>
         </div>
-        <ul className="social">
+        {/* <ul className="social">
           <li>
-      <a href="https://www.facebook.com/sobi.rider">
-      <img src="https://i.ibb.co/x7P24fL/facebook.png" alt="Facebook" />
-      </a>
+            <a href="https://www.facebook.com/sobi.rider">
+              <i style={{ color: "blue", fontSize: "4rem" }} className="fa-brands fa-facebook"></i>
+            </a>
 
           </li>
-          <li>
-            <a href="/">
-              <img src="https://i.ibb.co/Wnxq2Nq/twitter.png" alt="Twitter" />
-            </a>
-          </li>
-          <li>
-            <a href="/">
-              <img
-                src="https://i.ibb.co/ySwtH4B/instagram.png"
-                alt="Instagram"
-              />
-            </a>
-          </li>
-        </ul>
+        </ul> */}
       </section>
     </>
   );
