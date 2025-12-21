@@ -1,7 +1,7 @@
 import logo1 from "../../../../assets/MSimg1.avif";
 
 
-const ItemCard = ({item, openWhatsappChat}) => {
+const ItemCard = ({ item, openWhatsappChat }) => {
     const getRandomColor = () => {
         const letters = "0123456789ABCDEF";
         let color = "#";
@@ -15,12 +15,12 @@ const ItemCard = ({item, openWhatsappChat}) => {
         <div className='col-md-4 col-lg-3 my-3' >
             <div className='mx-2'>
 
-                <div className='card  img-zoom boxshadow ' style={{cursor: "pointer"}} onClick={openWhatsappChat} >
+                <div className='card  img-zoom boxshadow ' style={{ cursor: "pointer" }} onClick={() => openWhatsappChat(item)} >
                     <img width={"180px"} height={"150px"} src={item?.imgUrl === "" ? logo1 : item?.imgUrl} className='card-img-top pb-1 ' alt='no pic' />
-                    <div className='card-body ' style={{padding: 0, cursor: "pointer"}}>
+                    <div className='card-body ' style={{ padding: 0, cursor: "pointer" }}>
                         <div
                             className="px-2 mt-2"
-                            style={{display: "flex", justifyContent: "space-between"}}
+                            style={{ display: "flex", justifyContent: "space-between" }}
                         >
                             <h5
                                 className="card-title  "
@@ -28,17 +28,17 @@ const ItemCard = ({item, openWhatsappChat}) => {
                                     textTransform: "uppercase",
                                     fontWeight: "bolder",
                                     fontFamily: " 'Playfair Display', sans-serif;",
-                                    height:"45px",
-                                    fontSize:"15px"
+                                    height: "45px",
+                                    fontSize: "15px"
                                 }}
                             >
                                 {item?.label}
                             </h5>
-                            <h5 style={{fontSize:"15px",fontWeight:"bold"}} className="card-title ">{item?.sellingPrice} PKR</h5>
+                            <h5 style={{ fontSize: "15px", fontWeight: "bold" }} className="card-title ">{item?.sellingPrice} PKR</h5>
                         </div>
                         <p
                             className="card-text px-2  "
-                            style={{textTransform: "uppercase",fontSize:"14px",fontWeight:"bold"}}
+                            style={{ textTransform: "uppercase", fontSize: "14px", fontWeight: "bold" }}
                         >
                             {" "}
                             {item?.category}
@@ -53,7 +53,7 @@ const ItemCard = ({item, openWhatsappChat}) => {
                                 alignItems: "center",
                                 height: "2rem",
                                 borderRadius: "3px",
-                                marginTop:"3px"
+                                marginTop: "3px"
                             }}
                         >
                             <p >Buy Now</p>

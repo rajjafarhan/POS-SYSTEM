@@ -1,22 +1,22 @@
-import React, {useEffect, useState} from "react";
-import {fetchWebsiteProducts} from '../../functions/website'
-import {search} from "../../helpers/search.js";
+import React, { useEffect, useState } from "react";
+import { fetchWebsiteProducts } from '../../functions/website'
+import { search } from "../../helpers/search.js";
 import SearchBar from '../../components/searchBar/searchBar.jsx'
 import MySelect from '../../components/select/select'
 import Pagination from '@mui/material/Pagination';
 import ItemCard from './itemCard/itemCard.jsx'
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import LoaderLayout from "../../components/loaders/loaderLayout";
 import GeneralLoader from "../../components/loaders/generalLoader";
 
 const getUniqueItems = (arr) => {
     let uniqueItems = []
-    arr.forEach((elem)=> {
-        if (!uniqueItems.includes(elem.toLowerCase())){
+    arr.forEach((elem) => {
+        if (!uniqueItems.includes(elem.toLowerCase())) {
             uniqueItems.push(elem.toLowerCase())
         }
     })
-    console.log("uniquee",uniqueItems)
+    console.log("uniquee", uniqueItems)
 
     return uniqueItems;
 }
@@ -26,25 +26,39 @@ const ItemsSection = () => {
     const [query, setQuery] = useState('')
     const [category, setCategory] = useState('All')
     let [curr, setcurr] = useState(1);
-  if (products?.isLoading) {
-    return (
-      <LoaderLayout>
-        <GeneralLoader />
-      </LoaderLayout>
-    );
-  }
+    if (products?.isLoading) {
+        return (
+            <LoaderLayout>
+                <GeneralLoader />
+            </LoaderLayout>
+        );
+    }
     const dataarr = products?.data?.data?.data ?? []
-    
+
     const rawCategories = products?.data?.data?.categories ?? []
     const categories = getUniqueItems(rawCategories)
 
-    const whatsappNumber='03358782828';
-    const openWhatsappChat = () => {
-        if (whatsappNumber) {
-            const whatsappLink = `https://wa.me/${whatsappNumber}`;
-            window.open(whatsappLink, '_blank');
-        }
+    const whatsappNumber = '923358782828';
+
+    const openWhatsappChat = (item) => {
+        const message = `
+Hello 👋
+
+I'm interested in this item:
+
+🛍️ Product: ${item?.label}
+📂 Category: ${item?.category}
+💰 Price: ${item?.sellingPrice} PKR
+
+Is this still available?
+  `.trim();
+
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+        window.open(whatsappLink, '_blank');
     };
+
     let filteredData = dataarr;
 
     if (category !== "All") {
