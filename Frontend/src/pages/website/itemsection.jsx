@@ -42,13 +42,13 @@ const ItemsSection = () => {
 
     const openWhatsappChat = (item) => {
         const message = `
-Hello 👋
+Hello 
 
 I'm interested in this item:
 
-🛍️ Product: ${item?.label}
-📂 Category: ${item?.category}
-💰 Price: ${item?.sellingPrice} PKR
+Product: ${item?.label}
+Category: ${item?.category}
+Price: ${item?.sellingPrice} PKR
 
 Is this still available?
   `.trim();
