@@ -38,7 +38,7 @@ const ItemsSection = () => {
     const rawCategories = products?.data?.data?.categories ?? []
     const categories = getUniqueItems(rawCategories)
 
-    const whatsappNumber = '923358782828';
+    const whatsappNumber = '923712502670';
 
     const openWhatsappChat = (item) => {
         const message = `

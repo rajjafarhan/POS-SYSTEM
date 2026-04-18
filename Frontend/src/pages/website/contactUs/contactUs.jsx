@@ -76,7 +76,7 @@ const ContactUs = () => {
                   </div>
                   <div className='d-flex flex-column g-1'>
                     <h4 style={{ color: "rgb(2, 150, 179)", fontWeight: "bolder" }}>Phone</h4>
-                    <p style={{ color: "white", fontWeight: "bolder" }}>03358782828</p>
+                    <p style={{ color: "white", fontWeight: "bolder" }}>03712502670</p>
                   </div>
                 </div>
                 <div className='d-flex gap-3 my-2  border-bottom border-3'>
