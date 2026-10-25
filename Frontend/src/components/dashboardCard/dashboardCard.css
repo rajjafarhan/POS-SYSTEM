@@ -1,51 +1,82 @@
-.w-20rem{
-    width: 20rem !important;
+.dash_card {
+  --accent: #2c698d;
+  --accent-soft: #e3f6f5;
+  background: #ffffff;
+  border-radius: 0.75rem;
+  border-top: 4px solid var(--accent);
+  box-shadow: 0 1px 4px rgba(39, 38, 67, 0.12);
+  padding: 1.1rem 1.25rem;
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+.dash_card:hover {
+  box-shadow: 0 6px 18px rgba(39, 38, 67, 0.14);
+  transform: translateY(-2px);
+}
+.dash_sales {
+  --accent: #2c698d;
+  --accent-soft: #e3f6f5;
+}
+.dash_purchases {
+  --accent: #c27c0e;
+  --accent-soft: #fdf1dc;
+}
+.dash_pos {
+  --accent: #1d7a46;
+  --accent-soft: #e2f4ea;
+}
+.dash_neg {
+  --accent: #b3261e;
+  --accent-soft: #fbe5e3;
 }
 
-.h-13rem{
-    height: 13rem;
+.dash_card_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-
-.w-card{
-    width: 20rem !important
+.dash_label {
+  color: #6b7b86;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
-
-.c1{
- background-color: rgba(255, 99, 132, 0.3);
+.dash_icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 1.05rem;
 }
-.c2{
-background-color: rgba(54, 162, 235, 0.3);
+.dash_value {
+  color: #272643;
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0.4rem 0 0.2rem;
+  word-break: break-word;
 }
-
-.c3{
-background-color: rgba(255, 206, 86, 0.3);
+.dash_pos .dash_value {
+  color: #1d7a46;
 }
-.c4{
-background-color: rgba(75, 192, 192, 0.3);
+.dash_neg .dash_value {
+  color: #b3261e;
 }
-.c5{
-background-color: rgba(153, 102, 255, 0.3);
+.dash_hint {
+  color: #6b7b86;
+  font-size: 0.82rem;
+  margin: 0;
+  min-height: 1.2rem;
 }
-.c6{
-background-color: rgba(255, 159, 64, 0.3);
+.dash_good {
+  color: #1d7a46;
+  font-weight: 600;
 }
-
-.c1:hover{
-    background-color: rgba(255, 99, 132, 0.4);
-   }
-   .c2:hover{
-   background-color: rgba(54, 162, 235, 0.4);
-   }
-   
-   .c3:hover{
-   background-color: rgba(255, 206, 86, 0.4);
-   }
-   .c4:hover{
-   background-color: rgba(75, 192, 192, 0.4);
-   }
-   .c5:hover{
-   background-color: rgba(153, 102, 255, 0.4);
-   }
-   .c6:hover{
-   background-color: rgba(255, 159, 64, 0.4);
-   }
+.dash_bad {
+  color: #b3261e;
+  font-weight: 600;
+}

@@ -1,109 +1,76 @@
-import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
-  PointElement,
-  LineElement,
-  Title,
   Tooltip,
   Legend,
-  Colors,
-  Filler,
 } from "chart.js";
-import { Bar, Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Colors,
-  Filler
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
+
+const MONTH_LABELS = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+];
+
+const fmt = (n) => Number(n || 0).toLocaleString("en-US");
+const short = (n) =>
+  Math.abs(n) >= 1e6 ? `${+(n / 1e6).toFixed(1)}M` : Math.abs(n) >= 1e3 ? `${+(n / 1e3).toFixed(1)}K` : `${n}`;
+
+// [{ _id: { month }, totalSum }] -> 12 values, one per month (0 when missing)
+const byMonth = (rows) => {
+  const out = Array(12).fill(0);
+  (rows ?? []).forEach((r) => {
+    const m = Number(r?._id?.month);
+    if (m >= 1 && m <= 12) out[m - 1] = Number(r.totalSum) || 0;
+  });
+  return out;
+};
 
 const options = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       position: "top",
+      align: "end",
+      labels: { usePointStyle: true, pointStyle: "rectRounded", boxWidth: 10 },
     },
-    title: {
-      display: false,
-      text: "Sales vs Expenses BarChart",
+    tooltip: {
+      callbacks: { label: (ctx) => ` ${ctx.dataset.label}: ${fmt(ctx.parsed.y)}` },
+    },
+  },
+  scales: {
+    x: { grid: { display: false } },
+    y: {
+      beginAtZero: true,
+      grid: { color: "rgba(39, 38, 67, 0.06)" },
+      ticks: { callback: (v) => short(v) },
     },
   },
 };
 
-export const BarChart = ({ barChartData, MONTHS }) => {
-  const [sales, cost, months] = barChartData ?? [];
-  console.log(barChartData);
-  let monthsArr = [];
-  if (months) {
-    monthsArr = MONTHS?.slice(months[0], months[0] + months.length);
-  }
-
-  const chartData = {
-    labels: monthsArr,
+export const BarChart = ({ sales, expense }) => {
+  const data = {
+    labels: MONTH_LABELS,
     datasets: [
       {
         label: "Sales",
-        data: sales ?? [],
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        data: byMonth(sales),
+        backgroundColor: "#2c698d",
+        borderRadius: 6,
+        maxBarThickness: 28,
       },
       {
-        label: "Expense",
-        data: cost ?? [],
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        label: "Purchases",
+        data: byMonth(expense),
+        backgroundColor: "#e9b44c",
+        borderRadius: 6,
+        maxBarThickness: 28,
       },
     ],
   };
-  return <Bar options={options} data={chartData} />;
+  return <Bar options={options} data={data} />;
 };
-
-const options2 = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
-    },
-    title: {
-      display: true,
-      text: "Chart.js Line Chart",
-    },
-  },
-};
-
-const labels2 = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-];
-
-const data2 = {
-  labels2,
-  datasets: [
-    {
-      fill: true,
-      label: "Dataset 2",
-      data: [1, 2, 3, 53, 2, 43, 76, 23, 7],
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-    },
-  ],
-};
-
-export function Area() {
-  return <Line options={options2} data={data2} />;
-}

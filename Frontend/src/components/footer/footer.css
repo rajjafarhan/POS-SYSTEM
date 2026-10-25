@@ -1,3 +1,20 @@
-.footer{
-margin-top: 1rem;
+.footer {
+  margin-top: 2rem;
+  background: #2c698d;
+  color: #e3f6f5;
+  font-size: 0.9rem;
+}
+.footer_inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer_brand {
+  font-family: "Eagle Lake", cursive;
+  color: #fdfa66;
 }

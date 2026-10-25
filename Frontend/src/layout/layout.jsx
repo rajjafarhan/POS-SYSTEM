@@ -27,7 +27,7 @@ const Layout = ({ children }) => {
       <NavBar />
       {children}
       <Outlet context={[data?.data?.result ?? [], refetch, basicInfoData]} />
-      <Footer />
+      <Footer shopName={basicInfoData?.shopName} />
     </div>
   );
 };

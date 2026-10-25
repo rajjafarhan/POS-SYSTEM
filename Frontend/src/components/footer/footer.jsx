@@ -1,9 +1,15 @@
 import "./footer.css";
 
-const Footer = () => {
+const Footer = ({ shopName }) => {
+  const year = new Date().getFullYear();
   return (
-    <footer className="bg-dgreen py-3 text-yellow footer">
-      <div className="text-center fs-5">POS System 2023 ©®</div>
+    <footer className="footer">
+      <div className="footer_inner">
+        <span>
+          © {year} {shopName || "POS System"}. All rights reserved.
+        </span>
+        <span className="footer_brand">POS System</span>
+      </div>
     </footer>
   );
 };
