@@ -19,6 +19,22 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Website from "./pages/website/websitemain";
 import "react-toastify/dist/ReactToastify.css";
 import Item from "./pages/website/itempg/Item";
+import axios from "axios";
+
+// A saved login the backend no longer accepts (expired, or issued by another backend)
+// makes every /api call fail with 401. Clear it and send the user to log in again
+// instead of leaving the page stuck on the loader.
+axios.interceptors.response.use(undefined, (error) => {
+  const url = error?.config?.url ?? "";
+  if (error?.response?.status === 401 && url.includes("/api/")) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("name");
+    if (!window.location.pathname.startsWith("/auth")) {
+      window.location.replace("/auth/login");
+    }
+  }
+  return Promise.reject(error);
+});
 
 const queryClient = new QueryClient({
   defaultOptions: {
