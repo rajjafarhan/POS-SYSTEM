@@ -4,7 +4,7 @@ export const postbasicinfo = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   console.log(bearer);
-  return axios.put("https://backend-ten-amber.vercel.app/api/basicinfo", data, {
+  return axios.put(`${import.meta.env.VITE_API_URL}/api/basicinfo`, data, {
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -17,7 +17,7 @@ export const fetchBasicInfo = async () => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   const res = await axios.get(
-    "https://backend-ten-amber.vercel.app/api/basicinfo",
+    `${import.meta.env.VITE_API_URL}/api/basicinfo`,
     {
       headers: {
         authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ export const postEmail = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   return axios.put(
-    "https://backend-ten-amber.vercel.app/api/basicinfo/email",
+    `${import.meta.env.VITE_API_URL}/api/basicinfo/email`,
     data,
     {
       headers: {
@@ -46,7 +46,7 @@ export const resetPassword = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   return axios.put(
-    "https://backend-ten-amber.vercel.app/api/basicinfo/password",
+    `${import.meta.env.VITE_API_URL}/api/basicinfo/password`,
     data,
     {
       headers: {
@@ -60,7 +60,7 @@ export const deleteAccount = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   return axios.post(
-    "https://backend-ten-amber.vercel.app/api/deleteaccount",
+    `${import.meta.env.VITE_API_URL}/api/deleteaccount`,
     data,
     {
       headers: {

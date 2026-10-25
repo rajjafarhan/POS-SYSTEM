@@ -7,6 +7,7 @@ import {
   faFileInvoice,
   faWarehouse,
   faGear,
+  faFileArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -89,6 +90,18 @@ const SideBar = () => {
                 <p className="ms-4 fs-5 side">
                   <FontAwesomeIcon icon={faWarehouse} />
                   <span className="ms-3">Stock </span>
+                </p>
+              </div>
+            </Link>
+            <Link to={"/pos/report"}>
+              <div
+                className={`${
+                  pathName === "/pos/report" ? "bg-hover" : ""
+                } h-3rem d-flex align-items-center cursor-pointer opt-hover`}
+              >
+                <p className="ms-4 fs-5 side">
+                  <FontAwesomeIcon icon={faFileArrowDown} />
+                  <span className="ms-3">Sales Closing </span>
                 </p>
               </div>
             </Link>

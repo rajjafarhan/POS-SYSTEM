@@ -11,6 +11,7 @@ import Customer from "./pages/customer/customer";
 import SettingsLayout from "./pages/settings/settingsLayout";
 import BasicInfo from "./pages/settings/settings";
 import AccountSettings from "./pages/settings/accSettings";
+import ReportPage from "./pages/report/report";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./global.css";
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="vendor" element={<VendorPage />} />
             <Route path="customer" element={<Customer />} />
             <Route path="inventory" element={<Inventory />} />
+            <Route path="report" element={<ReportPage />} />
             <Route path="settings" element={<SettingsLayout />}>
               <Route path="basicinfo" element={<BasicInfo />} />
               <Route path="accsettings" element={<AccountSettings />} />

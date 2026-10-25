@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   root: "src",
+  envDir: "..", // load .env files from Frontend/, not src/
 build: {
     chunkSizeWarningLimit: 5000, // Adjust the value as needed
       outDir: 'dist',

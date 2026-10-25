@@ -2,5 +2,5 @@
 import axios from "axios";
 
 export const signup = (data) => {
-  return axios.post("https://backend-ten-amber.vercel.app/user", data);
+  return axios.post(`${import.meta.env.VITE_API_URL}/user`, data);
 };

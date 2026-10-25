@@ -1,0 +1,129 @@
+.r_main {
+  padding: 0 3rem;
+}
+.r_muted {
+  color: #6b7b86;
+}
+.r_btn {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+.r_btn:disabled {
+  opacity: 0.55;
+}
+.r_excel {
+  background-color: #1d7a46 !important;
+}
+.r_pdf {
+  background-color: #b3261e !important;
+}
+.r_csv,
+.r_sort {
+  background-color: #2c698d !important;
+}
+.r_filters {
+  background-color: #e3f6f5;
+  border-radius: 0.5rem;
+}
+
+.r_stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 1rem;
+}
+.r_stat {
+  background: #ffffff;
+  border-left: 4px solid #2c698d;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 4px rgba(39, 38, 67, 0.12);
+  padding: 0.9rem 1rem;
+}
+.r_stat_label {
+  color: #6b7b86;
+  font-size: 0.85rem;
+  margin: 0;
+}
+.r_stat_value {
+  color: #272643;
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin: 0.15rem 0 0;
+}
+.r_stat_hint {
+  color: #6b7b86;
+  font-size: 0.78rem;
+  margin: 0.2rem 0 0;
+}
+.r_stat.r_pos {
+  border-left-color: #1d7a46;
+}
+.r_stat.r_pos .r_stat_value {
+  color: #1d7a46;
+}
+.r_stat.r_neg {
+  border-left-color: #b3261e;
+}
+.r_stat.r_neg .r_stat_value,
+.r_neg {
+  color: #b3261e;
+}
+
+.r_insights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  background: #bae8e8;
+  border-radius: 0.5rem;
+  color: #272643;
+  padding: 0.7rem 1rem;
+}
+
+.r_table_wrap {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 4px rgba(39, 38, 67, 0.12);
+}
+.r_table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.r_table th {
+  background-color: #2c698d;
+  color: #ffffff;
+  padding: 0.6rem 0.75rem;
+  white-space: nowrap;
+}
+.r_table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e3eef3;
+  white-space: nowrap;
+}
+.r_table tbody tr:nth-child(even) {
+  background-color: #f7fbfb;
+}
+.r_table tfoot td {
+  background-color: #e3f6f5;
+  font-weight: 700;
+  border-top: 2px solid #2c698d;
+}
+.r_n {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.r_empty {
+  color: #9aa8b1;
+}
+.r_bar {
+  height: 3px;
+  background-color: #2c698d;
+  border-radius: 2px;
+  margin-top: 3px;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .r_main {
+    padding: 0 1rem;
+  }
+}

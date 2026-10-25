@@ -27,6 +27,7 @@ import {
 } from "./handlers/basicInfo";
 import { verifyPass } from "./middlewares/verifyPass";
 import { getStates, getProfit, getYears } from "./handlers/dashboard";
+import { getClosingReport } from "./handlers/report";
 
 const router = Router();
 //**************VENDOR*******************/
@@ -62,6 +63,9 @@ router.get("/dashboard/getstates/:year", getStates);
 router.get("/dashboard/years", getYears);
 
 router.get("/allsale", () => {});
+
+//*****************Sales closing report ******************** */
+router.get("/report/closing", getClosingReport);
 
 
 // ****************** WEBSITE ****************//

@@ -3,7 +3,7 @@ import axios from "axios";
 export const postVendorReceipt = (data) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  return axios.post("https://backend-ten-amber.vercel.app/api/vendor", data, {
+  return axios.post(`${import.meta.env.VITE_API_URL}/api/vendor`, data, {
     headers: {
       authorization: `Bearer ${token}`,
     },
@@ -19,7 +19,7 @@ export const fetchVendorReceipts = async ({ queryKey }) => {
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
   const res = await axios.get(
-    `https://backend-ten-amber.vercel.app/api/vendor/${offSet}/${query}`,
+    `${import.meta.env.VITE_API_URL}/api/vendor/${offSet}/${query}`,
     {
       headers: {
         authorization: bearer,
@@ -34,7 +34,7 @@ export const deleteVendorReceipt = (data) => {
   const { id } = data;
   const token = localStorage.getItem("token");
   const bearer = "Bearer " + token;
-  return axios.delete(`https://backend-ten-amber.vercel.app/api/vendor/${id}`, {
+  return axios.delete(`${import.meta.env.VITE_API_URL}/api/vendor/${id}`, {
     headers: {
       authorization: bearer,
     },
