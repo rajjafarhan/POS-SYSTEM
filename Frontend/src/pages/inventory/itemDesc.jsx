@@ -191,7 +191,7 @@ const ItemDescription = ({ refetch, setShowItemModal, product }) => {
 
           <ImageInput
             setcardImage={setImg}
-            img={<img src={item?.imgUrl} alt="" />}
+            img={<img src={item?.imgUrl} className="picture__img" alt="" />}
             setIsEditable={setIsEditable}
           />
         </div>

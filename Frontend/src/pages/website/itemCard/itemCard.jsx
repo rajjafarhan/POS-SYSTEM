@@ -16,7 +16,7 @@ const ItemCard = ({ item, openWhatsappChat }) => {
             <div className='mx-2'>
 
                 <div className='card  img-zoom boxshadow ' style={{ cursor: "pointer" }} onClick={() => openWhatsappChat(item)} >
-                    <img width={"180px"} height={"150px"} src={item?.imgUrl === "" ? logo1 : item?.imgUrl} className='card-img-top pb-1 ' alt='no pic' />
+                    <img width={"180px"} height={"150px"} style={{ objectFit: "contain" }} src={item?.imgUrl === "" ? logo1 : item?.imgUrl} className='card-img-top pb-1 ' alt='no pic' />
                     <div className='card-body ' style={{ padding: 0, cursor: "pointer" }}>
                         <div
                             className="px-2 mt-2"

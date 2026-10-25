@@ -42,12 +42,16 @@
   }
   
   .picture__img {
-    max-width: 100%;
-    object-fit: cover;
-    height: stretch;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* show the whole photo inside the box, no cropping */
   }
   .picture__image {
-    height: stretch;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .overlay{
       position: absolute;
