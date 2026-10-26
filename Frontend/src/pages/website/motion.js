@@ -42,3 +42,20 @@ export const tilt = {
     el.style.setProperty("--ry", "0deg");
   },
 };
+
+// Magnetic buttons: the element leans a little towards the cursor.
+export const magnet = {
+  onMouseMove: (e) => {
+    if (!enabled()) return;
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    const x = e.clientX - (r.left + r.width / 2);
+    const y = e.clientY - (r.top + r.height / 2);
+    el.style.setProperty("--tx", `${(x * 0.18).toFixed(1)}px`);
+    el.style.setProperty("--ty", `${(y * 0.28).toFixed(1)}px`);
+  },
+  onMouseLeave: (e) => {
+    e.currentTarget.style.setProperty("--tx", "0px");
+    e.currentTarget.style.setProperty("--ty", "0px");
+  },
+};

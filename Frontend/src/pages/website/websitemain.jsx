@@ -21,7 +21,7 @@ import { fetchWebsiteProducts } from "../../functions/website";
 import SiteLayout from "./siteLayout";
 import ItemCard from "./itemCard/itemCard.jsx";
 import StoreMap from "./map/map";
-import { parallax, spot } from "./motion";
+import { magnet, parallax, spot } from "./motion";
 import video from "../../../assets/ceramics.mp4";
 import { CONTACT, FAQS, REVIEWS, directionsLink, money, usableImage, whatsappLink } from "./siteData";
 
@@ -78,6 +78,31 @@ const CountUp = ({ to, suffix = "" }) => {
   );
 };
 
+// Cycles through product types in the hero intro line.
+const WORDS = ["commodes", "vanities", "showers", "basins", "fittings"];
+const RotatingWord = () => {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    const t = setInterval(() => setI((n) => (n + 1) % WORDS.length), 2200);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <span className="s-rotor" aria-live="off">
+      <span key={WORDS[i]}>{WORDS[i]}</span>
+    </span>
+  );
+};
+
+// Gold dust drifting up through the hero.
+const Dust = () => (
+  <div className="s-dust" aria-hidden="true">
+    {Array.from({ length: 14 }).map((_, i) => (
+      <i key={i} />
+    ))}
+  </div>
+);
+
 const Hero = ({ products }) => {
   const shots = products.filter((p) => usableImage(p?.imgUrl)).slice(0, 3);
   return (
@@ -86,6 +111,7 @@ const Hero = ({ products }) => {
       <div className="s-blob a" />
       <div className="s-blob b" />
       <div className="s-grain" />
+      <Dust />
       <div className="s-container s-hero-grid">
         <div>
           <span className="s-eyebrow s-fade-up">
@@ -103,14 +129,14 @@ const Hero = ({ products }) => {
             </span>
           </h1>
           <p className="lead s-fade-up s-d1">
-            Premium commodes, vanities, showers and fittings, all in one place, with honest prices and
-            delivery to your door.
+            Premium <RotatingWord /> and everything your bathroom needs, all in one place, with honest
+            prices and delivery to your door.
           </p>
           <div className="s-hero-actions s-fade-up s-d2">
-            <Link to="/item" className="s-btn s-btn-gold">
+            <Link to="/item" className="s-btn s-btn-gold s-magnet" {...magnet}>
               Browse products <FaArrowRight />
             </Link>
-            <a className="s-btn s-btn-ghost" href={whatsappLink()} target="_blank" rel="noreferrer">
+            <a className="s-btn s-btn-ghost s-magnet" {...magnet} href={whatsappLink()} target="_blank" rel="noreferrer">
               <FaWhatsapp /> Chat on WhatsApp
             </a>
           </div>

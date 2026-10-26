@@ -1,0 +1,305 @@
+/* ================= round 3 of motion ================= */
+
+/* --- page fade between Home and Products --- */
+.s-page {
+  animation: s-pagein 0.6s var(--ease) both;
+}
+@keyframes s-pagein {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- smart header: slides away while scrolling down --- */
+.s-header {
+  transition: background 0.4s ease, padding 0.4s var(--ease), box-shadow 0.4s ease, transform 0.45s var(--ease);
+}
+.s-header.hide {
+  transform: translateY(-110%);
+}
+.s-header.hide ~ main .s-toolbar {
+  top: 0;
+}
+.s-toolbar {
+  transition: top 0.45s var(--ease);
+}
+
+/* --- gold dust rising through the hero --- */
+.s-dust {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.s-dust i {
+  position: absolute;
+  bottom: -20px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold-2);
+  box-shadow: 0 0 10px 2px rgba(236, 208, 138, 0.55);
+  opacity: 0;
+  animation: s-rise-dust 12s linear infinite;
+}
+.s-dust i:nth-child(1) { left: 6%; animation-delay: 0s; animation-duration: 13s; }
+.s-dust i:nth-child(2) { left: 14%; animation-delay: -3s; width: 3px; height: 3px; }
+.s-dust i:nth-child(3) { left: 22%; animation-delay: -7s; animation-duration: 15s; }
+.s-dust i:nth-child(4) { left: 31%; animation-delay: -1s; width: 2px; height: 2px; }
+.s-dust i:nth-child(5) { left: 39%; animation-delay: -9s; animation-duration: 11s; }
+.s-dust i:nth-child(6) { left: 47%; animation-delay: -5s; width: 5px; height: 5px; }
+.s-dust i:nth-child(7) { left: 55%; animation-delay: -11s; animation-duration: 14s; }
+.s-dust i:nth-child(8) { left: 63%; animation-delay: -2s; width: 3px; height: 3px; }
+.s-dust i:nth-child(9) { left: 70%; animation-delay: -8s; animation-duration: 16s; }
+.s-dust i:nth-child(10) { left: 77%; animation-delay: -4s; width: 2px; height: 2px; }
+.s-dust i:nth-child(11) { left: 84%; animation-delay: -10s; animation-duration: 12s; }
+.s-dust i:nth-child(12) { left: 90%; animation-delay: -6s; width: 4px; height: 4px; }
+.s-dust i:nth-child(13) { left: 95%; animation-delay: -12s; animation-duration: 17s; }
+.s-dust i:nth-child(14) { left: 52%; animation-delay: -13s; width: 3px; height: 3px; }
+@keyframes s-rise-dust {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(18px, -50vh);
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-12px, -105vh);
+    opacity: 0;
+  }
+}
+
+/* --- rotating product word in the hero intro --- */
+.s-rotor {
+  display: inline-grid;
+  vertical-align: bottom;
+  overflow: hidden;
+  height: 1.6em;
+  line-height: 1.6em;
+}
+.s-rotor > span {
+  color: var(--gold-2);
+  font-weight: 600;
+  animation: s-wordin 0.6s var(--ease) both;
+}
+@keyframes s-wordin {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* --- magnetic buttons --- */
+.s-magnet {
+  transform: translate(var(--tx, 0px), var(--ty, 0px));
+  transition: transform 0.35s var(--ease), box-shadow 0.3s var(--ease), background 0.3s ease, border-color 0.3s ease;
+}
+.s-magnet:hover {
+  transform: translate(var(--tx, 0px), calc(var(--ty, 0px) - 2px));
+}
+
+/* --- scroll-driven entrances (browsers without support simply show content) --- */
+@supports (animation-timeline: view()) {
+  /* headings: gold underline draws in as they arrive */
+  .s-head h2::after {
+    content: "";
+    display: block;
+    width: 72px;
+    height: 3px;
+    margin-top: 16px;
+    border-radius: 3px;
+    background: var(--gold-grad);
+    transform-origin: left;
+    animation: s-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 35%;
+  }
+  .s-center h2::after {
+    margin-left: auto;
+    margin-right: auto;
+    transform-origin: center;
+  }
+  /* product cards zoom up */
+  .s-grid > .s-card {
+    animation: s-zoomup linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 55%;
+  }
+  /* category tiles flip up */
+  .s-cats > .s-cat {
+    animation: s-flipup linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+  /* glow blobs drift with the scroll */
+  .s-section .s-blob,
+  .s-contact-scene .s-blob,
+  .s-page-hero .s-blob {
+    animation: s-blobscroll linear both;
+    animation-timeline: view();
+  }
+  /* stats and features pop in */
+  .s-stat,
+  .s-feature {
+    animation: s-zoomup linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 50%;
+  }
+  .s-feature-icon {
+    animation: s-float 5s ease-in-out infinite;
+  }
+}
+@keyframes s-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes s-zoomup {
+  from {
+    opacity: 0;
+    translate: 0 40px;
+    scale: 0.94;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+@keyframes s-flipup {
+  from {
+    opacity: 0;
+    translate: 0 30px;
+    rotate: x 24deg;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    rotate: x 0deg;
+  }
+}
+@keyframes s-blobscroll {
+  from {
+    translate: 0 80px;
+  }
+  to {
+    translate: 0 -80px;
+  }
+}
+
+/* --- review cards: lift and glow on hover --- */
+.s-review {
+  transition: transform 0.45s var(--ease), border-color 0.3s ease, box-shadow 0.45s var(--ease);
+}
+.s-review:hover {
+  transform: translateY(-6px);
+  border-color: rgba(236, 208, 138, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(236, 208, 138, 0.15);
+}
+
+/* --- footer links: underline slides in --- */
+.s-footer ul a {
+  position: relative;
+}
+.s-footer ul a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: var(--gold-2);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease);
+}
+.s-footer ul a:hover::after {
+  transform: scaleX(1);
+}
+
+/* --- nav: active pill glows softly --- */
+.s-nav a.active {
+  animation: s-glow 3s ease-in-out infinite;
+}
+@keyframes s-glow {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 1px rgba(236, 208, 138, 0.35);
+  }
+  50% {
+    box-shadow: inset 0 0 0 1px rgba(236, 208, 138, 0.6), 0 0 18px rgba(236, 208, 138, 0.18);
+  }
+}
+
+/* --- touch screens: press feedback --- */
+@media (hover: none) {
+  .s-card:active,
+  .s-cat:active,
+  .s-info-item:active,
+  .s-pill:active {
+    transform: scale(0.97);
+    transition: transform 0.12s ease;
+  }
+  .s-btn:active {
+    transform: scale(0.95);
+    transition: transform 0.12s ease;
+  }
+}
+
+@media (max-width: 640px) {
+  .s-dust i:nth-child(n + 9) {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .s-dust {
+    display: none;
+  }
+  .s-magnet {
+    transform: none !important;
+  }
+}
+
+/* Entrance animations move with translate/scale (not transform), so hover lifts
+   and the 3D tilt, which use transform, keep working after the entrance ends. */
+@keyframes s-revealin {
+  from {
+    opacity: 0;
+    translate: 0 26px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+.s-grid > .s-card {
+  animation-name: s-revealin;
+}
+@supports (animation-timeline: view()) {
+  .s-reveal {
+    animation-name: s-revealin;
+  }
+  .s-grid > .s-card {
+    animation-name: s-zoomup;
+  }
+}

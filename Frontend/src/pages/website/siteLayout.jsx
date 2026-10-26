@@ -6,6 +6,7 @@ import logo from "../../../assets/logo1.png";
 import { CONTACT, whatsappLink } from "./siteData";
 import "./site.css";
 import "./site-motion.css";
+import "./site-motion-2.css";
 
 const NAV = [
   { label: "Home", to: "/" },
@@ -34,11 +35,21 @@ const useHashScroll = () => {
 
 const Header = ({ overHero }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    // solid after a little scroll; slides away while scrolling down, back when scrolling up
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 40);
+      if (Math.abs(y - last) > 6) {
+        setHidden(y > last && y > 320);
+        last = y;
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -53,7 +64,7 @@ const Header = ({ overHero }) => {
 
   return (
     <>
-      <header className={`s-header ${solid ? "solid" : ""}`}>
+      <header className={`s-header ${solid ? "solid" : ""} ${hidden && !open ? "hide" : ""}`}>
         <div className="s-container s-header-inner">
           <Link to="/" className="s-logo" aria-label="MS Enterprise home">
             <img src={logo} alt="MS Enterprise" />
@@ -175,6 +186,7 @@ const Footer = () => (
 
 const SiteLayout = ({ title = "MS Enterprise", overHero = false, children }) => {
   useHashScroll();
+  const { pathname } = useLocation();
   return (
     <div className="site">
       <Helmet>
@@ -192,7 +204,9 @@ const SiteLayout = ({ title = "MS Enterprise", overHero = false, children }) => 
       </Helmet>
       <div className="s-progress" aria-hidden="true" />
       <Header overHero={overHero} />
-      <main>{children}</main>
+      <main key={pathname} className="s-page">
+        {children}
+      </main>
       <Footer />
       <a className="s-fab" href={whatsappLink()} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp">
         <FaWhatsapp />
