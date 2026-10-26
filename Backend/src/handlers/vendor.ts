@@ -81,15 +81,17 @@ export const createVendor = async (req, res) => {
     // Get the user's ID from the request (assuming it's available in req.user._id)
     const userId = req.user.id;
     // console.log(userId);
-    const a = new Date(date).toDateString();
-    const a2 = new Date().toTimeString();
-    const a3 = a + " " + a2;
+    // The browser sends the picked day with the current local time; keep it as is.
+    // (Rebuilding it from toDateString() on the server, which runs in UTC, moved
+    // receipts made in Pakistan to the previous day.)
+    const parsed = new Date(date);
+    const receiptDate = isNaN(parsed.getTime()) ? new Date() : parsed;
 
     const vendorData = {
       userId: userId, // Associate the vendor with the user by including their ID
       cash: cash,
       change: change,
-      date: new Date(a3),
+      date: receiptDate,
       product: product,
       rDesc: rDesc,
       rName: rName,

@@ -9,6 +9,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
+import { withCurrentTime } from "../../helpers/dateFormatter";
 import ProductsInput from "./productsInp";
 import Table from "./table";
 import VendorReceipt from "./receipt";
@@ -153,7 +154,8 @@ const VendorPage = () => {
     ]);
   };
   const submit = () => {
-    const obj = { ...receiptData, change, total };
+    const date = withCurrentTime(receiptData.date);
+    const obj = { ...receiptData, date, change, total };
     if (product.length === 0) {
       toast.error("There should be atleast 1 product!");
       return;
@@ -164,6 +166,7 @@ const VendorPage = () => {
       return;
     }
     mutation.mutate({ ...obj, product });
+    setReceiptData({ ...receiptData, date: dayjs(date) });
     setModal(false);
     setReceiptModal(true);
   };

@@ -76,14 +76,16 @@ export const createCustomer = async (req, res) => {
     const { cash, change, date, product, rDesc, rName, total } = req.body;
     const userId = req.user.id;
     console.log(product);
-    const a = new Date(date).toDateString();
-    const a2 = new Date().toTimeString();
-    const a3 = a + " " + a2;
+    // The browser sends the picked day with the current local time; keep it as is.
+    // (Rebuilding it from toDateString() on the server, which runs in UTC, moved
+    // receipts made in Pakistan to the previous day.)
+    const parsed = new Date(date);
+    const receiptDate = isNaN(parsed.getTime()) ? new Date() : parsed;
     const custData = {
       userId: userId,
       cash: cash,
       change: change,
-      date: new Date(a3),
+      date: receiptDate,
       product: product,
       rDesc: rDesc,
       rName: rName,
