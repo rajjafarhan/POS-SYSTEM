@@ -20,6 +20,7 @@ import {
   postVendorReceipt,
   fetchVendorReceipts,
   deleteVendorReceipt,
+  deleteManyVendorReceipts,
 } from "../../functions/vendorRec";
 import LoaderLayout from "../../components/loaders/loaderLayout";
 import TypeWtiter from "../../components/loaders/typewriter";
@@ -60,6 +61,16 @@ const VendorPage = () => {
     },
     onError: () => {
       toast.error("Ops Error! Receipt could not be deleted.");
+    },
+  });
+  const bulkDeleteMutation = useMutation({
+    mutationFn: deleteManyVendorReceipts,
+    onSuccess: (res) => {
+      toast.success(`${res?.data?.deleted ?? ""} receipts deleted!`);
+      refetch();
+    },
+    onError: () => {
+      toast.error("Ops Error! Receipts could not be deleted.");
     },
   });
   const [receiptModal, setReceiptModal] = useState(false);
@@ -172,6 +183,7 @@ const VendorPage = () => {
             headings={["No.", "Name", "Description", "Date", "Cost", "Delete"]}
             type={"Vendor Receipt"}
             mutation={deleteMutation}
+            bulkMutation={bulkDeleteMutation}
             data={rData}
             total={data?.data?.totalCount}
             offSet={[offSet, setOffSet]}

@@ -123,7 +123,7 @@ export const deleteCustomer = async (req, res) => {
   try {
     const id = new ObjectId(`${req.params.id}`);
     const custCollection = await database_connection(["customer invoice"]);
-    const result = await custCollection[0].findOneAndDelete({ _id: id });
+    const result = await custCollection[0].findOneAndDelete({ _id: id, userId: req.user.id });
 
     if (!result) {
       return res.status(404).json({ message: "Customer not found" });

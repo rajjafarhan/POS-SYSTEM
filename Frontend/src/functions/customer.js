@@ -43,3 +43,10 @@ export const deleteCustomerReceipt = (data) => {
     },
   });
 };
+
+export const deleteManyCustomerReceipts = ({ ids }) =>
+  axios.post(
+    `${import.meta.env.VITE_API_URL}/api/customer/delete-many`,
+    { ids },
+    { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } }
+  );

@@ -84,7 +84,9 @@ const VendorReceipt = ({ data, type }) => {
 
   // page height grows with the number of lines (long names wrap onto a second line)
   const itemLines = items.reduce((s, i) => s + Math.ceil(i.name.length / 20) + (i.rate < i.list ? 1 : 0), 0);
-  const height = 215 + itemLines * 11 + (discount > 0 ? 24 : 0) + (data?.rDesc ? 12 : 0);
+  const returned = num(data?.returned);
+  const height =
+    215 + itemLines * 11 + (discount > 0 ? 24 : 0) + (data?.rDesc ? 12 : 0) + (returned > 0 ? 28 : 0);
 
   return (
     <PDFViewer width={400} height={600}>
@@ -168,6 +170,18 @@ const VendorReceipt = ({ data, type }) => {
             <Text>TOTAL</Text>
             <Text>Rs {money(total)}</Text>
           </View>
+          {returned > 0 ? (
+            <>
+              <View style={styles.totRow}>
+                <Text>Less returns</Text>
+                <Text>- {money(returned)}</Text>
+              </View>
+              <View style={styles.totRow}>
+                <Text style={styles.bold}>Net amount</Text>
+                <Text style={styles.bold}>Rs {money(total - returned)}</Text>
+              </View>
+            </>
+          ) : null}
           {hasCash ? (
             <>
               <View style={styles.totRow}>

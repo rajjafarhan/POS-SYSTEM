@@ -16,9 +16,11 @@ import SearchBar from "../../components/searchBar/searchBar";
 import { useOutlet } from "react-router-dom";
 import {
   deleteCustomerReceipt,
+  deleteManyCustomerReceipts,
   fetchCustomerReceipt,
   postCustomerReceipt,
 } from "../../functions/customer";
+import { fetchReturns } from "../../functions/returns";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import LoaderLayout from "../../components/loaders/loaderLayout";
 import TypeWtiter from "../../components/loaders/typewriter";
@@ -63,6 +65,22 @@ const Customer = () => {
       toast.error("Ops error! Receipt could not be deleted");
     },
   });
+  const bulkDeleteMutation = useMutation({
+    mutationFn: deleteManyCustomerReceipts,
+    onSuccess: (res) => {
+      toast.success(`${res?.data?.deleted ?? ""} receipts deleted!`);
+      refetch();
+    },
+    onError: () => {
+      toast.error("Ops error! Receipts could not be deleted");
+    },
+  });
+  // invoice id -> amount refunded through returns, shown on each receipt
+  const returnsQuery = useQuery(["returns"], fetchReturns);
+  const returnedMap = new Map();
+  (returnsQuery.data?.data?.returns ?? []).forEach((r) =>
+    returnedMap.set(r.invoiceId, (returnedMap.get(r.invoiceId) ?? 0) + (Number(r.total) || 0))
+  );
   const [receiptModal, setReceiptModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const tdate = new Date();
@@ -207,6 +225,8 @@ const Customer = () => {
               offSet={[offSet, setOffSet]}
               type={"Customer Receipt"}
               onReturn={setReturnInvoice}
+              bulkMutation={bulkDeleteMutation}
+              returnedMap={returnedMap}
             />
           </div>
         </div>

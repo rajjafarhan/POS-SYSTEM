@@ -29,6 +29,7 @@ import { verifyPass } from "./middlewares/verifyPass";
 import { getStates, getProfit, getYears } from "./handlers/dashboard";
 import { getClosingReport } from "./handlers/report";
 import { createReturn, getReturns, deleteReturn } from "./handlers/returns";
+import { deleteManyFrom } from "./handlers/bulkDelete";
 
 const router = Router();
 //**************VENDOR*******************/
@@ -36,6 +37,7 @@ router.get("/vendor/:setNo/:query", getAllVendors);
 router.post("/vendor", createVendor);
 router.delete("/vendor/:id", deleteVendor);
 router.delete("/vendor", deleteAllVendors);
+router.post("/vendor/delete-many", deleteManyFrom("vendor invoice"));
 
 //*****************CUSTOMER************ */
 
@@ -43,6 +45,7 @@ router.get("/customer/:setNo/:query", getAllCustomers);
 router.post("/customer", createCustomer);
 router.delete("/customer/:id", deleteCustomer);
 router.delete("/customer/", deleteAllCustomers);
+router.post("/customer/delete-many", deleteManyFrom("customer invoice"));
 
 //*****************CUSTOMER RETURNS************ */
 

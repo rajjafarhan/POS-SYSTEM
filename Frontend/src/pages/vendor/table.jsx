@@ -28,10 +28,30 @@ export const ReceiptLayout = ({ children, setShowReceiptModal, refetch }) => {
 };
 
 // onReturn (customer receipts only): shows a "Return items" button on an opened receipt
-const Table = ({ offSet, total, headings, data, mutation, type, onReturn }) => {
+// bulkMutation: enables row checkboxes and "Delete selected" (called with { ids })
+// returnedMap: invoice id -> amount refunded through returns, shown under the amount
+const Table = ({
+  offSet,
+  total,
+  headings,
+  data,
+  mutation,
+  type,
+  onReturn,
+  bulkMutation,
+  returnedMap,
+}) => {
   const [currReceipt, setCurrReceipt] = useState({});
   const [showReceiptModal, setShowReceiptModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selected, setSelected] = useState(() => new Set());
+  const [showBulkModal, setShowBulkModal] = useState(false);
+  const toggle = (id) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
   console.log(data);
   let pages = Math.ceil(total / 10);
   let [curr, setcurr] = useState(1);
@@ -56,11 +76,43 @@ const Table = ({ offSet, total, headings, data, mutation, type, onReturn }) => {
     }
   };
   const currData = data?.slice((currentData - 1) * 10, currentData * 10);
+  const pageIds = (currData ?? []).map((d) => String(d._id));
+  const allOnPage = pageIds.length > 0 && pageIds.every((id) => selected.has(id));
+  const togglePage = () =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      pageIds.forEach((id) => (allOnPage ? next.delete(id) : next.add(id)));
+      return next;
+    });
   return (
     <div>
+      {bulkMutation && selected.size > 0 && (
+        <div className="bulk_bar">
+          <span>
+            <b>{selected.size}</b> selected
+          </span>
+          <button className="btn btn-danger btn-sm" onClick={() => setShowBulkModal(true)}>
+            <FontAwesomeIcon icon={faTrash} /> Delete selected
+          </button>
+          <button className="btn btn-outline-secondary btn-sm" onClick={() => setSelected(new Set())}>
+            Clear
+          </button>
+        </div>
+      )}
       <table className="t_main p-4 rounde shadow">
         <thead className="m-3 bg-dgreen text-white">
           <tr className="m-3">
+            {bulkMutation && (
+              <th className="p-3 text-center">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  title="Select all on this page"
+                  checked={allOnPage}
+                  onChange={togglePage}
+                />
+              </th>
+            )}
             {headings.map((heading, ind) => {
               return (
                 <th key={ind} className="p-3 text-center">
@@ -86,6 +138,16 @@ const Table = ({ offSet, total, headings, data, mutation, type, onReturn }) => {
               console.log(d);
               return (
                 <tr key={index} className="cursor-pointer nbg">
+                  {bulkMutation && (
+                    <td className="p-3 text-center">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        checked={selected.has(String(d._id))}
+                        onChange={() => toggle(String(d._id))}
+                      />
+                    </td>
+                  )}
                   <td className="p-3 text-center">
                     {index === 9 ? curr * 10 : `${curr - 1}${index + 1}`}
                   </td>
@@ -124,6 +186,11 @@ const Table = ({ offSet, total, headings, data, mutation, type, onReturn }) => {
                     className="p-3 text-center"
                   >
                     {d.total}
+                    {returnedMap?.get(String(d._id)) ? (
+                      <div className="returned_tag">
+                        −{returnedMap.get(String(d._id)).toLocaleString()} returned
+                      </div>
+                    ) : null}
                   </td>
                   <td
                     className="p-3 text-center border-0 bg-transparent text-danger p-2  "
@@ -144,6 +211,7 @@ const Table = ({ offSet, total, headings, data, mutation, type, onReturn }) => {
         </tbody>
         <tfoot>
           <tr>
+            {bulkMutation && <td></td>}
             <td className="p-2 fs-5 text-dgreen text-center">
               Total Records :
             </td>
@@ -175,7 +243,10 @@ const Table = ({ offSet, total, headings, data, mutation, type, onReturn }) => {
       {showReceiptModal && (
         <Modal>
           <ReceiptLayout setShowReceiptModal={setShowReceiptModal}>
-            <VendorReceipt type={type} data={currReceipt} />
+            <VendorReceipt
+              type={type}
+              data={{ ...currReceipt, returned: returnedMap?.get(String(currReceipt._id)) ?? 0 }}
+            />
             {onReturn && (
               <div className="d-flex justify-content-center mt-2">
                 <button
@@ -190,6 +261,35 @@ const Table = ({ offSet, total, headings, data, mutation, type, onReturn }) => {
               </div>
             )}
           </ReceiptLayout>
+        </Modal>
+      )}
+      {showBulkModal && (
+        <Modal>
+          <section className="bg-white rounded p-5">
+            <h4 className="text-dgreen">Delete {selected.size} receipts? ⁉</h4>
+            <p className="fs-5 text-dgreen">
+              The selected receipts will be deleted permanently!
+            </p>
+            <hr />
+            <div className="d-flex justify-content-around">
+              <button
+                onClick={() => {
+                  bulkMutation.mutate({ ids: [...selected] });
+                  setSelected(new Set());
+                  setShowBulkModal(false);
+                }}
+                className="btn btn-danger fs-5 px-5"
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => setShowBulkModal(false)}
+                className="btn bg-dgreen text-light px-5 fs-5"
+              >
+                No
+              </button>
+            </div>
+          </section>
         </Modal>
       )}
       {showDeleteModal && (
