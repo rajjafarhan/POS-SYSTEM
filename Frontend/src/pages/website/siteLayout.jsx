@@ -5,6 +5,7 @@ import { FaBars, FaTimes, FaWhatsapp, FaPhoneAlt, FaFacebookF, FaMapMarkerAlt, F
 import logo from "../../../assets/logo1.png";
 import { CONTACT, whatsappLink } from "./siteData";
 import "./site.css";
+import "./site-motion.css";
 
 const NAV = [
   { label: "Home", to: "/" },

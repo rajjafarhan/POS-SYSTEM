@@ -3,6 +3,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import fallback from "../../../../assets/MSimg1.avif";
 import QuickView from "../quickView";
 import { describe, money, openWhatsapp, usableImage } from "../siteData";
+import { tilt } from "../motion";
 
 // Product tile: photo, category, name, short description, price and a WhatsApp order button.
 // Clicking the card opens the quick-view popup.
@@ -14,6 +15,7 @@ const ItemCard = ({ item }) => {
     <>
       <article
         className="s-card"
+        {...tilt}
         tabIndex={0}
         onClick={() => setOpen(true)}
         onKeyDown={(e) => e.key === "Enter" && setOpen(true)}
@@ -49,7 +51,7 @@ const ItemCard = ({ item }) => {
                 openWhatsapp(item);
               }}
             >
-              <FaWhatsapp /> Order
+              <FaWhatsapp /> <span className="s-btn-label">Order</span>
             </button>
           </div>
         </div>

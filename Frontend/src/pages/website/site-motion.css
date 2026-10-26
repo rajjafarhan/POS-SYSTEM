@@ -1,0 +1,359 @@
+/* ================= contact scene ================= */
+.s-contact-scene {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 120px 0;
+  background: var(--ink);
+  color: #fff;
+}
+.s-contact-scene > video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -4;
+  opacity: 0.22;
+  filter: blur(6px) saturate(0.8);
+  transform: scale(1.08);
+}
+.s-contact-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background: radial-gradient(ellipse at 20% 30%, rgba(13, 15, 19, 0.35), rgba(13, 15, 19, 0.92) 70%);
+}
+/* gold ceramic-tile pattern drifting slowly */
+.s-tiles {
+  position: absolute;
+  inset: -80px;
+  z-index: -2;
+  opacity: 0.16;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23ecd08a' stroke-width='1'><path d='M40 0 L80 40 L40 80 L0 40 Z'/><circle cx='40' cy='40' r='12'/><path d='M40 28 L52 40 L40 52 L28 40 Z'/><circle cx='0' cy='0' r='12'/><circle cx='80' cy='0' r='12'/><circle cx='0' cy='80' r='12'/><circle cx='80' cy='80' r='12'/></g></svg>");
+  background-size: 80px 80px;
+  -webkit-mask-image: radial-gradient(ellipse at 70% 50%, #000 10%, transparent 70%);
+  mask-image: radial-gradient(ellipse at 70% 50%, #000 10%, transparent 70%);
+  animation: s-tilepan 40s linear infinite;
+}
+/* glow that follows the cursor (set by spot() in motion.js) */
+.s-spot {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 70%) var(--my, 40%), rgba(236, 208, 138, 0.16), transparent 60%);
+}
+.s-spotlit {
+  isolation: isolate;
+  overflow: hidden;
+}
+.s-contact-scene .s-blob.a {
+  top: -160px;
+  right: -160px;
+}
+.s-contact-scene .s-contact {
+  align-items: center;
+  gap: 56px;
+}
+.s-contact-title {
+  font-size: clamp(2.2rem, 4.6vw, 3.6rem);
+  margin: 18px 0 16px;
+}
+.s-contact-lead {
+  color: var(--muted-dark);
+  font-size: 1.05rem;
+  max-width: 480px;
+  margin-bottom: 30px;
+}
+.s-contact-scene .s-info {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.s-contact-scene .s-info-item {
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line-dark);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  overflow: hidden;
+}
+.s-contact-scene .s-info-item::before {
+  /* light sweep on hover */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(236, 208, 138, 0.14) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.8s var(--ease);
+}
+.s-contact-scene a.s-info-item:hover {
+  transform: translateX(6px);
+  border-color: rgba(236, 208, 138, 0.45);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+.s-contact-scene a.s-info-item:hover::before {
+  transform: translateX(120%);
+}
+.s-contact-scene .s-info-item small {
+  color: var(--gold-2);
+}
+.s-contact-scene .s-info-item b {
+  font-size: 1rem;
+}
+.s-contact-scene .s-info-icon {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--gold-grad);
+  color: #1b1405;
+  font-size: 1.1rem;
+  box-shadow: 0 10px 24px rgba(201, 161, 74, 0.3);
+}
+.s-contact-scene .s-info-item.wa .s-info-icon {
+  background: var(--wa);
+  color: #fff;
+  animation: s-pulse 2.4s ease-in-out infinite;
+}
+.s-contact-scene .s-info-item .go {
+  margin-left: auto;
+  flex: none;
+  color: var(--gold-2);
+  opacity: 0.5;
+  transition: transform 0.3s var(--ease), opacity 0.3s ease;
+}
+.s-contact-scene a.s-info-item:hover .go {
+  opacity: 1;
+  transform: translateX(4px);
+}
+/* form with a rotating gold edge */
+.s-form-wrap {
+  position: relative;
+  border-radius: 28px;
+  padding: 1.5px;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45);
+}
+.s-form-wrap::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: 180%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background: conic-gradient(from 0deg, rgba(236, 208, 138, 0.1) 0 60%, rgba(236, 208, 138, 0.95), rgba(236, 208, 138, 0.1) 80%);
+  animation: s-spin 7s linear infinite;
+}
+.s-contact-scene .s-form {
+  border: 0;
+  border-radius: 27px;
+  background: linear-gradient(160deg, #161a21, #0f1217);
+  color: #fff;
+  box-shadow: none;
+}
+.s-contact-scene .s-form > p {
+  color: var(--muted-dark);
+}
+.s-contact-scene .s-field input,
+.s-contact-scene .s-field textarea {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+.s-contact-scene .s-field input:focus,
+.s-contact-scene .s-field textarea:focus {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--gold);
+}
+.s-contact-scene .s-field label {
+  color: rgba(255, 255, 255, 0.55);
+}
+.s-contact-scene .s-field input:focus + label,
+.s-contact-scene .s-field input:not(:placeholder-shown) + label,
+.s-contact-scene .s-field textarea:focus + label,
+.s-contact-scene .s-field textarea:not(:placeholder-shown) + label {
+  color: var(--gold-2);
+}
+
+/* ================= more motion ================= */
+/* 3D tilt + glare on product cards (values set by tilt in motion.js) */
+.s-card {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px));
+  transition: transform 0.35s var(--ease), box-shadow 0.5s var(--ease), border-color 0.3s ease;
+}
+.s-card:hover {
+  --lift: -8px;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift));
+}
+.s-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), rgba(255, 255, 255, 0.55), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.s-card:hover .s-card-media::after {
+  opacity: 1;
+}
+/* hero collage follows the cursor slightly (values set by parallax) */
+.s-collage {
+  transform: translate(calc(var(--px, 0) * -14px), calc(var(--py, 0) * -10px));
+  transition: transform 0.6s var(--ease);
+}
+.s-hero .s-blob.a {
+  translate: calc(var(--px, 0) * 30px) calc(var(--py, 0) * 20px);
+  transition: translate 1s var(--ease);
+}
+/* category numbers bounce on hover */
+.s-cat:hover .num {
+  animation: s-bob 0.6s var(--ease);
+}
+/* footer wordmark: slow shimmer */
+.s-bigword {
+  background: linear-gradient(100deg, transparent 30%, rgba(236, 208, 138, 0.35) 50%, transparent 70%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: s-shine 7s linear infinite;
+}
+/* stars twinkle in reviews */
+.s-stars svg {
+  animation: s-twinkle 3s ease-in-out infinite;
+}
+.s-stars svg:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.s-stars svg:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.s-stars svg:nth-child(4) {
+  animation-delay: 0.6s;
+}
+.s-stars svg:nth-child(5) {
+  animation-delay: 0.8s;
+}
+/* feature icons float gently */
+.s-feature-icon {
+  animation: s-float 5s ease-in-out infinite;
+}
+.s-feature:nth-child(3) .s-feature-icon {
+  animation-delay: -1s;
+}
+.s-feature:nth-child(4) .s-feature-icon {
+  animation-delay: -2s;
+}
+.s-feature:nth-child(5) .s-feature-icon {
+  animation-delay: -3s;
+}
+.s-feature:nth-child(6) .s-feature-icon {
+  animation-delay: -4s;
+}
+/* stat cards lift on hover */
+.s-stat {
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+}
+.s-stat:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+@keyframes s-tilepan {
+  to {
+    background-position: 160px 80px;
+  }
+}
+@keyframes s-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 195, 94, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(34, 195, 94, 0);
+  }
+}
+@keyframes s-bob {
+  0%,
+  100% {
+    transform: none;
+  }
+  40% {
+    transform: translateY(-6px) scale(1.06);
+  }
+}
+@keyframes s-twinkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 960px) {
+  .s-contact-scene {
+    padding: 90px 0;
+  }
+  .s-contact-scene .s-contact {
+    gap: 36px;
+  }
+}
+@media (max-width: 640px) {
+  .s-contact-scene {
+    padding: 64px 0;
+  }
+  .s-contact-title {
+    font-size: clamp(1.9rem, 9vw, 2.4rem);
+  }
+  .s-contact-lead {
+    font-size: 0.95rem;
+    margin-bottom: 22px;
+  }
+  .s-contact-scene .s-info-item {
+    padding: 13px 14px;
+    gap: 12px;
+  }
+  .s-contact-scene .s-info-icon {
+    width: 42px;
+    height: 42px;
+  }
+  .s-contact-scene .s-info-item b {
+    font-size: 0.9rem;
+  }
+  .s-form-wrap {
+    border-radius: 22px;
+  }
+  .s-contact-scene .s-form {
+    border-radius: 21px;
+  }
+  .s-collage {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .s-card,
+  .s-card:hover {
+    transform: none !important;
+  }
+}
+/* "+N more categories" tile on the home page */
+.s-cat-more {
+  border-style: dashed;
+  border-color: var(--gold);
+  background: rgba(201, 161, 74, 0.06);
+}

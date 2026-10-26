@@ -22,6 +22,7 @@ import SiteLayout from "./siteLayout";
 import ItemCard from "./itemCard/itemCard.jsx";
 import QuickView from "./quickView";
 import StoreMap from "./map/map";
+import { parallax, spot } from "./motion";
 import video from "../../../assets/ceramics.mp4";
 import { CONTACT, FAQS, REVIEWS, directionsLink, money, usableImage, whatsappLink } from "./siteData";
 
@@ -82,7 +83,7 @@ const Hero = ({ products }) => {
   const [view, setView] = useState(null);
   const shots = products.filter((p) => usableImage(p?.imgUrl)).slice(0, 3);
   return (
-    <section className="s-hero">
+    <section className="s-hero" onMouseMove={parallax}>
       <video src={video} muted loop autoPlay playsInline aria-hidden="true" />
       <div className="s-blob a" />
       <div className="s-blob b" />
@@ -159,7 +160,7 @@ const Hero = ({ products }) => {
 };
 
 const Marquee = ({ products }) => {
-  const words = categoryCounts(products).map(([c]) => c);
+  const words = categoryCounts(products).slice(0, 12).map(([c]) => c);
   const list = (words.length ? words : ["Commodes", "Vanities", "Showers", "Basins", "Fittings"]).concat(
     "Premium quality",
     "Delivery in Karachi"
@@ -177,7 +178,9 @@ const Marquee = ({ products }) => {
 };
 
 const Categories = ({ products }) => {
-  const cats = categoryCounts(products).slice(0, 8);
+  const all = categoryCounts(products);
+  const cats = all.slice(0, 8); // biggest categories; the rest are one tap away
+  const more = all.length - cats.length;
   if (cats.length === 0) return null;
   return (
     <section className="s-section tight">
@@ -204,6 +207,16 @@ const Categories = ({ products }) => {
               </span>
             </Link>
           ))}
+          {more > 0 ? (
+            <Link to="/item" className="s-cat s-cat-more s-reveal">
+              <span className="num">+{more}</span>
+              <strong>More categories</strong>
+              <small>Browse all {all.length} categories</small>
+              <span className="arrow">
+                <FaArrowRight />
+              </span>
+            </Link>
+          ) : null}
         </div>
       </div>
     </section>
@@ -233,7 +246,8 @@ const Featured = ({ products, loading }) => (
 );
 
 const Why = () => (
-  <section className="s-section s-dark">
+  <section className="s-section s-dark s-spotlit" onMouseMove={spot}>
+    <div className="s-spot" aria-hidden="true" />
     <div className="s-container">
       <div className="s-head s-reveal">
         <div>
@@ -387,75 +401,93 @@ const CtaBand = () => (
 );
 
 const Contact = () => (
-  <section id="contact" className="s-section s-alt">
+  <section id="contact" className="s-contact-scene" onMouseMove={spot}>
+    <video src={video} muted loop autoPlay playsInline aria-hidden="true" />
+    <div className="s-tiles" aria-hidden="true" />
+    <div className="s-spot" aria-hidden="true" />
+    <div className="s-blob a" />
+    <div className="s-blob b" />
     <div className="s-container">
-      <div className="s-head s-reveal">
-        <div>
-          <span className="s-eyebrow">Contact</span>
-          <h2>Get in touch</h2>
-          <p>Questions, prices or bulk orders? Call, WhatsApp or send us a message.</p>
-        </div>
-      </div>
       <div className="s-contact">
-        <div className="s-info">
-          <div className="s-info-item full s-reveal">
-            <span className="s-info-icon">
-              <FaMapMarkerAlt />
+        <div>
+          <div className="s-reveal">
+            <span className="s-eyebrow">
+              <i /> Contact us
             </span>
-            <div>
-              <small>Visit us</small>
-              <b>{CONTACT.address}</b>
-            </div>
+            <h2 className="s-contact-title">
+              Let's build your <em className="s-gold">dream bathroom</em>
+            </h2>
+            <p className="s-contact-lead">
+              Questions, prices or bulk orders? Call, WhatsApp or send a message. We usually reply within a
+              few hours.
+            </p>
           </div>
-          <a className="s-info-item s-reveal" href={CONTACT.phoneHref}>
-            <span className="s-info-icon">
-              <FaPhoneAlt />
-            </span>
-            <div>
-              <small>Call us</small>
-              <b>{CONTACT.phone}</b>
-            </div>
-          </a>
-          <a className="s-info-item s-reveal" href={whatsappLink()} target="_blank" rel="noreferrer">
-            <span className="s-info-icon">
-              <FaWhatsapp />
-            </span>
-            <div>
-              <small>WhatsApp</small>
-              <b>Chat with us now</b>
-            </div>
-          </a>
-          <a className="s-info-item full s-reveal" href={`mailto:${CONTACT.email}`}>
-            <span className="s-info-icon">
-              <FaEnvelope />
-            </span>
-            <div>
-              <small>Email</small>
-              <b>{CONTACT.email}</b>
-            </div>
-          </a>
+          <div className="s-info">
+            <a className="s-info-item wa s-reveal" href={whatsappLink()} target="_blank" rel="noreferrer">
+              <span className="s-info-icon">
+                <FaWhatsapp />
+              </span>
+              <div>
+                <small>Fastest reply</small>
+                <b>Chat on WhatsApp</b>
+              </div>
+              <FaArrowRight className="go" />
+            </a>
+            <a className="s-info-item s-reveal" href={CONTACT.phoneHref}>
+              <span className="s-info-icon">
+                <FaPhoneAlt />
+              </span>
+              <div>
+                <small>Call us</small>
+                <b>{CONTACT.phone}</b>
+              </div>
+              <FaArrowRight className="go" />
+            </a>
+            <a className="s-info-item s-reveal" href={directionsLink} target="_blank" rel="noreferrer">
+              <span className="s-info-icon">
+                <FaMapMarkerAlt />
+              </span>
+              <div>
+                <small>Visit our store</small>
+                <b>{CONTACT.address}</b>
+              </div>
+              <FaArrowRight className="go" />
+            </a>
+            <a className="s-info-item s-reveal" href={`mailto:${CONTACT.email}`}>
+              <span className="s-info-icon">
+                <FaEnvelope />
+              </span>
+              <div>
+                <small>Email</small>
+                <b>{CONTACT.email}</b>
+              </div>
+              <FaArrowRight className="go" />
+            </a>
+          </div>
         </div>
-        <form className="s-form s-reveal" action={`https://formsubmit.co/${CONTACT.email}`} method="POST">
-          <h3>Send us a message</h3>
-          <p>We usually reply within a few hours.</p>
-          <div className="s-row2">
-            <div className="s-field">
-              <input id="c-name" name="name" required placeholder=" " />
-              <label htmlFor="c-name">Full name</label>
+        <div className="s-form-wrap s-reveal">
+          <form className="s-form" action={`https://formsubmit.co/${CONTACT.email}`} method="POST">
+            <h3>Send us a message</h3>
+            <p>Tell us what you need and we'll get back to you with options and prices.</p>
+            <div className="s-row2">
+              <div className="s-field">
+                <input id="c-name" name="name" required placeholder=" " />
+                <label htmlFor="c-name">Full name</label>
+              </div>
+              <div className="s-field">
+                <input id="c-email" name="email" type="email" required placeholder=" " />
+                <label htmlFor="c-email">Email</label>
+              </div>
             </div>
             <div className="s-field">
-              <input id="c-email" name="email" type="email" required placeholder=" " />
-              <label htmlFor="c-email">Email</label>
+              <textarea id="c-msg" name="message" rows={5} required placeholder=" " />
+              <label htmlFor="c-msg">What are you looking for?</label>
             </div>
-          </div>
-          <div className="s-field">
-            <textarea id="c-msg" name="message" rows={5} required placeholder=" " />
-            <label htmlFor="c-msg">What are you looking for?</label>
-          </div>
-          <button type="submit" className="s-btn s-btn-dark" style={{ width: "100%" }}>
-            <FaPaperPlane /> Send message
-          </button>
-        </form>
+            <button type="submit" className="s-btn s-btn-gold" style={{ width: "100%" }}>
+              <FaPaperPlane /> Send message
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </section>

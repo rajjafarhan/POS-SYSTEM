@@ -2365,3 +2365,497 @@ a.s-info-item:hover {
 .s-hero h1 em {
   display: inline-block;
 }
+/* phones: compact product cards with a round WhatsApp button beside the price */
+@media (max-width: 640px) {
+  .s-card {
+    border-radius: 16px;
+  }
+  .s-card-media {
+    aspect-ratio: 1 / 0.95;
+    padding: 10px;
+  }
+  .s-badge {
+    top: 8px;
+    left: 8px;
+    font-size: 0.56rem;
+    letter-spacing: 0.08em;
+    padding: 4px 8px;
+  }
+  .s-card-body {
+    padding: 10px 12px 12px;
+    gap: 4px;
+  }
+  .site .s-card-title {
+    font-size: 0.86rem;
+    line-height: 1.3;
+  }
+  .s-card-desc {
+    -webkit-line-clamp: 1;
+    min-height: 0;
+    font-size: 0.74rem;
+  }
+  .s-card-foot {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 8px;
+    gap: 6px;
+  }
+  .s-price {
+    font-size: 1rem;
+  }
+  .s-price small {
+    font-size: 0.62rem;
+  }
+  .s-card-foot .s-btn {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 1.05rem;
+    box-shadow: 0 6px 14px rgba(34, 195, 94, 0.3);
+  }
+  .s-card-foot .s-btn-label {
+    display: none;
+  }
+}
+/* category label in the quick view should hug its text */
+.s-qv-body .s-eyebrow {
+  align-self: flex-start;
+}
+/* phones: quick view as a compact bottom sheet with the order buttons always visible */
+@media (max-width: 640px) {
+  .s-qv-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .s-qv {
+    width: 100%;
+    max-height: 88vh;
+    border-radius: 24px 24px 0 0;
+    display: flex;
+    flex-direction: column;
+    animation: s-sheet 0.4s var(--ease) both;
+  }
+  .s-qv::before {
+    /* grab handle */
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 40px;
+    height: 4px;
+    margin-left: -20px;
+    border-radius: 4px;
+    background: rgba(13, 15, 19, 0.18);
+    z-index: 3;
+  }
+  .s-qv-media {
+    min-height: 0;
+    padding: 26px 20px 14px;
+    flex: none;
+  }
+  .s-qv-media img {
+    max-height: 190px;
+  }
+  .s-qv-body {
+    padding: 16px 18px 0;
+    gap: 8px;
+  }
+  .s-qv-body h3 {
+    font-size: 1.3rem;
+  }
+  .s-qv-price {
+    font-size: 1.35rem;
+  }
+  .s-qv-desc {
+    font-size: 0.9rem;
+  }
+  .s-qv-points {
+    font-size: 0.82rem;
+    gap: 6px;
+    margin: 2px 0 0;
+  }
+  .s-qv-actions {
+    position: sticky;
+    bottom: 0;
+    margin: 10px -18px 0;
+    padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
+    background: #fff;
+    border-top: 1px solid var(--line);
+    flex-wrap: nowrap;
+  }
+  .s-qv-actions .s-btn {
+    padding: 12px 14px;
+    font-size: 0.88rem;
+  }
+  .s-qv-actions .s-btn-wa {
+    flex: 1;
+  }
+  .s-qv-close {
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+}
+@keyframes s-sheet {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ================= phone refinements ================= */
+@media (max-width: 640px) {
+  .s-section {
+    padding: 64px 0;
+  }
+  .s-section.tight {
+    padding: 52px 0;
+  }
+  .s-head {
+    margin-bottom: 30px;
+    gap: 14px;
+  }
+  .s-head h2,
+  .s-about h2 {
+    font-size: clamp(1.75rem, 8vw, 2.2rem);
+  }
+  .s-head p {
+    font-size: 0.95rem;
+  }
+  .s-btn {
+    padding: 13px 22px;
+    font-size: 0.92rem;
+  }
+
+  /* hero: equal full-width buttons, product photos as a swipeable strip */
+  .s-hero {
+    min-height: auto;
+  }
+  .s-hero-grid {
+    padding-top: 104px;
+    padding-bottom: 56px;
+    gap: 34px;
+  }
+  .s-hero h1 {
+    font-size: clamp(2.5rem, 12vw, 3.2rem);
+    margin: 20px 0 18px;
+  }
+  .s-hero p.lead {
+    font-size: 1rem;
+  }
+  .s-hero-actions {
+    margin-top: 28px;
+  }
+  .s-hero-actions .s-btn {
+    flex: 1 1 100%;
+  }
+  .s-trust {
+    margin-top: 28px;
+    gap: 10px 18px;
+    font-size: 0.82rem;
+  }
+  .s-collage {
+    height: auto;
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin: 0 -16px;
+    padding: 4px 16px 10px;
+    scrollbar-width: none;
+  }
+  .s-collage::-webkit-scrollbar {
+    display: none;
+  }
+  .s-tile,
+  .s-tile.t1,
+  .s-tile.t2,
+  .s-tile.t3 {
+    position: relative;
+    inset: auto;
+    flex: none;
+    width: 68%;
+    scroll-snap-align: start;
+    animation: s-fadeup 0.9s var(--ease) both;
+  }
+  .s-tile.t1 .img,
+  .s-tile.t2 .img,
+  .s-tile.t3 .img {
+    height: 170px;
+  }
+  .s-tile .cap {
+    font-size: 0.78rem;
+  }
+  .s-chip {
+    display: none;
+  }
+  .s-marquee {
+    padding: 14px 0;
+  }
+  .s-marquee-track span {
+    font-size: 1.2rem;
+    gap: 28px;
+    padding-right: 28px;
+  }
+
+  /* why us: big card on top, the four small ones two per row */
+  .s-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    gap: 10px;
+  }
+  .s-feature.big {
+    grid-column: 1 / -1;
+    min-height: 0;
+    padding: 26px 22px;
+  }
+  .s-feature {
+    padding: 18px 16px;
+    border-radius: 18px;
+  }
+  .s-feature-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    font-size: 1rem;
+    margin-bottom: 14px;
+  }
+  .s-feature h3 {
+    font-size: 0.95rem;
+  }
+  .s-feature p {
+    font-size: 0.8rem;
+  }
+  .s-feature.big h3 {
+    font-size: 1.6rem;
+  }
+  .s-feature.big p {
+    font-size: 0.92rem;
+  }
+
+  /* about */
+  .s-about {
+    gap: 28px;
+  }
+  .s-about p {
+    font-size: 0.95rem;
+  }
+  .s-stats {
+    gap: 10px;
+  }
+  .s-stat {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+  .s-stat strong {
+    font-size: 2.4rem;
+  }
+  .s-stat span {
+    font-size: 0.85rem;
+    margin-top: 8px;
+  }
+
+  /* reviews */
+  .s-wall {
+    gap: 12px;
+  }
+  .s-review {
+    width: 270px;
+    padding: 20px;
+    gap: 14px;
+    margin-right: 12px;
+    font-size: 0.9rem;
+  }
+
+  /* contact: compact rows with the icon beside the text */
+  .s-info {
+    gap: 10px;
+  }
+  .s-info-item {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+  }
+  .s-info-icon {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+  .s-form {
+    padding: 22px 18px;
+    border-radius: 20px;
+  }
+  .s-form h3 {
+    font-size: 1.45rem;
+  }
+  .s-faq-q {
+    padding: 16px 18px;
+    font-size: 0.95rem;
+  }
+  .s-faq-a p {
+    padding: 0 18px 18px;
+    font-size: 0.92rem;
+  }
+
+  /* map: address card below the map instead of on top of it */
+  .s-map {
+    border-radius: 20px;
+  }
+  .s-map .leaflet-container {
+    height: 280px !important;
+  }
+  .s-map-card {
+    position: static;
+    max-width: none;
+    border-radius: 0;
+    backdrop-filter: none;
+    background: var(--ink);
+  }
+
+  /* footer: links side by side */
+  .s-footer {
+    padding: 64px 0 24px;
+  }
+  .s-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 20px;
+  }
+  .s-footer-grid > div:first-child,
+  .s-footer-grid > div:last-child {
+    grid-column: 1 / -1;
+  }
+  .s-bigword {
+    margin-top: 44px;
+  }
+  .s-footer-bottom {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* floating WhatsApp: smaller and out of the way */
+  .s-fab {
+    width: 52px;
+    height: 52px;
+    right: 14px;
+    bottom: 14px;
+    font-size: 1.5rem;
+  }
+  .s-fab-tip {
+    display: none;
+  }
+
+  /* products page: shorter header and a slimmer sticky toolbar */
+  .s-page-hero {
+    padding: 104px 0 40px;
+  }
+  .s-page-hero h1 {
+    font-size: clamp(2.2rem, 11vw, 2.8rem);
+  }
+  .s-page-hero p {
+    font-size: 0.95rem;
+  }
+  .s-toolbar {
+    padding: 10px 0 8px;
+  }
+  .s-toolbar-row {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  .s-search {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .s-search input,
+  .s-select {
+    height: 44px;
+    font-size: 0.9rem;
+  }
+  .s-search input {
+    padding-left: 40px;
+  }
+  .s-search svg {
+    left: 15px;
+  }
+  .s-select {
+    flex: none;
+    max-width: 128px;
+    padding: 0 10px;
+  }
+  .s-pills-row {
+    padding-top: 10px;
+  }
+  .s-pill {
+    padding: 6px 12px;
+    font-size: 0.82rem;
+  }
+  .s-count {
+    margin: 18px 0 12px;
+    font-size: 0.85rem;
+  }
+  .s-more-panel {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    top: auto;
+    bottom: 12px;
+    width: auto;
+    max-height: 70vh;
+  }
+}
+@media (max-width: 380px) {
+  .s-logo img {
+    height: 32px;
+  }
+  .s-cats,
+  .s-grid {
+    gap: 8px;
+  }
+}
+
+/* ================= tablet refinements ================= */
+@media (min-width: 641px) and (max-width: 1100px) {
+  .s-section {
+    padding: 88px 0;
+  }
+  .s-hero {
+    min-height: auto;
+  }
+  .s-hero-grid {
+    padding-top: 130px;
+    padding-bottom: 80px;
+  }
+  .s-hero-content,
+  .s-hero-grid > div:first-child {
+    max-width: 640px;
+  }
+  .s-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .s-info {
+    grid-template-columns: 1fr 1fr;
+  }
+  .s-stat:first-child {
+    grid-column: span 2;
+  }
+}
+@media (min-width: 641px) and (max-width: 860px) {
+  .s-grid {
+    gap: 14px;
+  }
+  .s-card-body {
+    padding: 14px 16px 16px;
+  }
+  .s-footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
