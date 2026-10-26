@@ -1,68 +1,35 @@
-import logo1 from "../../../../assets/MSimg1.avif";
+import { FaWhatsapp } from "react-icons/fa";
+import fallback from "../../../../assets/MSimg1.avif";
+import { money, openWhatsapp } from "../siteData";
 
+// Product tile for the website: photo, category, name, price and a WhatsApp order button.
+const ItemCard = ({ item }) => (
+  <article className="s-card">
+    <div className="s-card-media">
+      <img
+        src={item?.imgUrl ? item.imgUrl : fallback}
+        alt={item?.label ?? "Product"}
+        loading="lazy"
+        onError={(e) => {
+          // old Firebase images no longer exist; show the shop placeholder instead
+          if (e.currentTarget.src !== fallback) e.currentTarget.src = fallback;
+        }}
+      />
+      {item?.category ? <span className="s-badge">{item.category}</span> : null}
+    </div>
+    <div className="s-card-body">
+      <h3 className="s-card-title">{String(item?.label ?? "").toLowerCase()}</h3>
+      <div className="s-card-foot">
+        <span className="s-price">
+          <small>Rs</small>
+          {money(item?.sellingPrice)}
+        </span>
+        <button type="button" className="s-btn s-btn-wa" onClick={() => openWhatsapp(item)}>
+          <FaWhatsapp /> Order
+        </button>
+      </div>
+    </div>
+  </article>
+);
 
-const ItemCard = ({ item, openWhatsappChat }) => {
-    const getRandomColor = () => {
-        const letters = "0123456789ABCDEF";
-        let color = "#";
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    };
-    return (
-
-        <div className='col-md-4 col-lg-3 my-3' >
-            <div className='mx-2'>
-
-                <div className='card  img-zoom boxshadow ' style={{ cursor: "pointer" }} onClick={() => openWhatsappChat(item)} >
-                    <img width={"180px"} height={"150px"} style={{ objectFit: "contain" }} src={item?.imgUrl === "" ? logo1 : item?.imgUrl} className='card-img-top pb-1 ' alt='no pic' />
-                    <div className='card-body ' style={{ padding: 0, cursor: "pointer" }}>
-                        <div
-                            className="px-2 mt-2"
-                            style={{ display: "flex", justifyContent: "space-between" }}
-                        >
-                            <h5
-                                className="card-title  "
-                                style={{
-                                    textTransform: "uppercase",
-                                    fontWeight: "bolder",
-                                    fontFamily: " 'Playfair Display', sans-serif;",
-                                    height: "45px",
-                                    fontSize: "15px"
-                                }}
-                            >
-                                {item?.label}
-                            </h5>
-                            <h5 style={{ fontSize: "15px", fontWeight: "bold" }} className="card-title ">{item?.sellingPrice} PKR</h5>
-                        </div>
-                        <p
-                            className="card-text px-2  "
-                            style={{ textTransform: "uppercase", fontSize: "14px", fontWeight: "bold" }}
-                        >
-                            {" "}
-                            {item?.category}
-                        </p>
-                        <div
-                            style={{
-                                width: "100",
-                                backgroundColor: getRandomColor(),
-                                color: "white",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                height: "2rem",
-                                borderRadius: "3px",
-                                marginTop: "3px"
-                            }}
-                        >
-                            <p >Buy Now</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
 export default ItemCard;
-
