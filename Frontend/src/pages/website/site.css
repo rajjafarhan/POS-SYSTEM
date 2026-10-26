@@ -1149,3 +1149,7 @@ a.s-info-item:hover {
     padding-bottom: 56px;
   }
 }
+/* global.css sets a font on every element (*); let the website's own fonts flow down instead */
+.site * {
+  font-family: inherit;
+}

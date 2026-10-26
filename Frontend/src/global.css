@@ -6,7 +6,9 @@
 *{
     margin: 0 ;
     padding: 0;
- 
+    /* used to come from the old website stylesheets, which loaded app-wide */
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 .text-black{
