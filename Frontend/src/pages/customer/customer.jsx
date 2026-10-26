@@ -27,6 +27,7 @@ import { validateProducts } from "../../helpers/validate";
 import { toast } from "react-toastify";
 import ReturnForm from "./returnForm";
 import ReturnsList from "./returnsList";
+import ReceiptForm from "../../components/receiptForm/receiptForm";
 
 const Customer = () => {
   const [offSet, setOffSet] = useState(1);
@@ -227,123 +228,34 @@ const Customer = () => {
 
       {showModal && (
         <Modal>
-          <section className="bg-white rounded p-5 modal_bg">
-            <div>
-              <div className="d-flex justify-content-between align-items-center">
-                <h1 className="text-dgreen">Create Customer Receipt 🧾</h1>
-                <button
-                  onClick={() => setShowModal(false)}
-                  className="text-dark btn-close border-0 bg-white fs-4"
-                  type="button"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="mt-5 d-flex ">
-                <TextField
-                  id="outlined-search"
-                  name="rName"
-                  value={receiptData.rName}
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
-                  label="Name"
-                  type="search"
-                />
-                <div className="mx-1"></div>
-                <TextField
-                  id="outlined-search"
-                  name="rDesc"
-                  value={receiptData.rDesc}
-                  onChange={(e) => {
-                    handleChange(e);
-                  }}
-                  label="Description"
-                  type="search"
-                />
-                <div className="mx-1"></div>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    value={receiptData.date}
-                    onChange={(newValue) => {
-                      setReceiptData({ ...receiptData, ["date"]: newValue });
-                    }}
-                  />
-                </LocalizationProvider>
-              </div>
-
-              {product.map((prod, index) => {
-                return (
-                  <div key={index}>
-                    <ProductsInput
-                      handleProductChange={handleProductChange}
-                      setProduct={handleproduct}
-                      deleteProduct={deleteProduct}
-                      product={prod?.product}
-                      qtyVal={prod?.productQty ? prod?.productQty : null}
-                      products={products}
-                      unitPrice={prod?.unitPrice ?? ""}
-                      totalPrice={prod?.totalPrice ? prod?.totalPrice : 0}
-                      id={index}
-                      type={"customer"}
-                    />
-                  </div>
-                );
-              })}
-              <div className="d-flex justify-content-center align-items-center mt-4">
-                <button
-                  type="button"
-                  className="btn bg-dgreen text-white"
-                  onClick={addProduct}
-                >
-                  Add product
-                </button>
-              </div>
-              <div>
-                <div className="my-2 d-flex justify-content-between align-items-center">
-                  <h3 className="text-dgreen">Total</h3>
-                  <TextField
-                    id="outlined-search"
-                    label={total}
-                    type="number"
-                    disabled
-                  />
-                </div>
-                <div className="my-2 d-flex justify-content-between align-items-center">
-                  <h3 className="text-dgreen">Cash</h3>
-                  <TextField
-                    id="outlined-search"
-                    label="Cash"
-                    name="cash"
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                    type="number"
-                    value={receiptData.cash}
-                  />
-                </div>
-                <div className="my-2 d-flex justify-content-between align-items-center">
-                  <h3 className="text-dgreen">Change</h3>
-                  <TextField
-                    id="outlined-search"
-                    label={change}
-                    type="number"
-                    disabled
-                  />
-                </div>
-                <div className="d-flex justify-content-center mt-3">
-                  <button
-                    onClick={() => {
-                      submit();
-                    }}
-                    type="submit"
-                    className="btn bg-dgreen text-light "
-                  >
-                    Create Receipt!
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
+          <ReceiptForm
+            title="Create Customer Receipt"
+            partyLabel="Customer name"
+            receiptData={receiptData}
+            onFieldChange={handleChange}
+            onDateChange={(newValue) => setReceiptData({ ...receiptData, date: newValue })}
+            itemCount={product.length}
+            onAddProduct={addProduct}
+            total={total}
+            onSubmit={submit}
+            onClose={() => setShowModal(false)}
+          >
+            {product.map((prod, index) => (
+              <ProductsInput
+                key={index}
+                handleProductChange={handleProductChange}
+                setProduct={handleproduct}
+                deleteProduct={deleteProduct}
+                product={prod?.product}
+                qtyVal={prod?.productQty ? prod?.productQty : null}
+                products={products}
+                unitPrice={prod?.unitPrice ?? ""}
+                totalPrice={prod?.totalPrice ? prod?.totalPrice : 0}
+                id={index}
+                type={"customer"}
+              />
+            ))}
+          </ReceiptForm>
         </Modal>
       )}
       {receiptModal && (

@@ -5,6 +5,9 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 import "./vendor.css";
+import "../../components/receiptForm/receiptForm.css";
+
+const money = (n) => Number(n || 0).toLocaleString("en-US", { maximumFractionDigits: 2 });
 
 const ProductsInput = ({
   handleProductChange,
@@ -22,6 +25,7 @@ const ProductsInput = ({
   // selling price and can be changed when the customer negotiates).
   const isCustomer = type !== "vendor";
   const listPrice = isCustomer ? product?.sellingPrice : product?.costPrice;
+  const negotiated = isCustomer && product && Number(unitPrice) !== Number(listPrice);
   useEffect(() => {
     if (type === "vendor") {
       handleProductChange(
@@ -48,83 +52,66 @@ const ProductsInput = ({
     const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue ,  { keys: ['label'], threshold: 0.2  });
 
   return (
-    
-    <div className="d-flex flex-wrap jf-between inp-mob  align-items-center mt-3">
-      <div className="w-15rem">
+    <div className="pi_row">
+      <div className="pi_cell pi_product">
         <Autocomplete
           value={product}
           onChange={(e, val) => {
             setProduct(val, id);
           }}
           disablePortal
-      filterOptions={filterOptions}
-          id="combo-box-demo"
+          filterOptions={filterOptions}
           options={products ?? []}
           renderInput={(params) => <TextField {...params} label="Product" />}
           size="small"
         />
       </div>
 
-      <div className="m2">
-        {isCustomer ? (
-          <TextField
-            id="outlined-search"
-            name="unitPrice"
-            label="Unit Price"
-            type="number"
-            value={unitPrice}
-            onChange={(e) => handleProductChange(e, id)}
-            disabled={!product}
-            size="small"
-            inputProps={{ min: 0 }}
-            helperText={
-              product && Number(unitPrice) !== Number(listPrice)
-                ? `List price ${listPrice}`
-                : " "
-            }
-          />
-        ) : (
-          <TextField
-            id="outlined-search"
-            name="unitPrice"
-            // label="Unit Price"
-            type="number"
-            disabled
-            value={listPrice}
-            size="small"
-          />
-        )}
-      </div>
-      <div className="m2">
+      <div className="pi_cell">
         <TextField
-          id="outlined-search"
-          value={qtyVal}
+          name="unitPrice"
+          label="Unit Price"
+          type="number"
+          size="small"
+          fullWidth
+          value={isCustomer ? unitPrice : listPrice ?? ""}
+          onChange={(e) => handleProductChange(e, id)}
+          disabled={!isCustomer || !product}
+          inputProps={{ min: 0 }}
+        />
+        {negotiated ? <span className="pi_hint">List price {money(listPrice)}</span> : null}
+      </div>
+      <div className="pi_cell">
+        <TextField
+          value={qtyVal ?? ""}
           name="productQty"
           onChange={(e) => {
             handleProductChange(e, id);
           }}
-          label="Quantity"
+          label="Qty"
           type="number"
           size="small"
+          fullWidth
+          inputProps={{ min: 1 }}
         />
       </div>
-
-      <div className="m2">
+      <div className="pi_cell">
         <TextField
-          id="outlined-search"
-          value={totalPrice}
+          value={money(totalPrice)}
           name="totalPrice"
-          label="Total Price"
+          label="Total"
           size="small"
-          type="search"
+          fullWidth
           disabled
         />
       </div>
       <button
+        type="button"
+        title="Remove product"
         onClick={() => {
           deleteProduct(id);
         }}
-        className="text-danger  border-0 bg-white fs-4"
+        className="pi_del"
       >
         <FontAwesomeIcon icon={faTrash} />
       </button>

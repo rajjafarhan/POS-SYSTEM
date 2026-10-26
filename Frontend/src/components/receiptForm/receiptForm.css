@@ -1,0 +1,179 @@
+.rf_modal {
+  display: flex;
+  flex-direction: column;
+  width: min(980px, 94vw);
+  max-height: 92vh;
+  background: #ffffff;
+  border-radius: 0.9rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.rf_head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: #2c698d;
+  color: #ffffff;
+}
+.rf_head h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.rf_head .btn-close {
+  filter: invert(1);
+  opacity: 0.85;
+}
+.rf_body {
+  padding: 1.25rem 1.5rem;
+  overflow-y: auto;
+}
+.rf_section_title {
+  color: #2c698d;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0.25rem 0 0.75rem;
+}
+.rf_count {
+  display: inline-block;
+  min-width: 1.4rem;
+  padding: 0 0.4rem;
+  margin-left: 0.3rem;
+  border-radius: 1rem;
+  background: #e3f6f5;
+  text-align: center;
+}
+.rf_details {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+.rf_items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.rf_empty {
+  border: 2px dashed #cfe3ea;
+  border-radius: 0.6rem;
+  color: #6b7b86;
+  padding: 1.25rem;
+  text-align: center;
+}
+.rf_add {
+  margin-top: 0.9rem;
+  color: #2c698d !important;
+  border: 1.5px dashed #2c698d !important;
+  background: #f5fbfb !important;
+  font-weight: 600;
+}
+.rf_add:hover {
+  background: #e3f6f5 !important;
+}
+
+/* one product line: product | unit price | qty | total | delete */
+.pi_row {
+  display: grid;
+  grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 1fr) 2.25rem;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.75rem 0.75rem 1.1rem;
+  border: 1px solid #e3edf2;
+  border-radius: 0.6rem;
+  background: #fbfdfd;
+}
+.pi_cell {
+  position: relative;
+}
+.pi_hint {
+  position: absolute;
+  left: 0.2rem;
+  top: 100%;
+  margin-top: 0.1rem;
+  font-size: 0.72rem;
+  color: #b46b00;
+  white-space: nowrap;
+}
+.pi_del {
+  border: 0;
+  background: transparent;
+  color: #dc3545;
+  font-size: 1.15rem;
+  height: 2.5rem;
+}
+
+.rf_foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e3edf2;
+  background: #f5fbfb;
+}
+.rf_sum {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: center;
+}
+.rf_total,
+.rf_change {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.rf_total span,
+.rf_change span {
+  color: #6b7b86;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.rf_total strong {
+  color: #272643;
+  font-size: 1.6rem;
+}
+.rf_change strong {
+  color: #1d7a46;
+  font-size: 1.2rem;
+}
+.rf_due strong {
+  color: #b3261e;
+}
+.rf_cash {
+  width: 10rem;
+}
+.rf_actions {
+  display: flex;
+  gap: 0.6rem;
+}
+.rf_submit {
+  background: #2c698d !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media only screen and (max-width: 700px) {
+  .rf_details {
+    grid-template-columns: 1fr;
+  }
+  .pi_row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 2.25rem;
+  }
+  .pi_row .pi_product {
+    grid-column: 1 / -1;
+  }
+  .rf_body,
+  .rf_head,
+  .rf_foot {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
