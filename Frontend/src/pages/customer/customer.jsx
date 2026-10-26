@@ -25,6 +25,8 @@ import TypeWtiter from "../../components/loaders/typewriter";
 import GeneralLoader from "../../components/loaders/generalLoader";
 import { validateProducts } from "../../helpers/validate";
 import { toast } from "react-toastify";
+import ReturnForm from "./returnForm";
+import ReturnsList from "./returnsList";
 
 const Customer = () => {
   const [offSet, setOffSet] = useState(1);
@@ -72,6 +74,8 @@ const Customer = () => {
     cash: "",
   });
   const [product, setProduct] = useState([]);
+  const [tab, setTab] = useState("receipts");
+  const [returnInvoice, setReturnInvoice] = useState(null);
 
   if (mutation.isLoading) {
     return (
@@ -109,6 +113,8 @@ const Customer = () => {
     setProduct((prevcomponents) => {
       const updatedComponents = [...prevcomponents];
       updatedComponents[id].product = val;
+      // start at the list price; the user can change it if the customer negotiates
+      updatedComponents[id].unitPrice = val?.sellingPrice ?? "";
       return updatedComponents;
     });
   };
@@ -149,6 +155,10 @@ const Customer = () => {
       toast.error("Product Name or Product quantity must not be empty!");
       return;
     }
+    if (product.some((p) => p.unitPrice === "" || Number(p.unitPrice) < 0)) {
+      toast.error("Enter a unit price for every product!");
+      return;
+    }
     mutation.mutate({ ...obj, product });
     setShowModal(false);
     setReceiptModal(true);
@@ -162,25 +172,58 @@ const Customer = () => {
           <AddButton onChange={setShowModal} />
         </div>
       </div>
-      <div>
-        <div className="pc_vendor d-flex justify-content-center align-items-start">
-          <Table
-            headings={[
-              "No.",
-              "Name",
-              "Description",
-              "Date",
-              "Amount",
-              "Delete",
-            ]}
-            mutation={deleteMutation}
-            data={rData}
-            total={data?.data?.totalCount}
-            offSet={[offSet, setOffSet]}
-            type={"Customer Receipt"}
-          />
+      <div className="d-flex justify-content-center mb-3">
+        <div className="ret_tabs">
+          <button
+            className={`ret_tab ${tab === "receipts" ? "active" : ""}`}
+            onClick={() => setTab("receipts")}
+          >
+            Receipts
+          </button>
+          <button
+            className={`ret_tab ${tab === "returns" ? "active" : ""}`}
+            onClick={() => setTab("returns")}
+          >
+            Returns
+          </button>
         </div>
       </div>
+      {tab === "receipts" ? (
+        <div>
+          <div className="pc_vendor d-flex justify-content-center align-items-start">
+            <Table
+              headings={[
+                "No.",
+                "Name",
+                "Description",
+                "Date",
+                "Amount",
+                "Delete",
+              ]}
+              mutation={deleteMutation}
+              data={rData}
+              total={data?.data?.totalCount}
+              offSet={[offSet, setOffSet]}
+              type={"Customer Receipt"}
+              onReturn={setReturnInvoice}
+            />
+          </div>
+        </div>
+      ) : (
+        <ReturnsList refetchProducts={refetchProducts} />
+      )}
+      {returnInvoice && (
+        <Modal>
+          <ReturnForm
+            invoice={returnInvoice}
+            onClose={() => setReturnInvoice(null)}
+            onSaved={() => {
+              refetchProducts();
+              setTab("returns");
+            }}
+          />
+        </Modal>
+      )}
 
       {showModal && (
         <Modal>
@@ -238,7 +281,7 @@ const Customer = () => {
                       product={prod?.product}
                       qtyVal={prod?.productQty ? prod?.productQty : null}
                       products={products}
-                      unitPrice={prod?.unitPrice ? prod?.unitPrice : 0}
+                      unitPrice={prod?.unitPrice ?? ""}
                       totalPrice={prod?.totalPrice ? prod?.totalPrice : 0}
                       id={index}
                       type={"customer"}

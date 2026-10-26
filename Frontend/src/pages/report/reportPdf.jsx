@@ -62,7 +62,8 @@ const ReportPdf = ({ report }) => {
   const s = report.summary;
   const shop = report.shop?.shopName || "POS System";
   const cards = [
-    ["Total Sales", money(s.totalSales)],
+    ["Total Sales (after returns)", money(s.totalSales)],
+    ["Customer Returns", money(s.returns)],
     ["Cost of Goods Sold", money(s.cogs)],
     ["Gross Profit", money(s.grossProfit)],
     ["Profit Margin", pct(s.margin)],

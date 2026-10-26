@@ -2,226 +2,186 @@ import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import { PDFViewer } from "@react-pdf/renderer";
 import { useOutletContext } from "react-router-dom";
 
+// 80mm thermal-printer receipt (227pt wide) for customer and vendor receipts.
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const num = (v) => {
+  const n = Number(v);
+  return isFinite(n) ? n : 0;
+};
+const money = (n) => num(n).toLocaleString("en-US", { maximumFractionDigits: 2 });
+const pad = (n) => String(n).padStart(2, "0");
+
 const styles = StyleSheet.create({
   page: {
-    flexDirection: "row",
     backgroundColor: "white",
+    paddingHorizontal: 10,
+    paddingVertical: 12,
+    fontFamily: "Helvetica",
+    fontSize: 8,
+    color: "#111111",
   },
-  section: {
-    flexGrow: 1,
+  center: { textAlign: "center" },
+  shop: { fontSize: 13, fontFamily: "Helvetica-Bold", textAlign: "center" },
+  small: { fontSize: 7.5, textAlign: "center", color: "#333333", marginTop: 1 },
+  title: {
+    fontSize: 9,
+    fontFamily: "Helvetica-Bold",
+    textAlign: "center",
+    marginTop: 6,
+    paddingVertical: 2,
+    borderTop: "1pt solid #111111",
+    borderBottom: "1pt solid #111111",
+    letterSpacing: 1,
   },
+  metaRow: { flexDirection: "row", justifyContent: "space-between", marginTop: 2 },
+  muted: { color: "#555555" },
+  rule: { borderBottom: "0.75pt dashed #777777", marginVertical: 4 },
+  head: { flexDirection: "row", fontFamily: "Helvetica-Bold", fontSize: 7.5 },
+  row: { flexDirection: "row", marginTop: 3 },
+  cItem: { flex: 1, paddingRight: 3 },
+  cQty: { width: 22, textAlign: "right" },
+  cRate: { width: 44, textAlign: "right" },
+  cAmt: { width: 50, textAlign: "right" },
+  note: { fontSize: 6.5, color: "#555555" },
+  totRow: { flexDirection: "row", justifyContent: "space-between", marginTop: 2 },
+  grand: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 3,
+    paddingVertical: 3,
+    borderTop: "1pt solid #111111",
+    borderBottom: "1pt solid #111111",
+    fontFamily: "Helvetica-Bold",
+    fontSize: 11,
+  },
+  bold: { fontFamily: "Helvetica-Bold" },
+  thanks: { textAlign: "center", fontFamily: "Helvetica-Bold", fontSize: 9, marginTop: 8 },
 });
 
 const VendorReceipt = ({ data, type }) => {
   const [, , basicInfoData] = useOutletContext();
-  console.log(basicInfoData);
+  const isVendor = type === "Vendor Receipt";
   const date = new Date(data?.date);
+  const validDate = !isNaN(date.getTime());
+
+  const items = (data?.product ?? []).map((prod) => {
+    const qty = num(prod?.productQty);
+    const list = num(isVendor ? prod?.product?.costPrice : prod?.product?.sellingPrice);
+    let rate = list;
+    if (!isVendor && prod?.unitPrice !== undefined && prod?.unitPrice !== "") rate = num(prod.unitPrice);
+    else if (qty && num(prod?.totalPrice)) rate = num(prod.totalPrice) / qty;
+    const amount = num(prod?.totalPrice) || rate * qty;
+    return { name: prod?.product?.label ?? "Item", qty, list, rate, amount };
+  });
+  const listTotal = items.reduce((s, i) => s + i.list * i.qty, 0);
+  const total = num(data?.total) || items.reduce((s, i) => s + i.amount, 0);
+  const discount = isVendor ? 0 : listTotal - total;
+  const units = items.reduce((s, i) => s + i.qty, 0);
+  const hasCash = data?.cash !== undefined && data?.cash !== "" && data?.cash !== null;
+  const cash = num(data?.cash);
+  const receiptNo = data?._id ? String(data._id).slice(-6).toUpperCase() : null;
+
+  // page height grows with the number of lines (long names wrap onto a second line)
+  const itemLines = items.reduce((s, i) => s + Math.ceil(i.name.length / 20) + (i.rate < i.list ? 1 : 0), 0);
+  const height = 215 + itemLines * 11 + (discount > 0 ? 24 : 0) + (data?.rDesc ? 12 : 0);
+
   return (
     <PDFViewer width={400} height={600}>
-      <Document
-        title="Receipt"
-        author="Subhan Shop"
-        subject="vendor receipt"
-        language="English"
-        producer="Dev Team"
-        pageMode="useAttachments"
-      >
-        <Page
-          bookmark="POS System"
-          orientation="potrait"
-          size={227}
-          style={{
-            backgroundColor: "white",
-            display: "flex",
-            flexDirection: "column",
-            margin: "0",
-            paddingLeft: "8px",
-            paddingRight: "8px",
-          }}
-        >
-          <View style={styles.section}>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: "16px",
-                marginTop: "10px",
-              }}
-            >
-              {type}
+      <Document title={isVendor ? "Purchase Receipt" : "Sales Receipt"} author={basicInfoData?.shopName ?? "POS System"}>
+        <Page size={[227, height]} style={styles.page}>
+          <Text style={styles.shop}>{basicInfoData?.shopName || "POS System"}</Text>
+          {basicInfoData?.shopAdd ? <Text style={styles.small}>{basicInfoData.shopAdd}</Text> : null}
+          {basicInfoData?.contactNo ? <Text style={styles.small}>Phone: {basicInfoData.contactNo}</Text> : null}
+
+          <Text style={styles.title}>{isVendor ? "PURCHASE RECEIPT" : "SALES RECEIPT"}</Text>
+
+          <View style={styles.metaRow}>
+            <Text>
+              <Text style={styles.muted}>Date: </Text>
+              {validDate
+                ? `${pad(date.getDate())}-${MONTHS[date.getMonth()]}-${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}`
+                : "-"}
             </Text>
-            <Text style={{ textAlign: "center", fontSize: "16px" }}>
-              {basicInfoData?.shopName}
+            {receiptNo ? (
+              <Text>
+                <Text style={styles.muted}>No: </Text>
+                {receiptNo}
+              </Text>
+            ) : null}
+          </View>
+          {data?.rName ? (
+            <Text style={{ marginTop: 2 }}>
+              <Text style={styles.muted}>{isVendor ? "Vendor: " : "Customer: "}</Text>
+              {data.rName}
             </Text>
-            <Text
-              wrap={true}
-              style={{
-                textAlign: "center",
-                fontSize: "12px",
-                marginTop: "4px",
-              }}
-            >
-              Address: {basicInfoData?.shopAdd}
+          ) : null}
+          {data?.rDesc ? (
+            <Text style={{ marginTop: 2 }}>
+              <Text style={styles.muted}>Note: </Text>
+              {data.rDesc}
             </Text>
-            <Text
-              wrap={true}
-              style={{
-                textAlign: "center",
-                fontSize: "12px",
-                marginTop: "4px",
-                marginBottom: "4px",
-              }}
-            >
-              --------------------------------------------------
-            </Text>
-            <Text
-              wrap={true}
-              style={{
-                textAlign: "center",
-                fontSize: "12px",
-                marginTop: "4px",
-                marginBottom: "4px",
-              }}
-            >
-              {`${date?.getDate()}/${
-                date.getMonth() + 1
-              }/${date.getFullYear()}`}
-            </Text>
-            <View
-              wrap={true}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                fontSize: "11px",
-                marginTop: "4px",
-                marginBottom: "0px",
-              }}
-            >
-              <View style={{ display: "flex", flexDirection: "row" }}>
-                <Text>no</Text>
-                <Text style={{ marginLeft: "5px", width: "89px" }}>
-                  {" "}
-                  PRODUCT
+          ) : null}
+
+          <View style={styles.rule} />
+          <View style={styles.head}>
+            <Text style={styles.cItem}>Item</Text>
+            <Text style={styles.cQty}>Qty</Text>
+            <Text style={styles.cRate}>Rate</Text>
+            <Text style={styles.cAmt}>Amount</Text>
+          </View>
+          <View style={styles.rule} />
+
+          {items.map((i, index) => (
+            <View key={index} style={styles.row} wrap={false}>
+              <View style={styles.cItem}>
+                <Text>
+                  {index + 1}. {i.name}
                 </Text>
-                <Text style={{ marginLeft: "17px" }}> Price</Text>
-                <Text style={{ marginLeft: "5px" }}> Qty</Text>
+                {i.rate < i.list ? <Text style={styles.note}>List {money(i.list)}</Text> : null}
               </View>
-              <Text>AMT</Text>
+              <Text style={styles.cQty}>{i.qty}</Text>
+              <Text style={styles.cRate}>{money(i.rate)}</Text>
+              <Text style={styles.cAmt}>{money(i.amount)}</Text>
             </View>
+          ))}
 
-            <Text style={{ margin: "0", padding: "0", fontSize: "12px" }}>
-              -----------------------------------------------------
-            </Text>
-            {data?.product?.map((prod, index) => {
-              return (
-                <View
-                  wrap={true}
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    fontSize: "12px",
-                    marginTop: "0px",
-                    marginBottom: "0px",
-                  }}
-                >
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      fontSize: "10px",
-                    }}
-                  >
-                    <Text>{index + 1}</Text>
-                    <Text style={{ marginLeft: "15px", width: "100px" }}>
-                      {" "}
-                      {prod?.product?.label}
-                    </Text>
-                    <Text style={{ marginLeft: "25px", width: "40px" }}>
-                      {" "}
-                      {type === "Vendor Receipt"
-                        ? prod?.product?.costPrice
-                        : prod?.product?.sellingPrice}
-                    </Text>
-                    <Text style={{ marginLeft: "5px", width: "40px" }}>
-                      {" "}
-                      {prod?.productQty}
-                    </Text>
-                  </View>
-                  <Text style={{ fontSize: "10px" }}>{prod?.totalPrice}</Text>
-                </View>
-              );
-            })}
-
-            <Text style={{ margin: "0", padding: "0", fontSize: "12px" }}>
-              -----------------------------------------------------
-            </Text>
-            <View
-              wrap={true}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                fontSize: "12px",
-                marginTop: "0px",
-                marginBottom: "0px",
-              }}
-            >
-              <Text style={{ fontSize: "14px", fontWeight: "bold" }}>
-                Total
-              </Text>
-
-              <Text style={{ fontSize: "14px", fontWeight: "bold" }}>
-                {data?.total}
-              </Text>
-            </View>
-            <View
-              wrap={true}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                fontSize: "12px",
-                marginTop: "0px",
-                marginBottom: "0px",
-              }}
-            >
-              <Text style={{ fontSize: "12px", fontWeight: "bold" }}>Cash</Text>
-
-              <Text style={{ fontSize: "12px", fontWeight: "bold" }}>
-                {data?.cash}
-              </Text>
-            </View>
-            <View
-              wrap={true}
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                fontSize: "12px",
-                marginTop: "0px",
-                marginBottom: "0px",
-              }}
-            >
-              <Text style={{ fontSize: "12px", fontWeight: "bold" }}>
-                Change
-              </Text>
-
-              <Text style={{ fontSize: "12px", fontWeight: "bold" }}>
-                {data?.change}
-              </Text>
-            </View>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: "14px",
-                marginBottom: "12px",
-                marginTop: "4px",
-              }}
-            >
-              Thank You!
+          <View style={styles.rule} />
+          <View style={styles.totRow}>
+            <Text style={styles.muted}>
+              Items: {items.length} · Units: {units}
             </Text>
           </View>
+          {discount > 0 ? (
+            <>
+              <View style={styles.totRow}>
+                <Text>Subtotal</Text>
+                <Text>{money(listTotal)}</Text>
+              </View>
+              <View style={styles.totRow}>
+                <Text>Discount</Text>
+                <Text>- {money(discount)}</Text>
+              </View>
+            </>
+          ) : null}
+          <View style={styles.grand}>
+            <Text>TOTAL</Text>
+            <Text>Rs {money(total)}</Text>
+          </View>
+          {hasCash ? (
+            <>
+              <View style={styles.totRow}>
+                <Text>Cash</Text>
+                <Text>{money(cash)}</Text>
+              </View>
+              <View style={styles.totRow}>
+                <Text style={styles.bold}>{cash >= total ? "Change" : "Balance due"}</Text>
+                <Text style={styles.bold}>{money(Math.abs(cash - total))}</Text>
+              </View>
+            </>
+          ) : null}
+
+          <Text style={styles.thanks}>Thank you!</Text>
         </Page>
       </Document>
     </PDFViewer>

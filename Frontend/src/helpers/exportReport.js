@@ -139,7 +139,8 @@ export const downloadExcel = async (report) => {
     c.fill = { type: "pattern", pattern: "solid", fgColor: { argb: BRAND } };
   });
   const lines = [
-    ["Total Sales", s.totalSales, MONEY, "Money from customer invoices in this period"],
+    ["Total Sales", s.totalSales, MONEY, "Money from customer invoices in this period, after returns"],
+    ["Customer Returns", s.returns, MONEY, `${s.returnedUnits} units returned (already taken off Total Sales)`],
     ["Cost of Goods Sold", s.cogs, MONEY, "Cost price of the items that were sold"],
     ["Gross Profit", s.grossProfit, MONEY, "Total Sales − Cost of Goods Sold"],
     ["Profit Margin %", s.margin / 100, PCT, "Gross Profit ÷ Total Sales"],

@@ -16,6 +16,7 @@ export const getProfit = async (req, res) => {
     const customerCol = await database_connection([
       "vendor invoice",
       "customer invoice",
+      "customer returns",
     ]);
 
     const costPromise = customerCol[0]
@@ -41,7 +42,25 @@ export const getProfit = async (req, res) => {
       ])
       .toArray();
 
-    const [sales, cost] = await Promise.all([salePromise, costPromise]);
+    const returnPromise = customerCol[2]
+      .aggregate([
+        {
+          $match: {
+            userId: req.user.id,
+            date: { $gt: lowerDate, $lt: upperDate },
+          },
+        },
+        { $group: { _id: null, sum: { $sum: "$total" } } },
+      ])
+      .toArray();
+
+    const [sales, cost, returns] = await Promise.all([salePromise, costPromise, returnPromise]);
+    // sales are shown net of customer returns made in the same month
+    const returned = returns[0]?.sum ?? 0;
+    if (returned) {
+      if (sales.length > 0) sales[0].sum -= returned;
+      else sales.push({ _id: null, sum: -returned });
+    }
     let profit = 0;
     if (sales.length > 0) {
       profit += sales[0].sum;
@@ -91,12 +110,13 @@ export const getStates = async (req, res) => {
   try {
     const year = req.params.year;
     const lowerDate = new Date(`${year}-1-1`);
-    const upperDate = new Date(`${year + 1}-1-1`);
+    const upperDate = new Date(`${Number(year) + 1}-1-1`);
     const collections = await database_connection([
       "customer invoice",
       "vendor invoice",
+      "customer returns",
     ]);
-    const [sales, expense] = await Promise.all([
+    const [sales, expense, returns] = await Promise.all([
       collections[0]
         .aggregate([
           {
@@ -153,7 +173,24 @@ export const getStates = async (req, res) => {
           },
         ])
         .toArray(),
+      collections[2]
+        .aggregate([
+          {
+            $match: {
+              userId: req?.user?.id,
+              date: { $gt: lowerDate, $lt: upperDate },
+            },
+          },
+          { $group: { _id: { month: { $month: "$date" } }, totalSum: { $sum: "$total" } } },
+        ])
+        .toArray(),
     ]);
+    // monthly sales are shown net of customer returns
+    returns.forEach((r) => {
+      const row = sales.find((s) => s._id.month === r._id.month);
+      if (row) row.totalSum -= r.totalSum;
+      else sales.push({ _id: { month: r._id.month, year: Number(year) }, totalSum: -r.totalSum });
+    });
     res
       .json({
         sales,

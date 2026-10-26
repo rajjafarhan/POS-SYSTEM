@@ -28,6 +28,7 @@ import {
 import { verifyPass } from "./middlewares/verifyPass";
 import { getStates, getProfit, getYears } from "./handlers/dashboard";
 import { getClosingReport } from "./handlers/report";
+import { createReturn, getReturns, deleteReturn } from "./handlers/returns";
 
 const router = Router();
 //**************VENDOR*******************/
@@ -42,6 +43,12 @@ router.get("/customer/:setNo/:query", getAllCustomers);
 router.post("/customer", createCustomer);
 router.delete("/customer/:id", deleteCustomer);
 router.delete("/customer/", deleteAllCustomers);
+
+//*****************CUSTOMER RETURNS************ */
+
+router.get("/returns", getReturns);
+router.post("/returns", createReturn);
+router.delete("/returns/:id", deleteReturn);
 
 //*****************PRODUCT/INVENTORY ******************** */
 

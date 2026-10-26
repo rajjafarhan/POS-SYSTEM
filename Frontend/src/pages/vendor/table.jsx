@@ -16,7 +16,7 @@ export const ReceiptLayout = ({ children, setShowReceiptModal, refetch }) => {
       <button
         onClick={() => {
           setShowReceiptModal(false);
-          refetch();
+          refetch?.();
         }}
         className="text-dark btn-close border-0 bg-white fs-4 abs_tr"
         type="button"
@@ -27,7 +27,8 @@ export const ReceiptLayout = ({ children, setShowReceiptModal, refetch }) => {
   );
 };
 
-const Table = ({ offSet, total, headings, data, mutation, type }) => {
+// onReturn (customer receipts only): shows a "Return items" button on an opened receipt
+const Table = ({ offSet, total, headings, data, mutation, type, onReturn }) => {
   const [currReceipt, setCurrReceipt] = useState({});
   const [showReceiptModal, setShowReceiptModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -175,6 +176,19 @@ const Table = ({ offSet, total, headings, data, mutation, type }) => {
         <Modal>
           <ReceiptLayout setShowReceiptModal={setShowReceiptModal}>
             <VendorReceipt type={type} data={currReceipt} />
+            {onReturn && (
+              <div className="d-flex justify-content-center mt-2">
+                <button
+                  className="btn btn-warning fw-semibold"
+                  onClick={() => {
+                    setShowReceiptModal(false);
+                    onReturn(currReceipt);
+                  }}
+                >
+                  ↩ Return items
+                </button>
+              </div>
+            )}
           </ReceiptLayout>
         </Modal>
       )}

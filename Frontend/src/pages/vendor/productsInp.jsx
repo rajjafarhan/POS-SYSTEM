@@ -18,7 +18,10 @@ const ProductsInput = ({
   id,
   type,
 }) => {
-  console.log(products);
+  // Customer receipts use the price typed in the Unit Price box (it starts at the
+  // selling price and can be changed when the customer negotiates).
+  const isCustomer = type !== "vendor";
+  const listPrice = isCustomer ? product?.sellingPrice : product?.costPrice;
   useEffect(() => {
     if (type === "vendor") {
       handleProductChange(
@@ -35,13 +38,13 @@ const ProductsInput = ({
         {
           target: {
             name: "totalPrice",
-            value: product && qtyVal ? product?.sellingPrice * qtyVal : 0,
+            value: product && qtyVal ? Number(unitPrice || 0) * qtyVal : 0,
           },
         },
         id
       );
     }
-  }, [product, qtyVal]);
+  }, [product, qtyVal, unitPrice]);
     const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue ,  { keys: ['label'], threshold: 0.2  });
 
   return (
@@ -63,15 +66,34 @@ const ProductsInput = ({
       </div>
 
       <div className="m2">
-        <TextField
-          id="outlined-search"
-          name="unitPrice"
-          // label="Unit Price"
-          type="number"
-          disabled
-          value={type === "vendor" ? product?.costPrice : product?.sellingPrice}
-          size="small"
-        />
+        {isCustomer ? (
+          <TextField
+            id="outlined-search"
+            name="unitPrice"
+            label="Unit Price"
+            type="number"
+            value={unitPrice}
+            onChange={(e) => handleProductChange(e, id)}
+            disabled={!product}
+            size="small"
+            inputProps={{ min: 0 }}
+            helperText={
+              product && Number(unitPrice) !== Number(listPrice)
+                ? `List price ${listPrice}`
+                : " "
+            }
+          />
+        ) : (
+          <TextField
+            id="outlined-search"
+            name="unitPrice"
+            // label="Unit Price"
+            type="number"
+            disabled
+            value={listPrice}
+            size="small"
+          />
+        )}
       </div>
       <div className="m2">
         <TextField

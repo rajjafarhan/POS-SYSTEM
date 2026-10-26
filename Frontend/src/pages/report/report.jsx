@@ -209,7 +209,15 @@ const ReportPage = () => {
       {report && (
         <>
           <div className="r_stats mb-4">
-            <Stat label="Total Sales" value={money(s.totalSales)} hint={`${s.saleInvoices} sale invoices`} />
+            <Stat
+              label="Total Sales"
+              value={money(s.totalSales)}
+              hint={
+                s.returns
+                  ? `${s.saleInvoices} invoices · after ${money(s.returns)} returns`
+                  : `${s.saleInvoices} sale invoices`
+              }
+            />
             <Stat label="Cost of Goods Sold" value={money(s.cogs)} hint="Cost price of items sold" />
             <Stat
               label="Gross Profit"

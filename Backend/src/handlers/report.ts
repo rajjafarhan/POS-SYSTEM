@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import { database_connection } from "../db";
 
 //////////////////////////////////////SALES CLOSING REPORT//////////////////////////////////////
-// Returns every sale/purchase invoice from `from` up to now (not just up to `to`),
+// Returns every sale/purchase invoice and customer return from `from` up to now (not just up to `to`),
 // so the frontend can work back from today's stock to the opening stock of the period.
 // All grouping by day/week/month happens on the frontend, in the user's timezone.
 
@@ -14,15 +14,16 @@ export const getClosingReport = async (req, res) => {
       return res.status(400).json({ message: "Invalid date range" });
     }
     const userId = req.user.id;
-    const [saleCol, purchaseCol, inventoryCol, shopCol] =
+    const [saleCol, purchaseCol, inventoryCol, shopCol, returnCol] =
       await database_connection([
         "customer invoice",
         "vendor invoice",
         "inventory",
         "shops",
+        "customer returns",
       ]);
 
-    const [sales, purchases, inventory, shop] = await Promise.all([
+    const [sales, purchases, inventory, shop, returns] = await Promise.all([
       saleCol.find({ userId, date: { $gte: from } }).sort({ date: 1 }).toArray(),
       purchaseCol
         .find({ userId, date: { $gte: from } })
@@ -33,6 +34,7 @@ export const getClosingReport = async (req, res) => {
         { _id: new ObjectId(userId) },
         { projection: { shopName: 1, name: 1, shopAdd: 1, contactNo: 1 } },
       ),
+      returnCol.find({ userId, date: { $gte: from } }).sort({ date: 1 }).toArray(),
     ]);
 
     return res.status(200).json({
@@ -42,6 +44,7 @@ export const getClosingReport = async (req, res) => {
       shop,
       sales,
       purchases,
+      returns,
       inventory,
     });
   } catch (error) {

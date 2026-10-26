@@ -126,6 +126,38 @@ const toLines = (invoices, type) => {
   return lines;
 };
 
+// Customer returns become negative sale lines on the return date, so sales, cost,
+// profit, per-product figures and stock movement all net them out.
+const returnLines = (returns) => {
+  const lines = [];
+  (returns ?? []).forEach((r) => {
+    const date = new Date(r.date);
+    (r.items ?? []).forEach((item) => {
+      const p = item?.product ?? {};
+      const qty = num(item?.qty);
+      const unitCost = num(p.costPrice);
+      const amount = num(item?.amount) || num(item?.unitPrice) * qty;
+      lines.push({
+        date,
+        invoiceId: null,
+        isReturn: true,
+        party: `Return${r.rName ? ` – ${r.rName}` : ""}`,
+        note: r.reason || "",
+        productId: p._id ? String(p._id) : "",
+        product: p.label || "Unknown product",
+        category: p.category || "",
+        qty: -qty,
+        unitPrice: num(item?.unitPrice),
+        total: -amount,
+        unitCost,
+        cost: -unitCost * qty,
+        profit: -(amount - unitCost * qty),
+      });
+    });
+  });
+  return lines;
+};
+
 const productKey = (line) => line.productId || `label:${line.product}`;
 
 // ---------- report ----------
@@ -134,15 +166,17 @@ export const buildClosingReport = (raw, { from, to, groupBy }) => {
   const inRange = (l) => l.date >= from && l.date <= to;
   const afterRange = (l) => l.date > to;
 
-  const allSales = toLines(raw?.sales, "sale");
+  const allSales = toLines(raw?.sales, "sale").concat(returnLines(raw?.returns));
   const allPurchases = toLines(raw?.purchases, "purchase");
   const sales = allSales.filter(inRange);
   const purchases = allPurchases.filter(inRange);
 
-  const invoiceCount = (lines) => new Set(lines.map((l) => l.invoiceId)).size;
+  const invoiceCount = (lines) =>
+    new Set(lines.filter((l) => !l.isReturn).map((l) => l.invoiceId)).size;
   const sum = (lines, field) => lines.reduce((s, l) => s + l[field], 0);
+  const returnedLines = sales.filter((l) => l.isReturn);
 
-  const totalSales = sum(sales, "total");
+  const totalSales = sum(sales, "total"); // net of returns
   const cogs = sum(sales, "cost");
   const totalPurchases = sum(purchases, "total");
   const grossProfit = totalSales - cogs;
@@ -278,6 +312,8 @@ export const buildClosingReport = (raw, { from, to, groupBy }) => {
       markup: percent(grossProfit, cogs),
       netCash: totalSales - totalPurchases,
       saleInvoices,
+      returns: -sum(returnedLines, "total"),
+      returnedUnits: -sum(returnedLines, "qty"),
       purchaseInvoices: invoiceCount(purchases),
       unitsSold: sum(sales, "qty"),
       unitsBought: sum(purchases, "qty"),
