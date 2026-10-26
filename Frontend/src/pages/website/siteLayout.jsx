@@ -198,6 +198,15 @@ const SiteLayout = ({ title = "MS Enterprise", overHero = false, children }) => 
         <FaWhatsapp />
         <span className="s-fab-tip">Chat with us</span>
       </a>
+      {/* phones: sticky contact bar */}
+      <nav className="s-mbar" aria-label="Quick contact">
+        <a className="s-btn call" href={CONTACT.phoneHref}>
+          <FaPhoneAlt /> Call
+        </a>
+        <a className="s-btn s-btn-wa" href={whatsappLink()} target="_blank" rel="noreferrer">
+          <FaWhatsapp /> WhatsApp us
+        </a>
+      </nav>
       {/* popups (product quick view) render here so they keep the site styles */}
       <div id="s-portal" />
     </div>

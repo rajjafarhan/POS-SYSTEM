@@ -20,7 +20,6 @@ import {
 import { fetchWebsiteProducts } from "../../functions/website";
 import SiteLayout from "./siteLayout";
 import ItemCard from "./itemCard/itemCard.jsx";
-import QuickView from "./quickView";
 import StoreMap from "./map/map";
 import { parallax, spot } from "./motion";
 import video from "../../../assets/ceramics.mp4";
@@ -80,7 +79,6 @@ const CountUp = ({ to, suffix = "" }) => {
 };
 
 const Hero = ({ products }) => {
-  const [view, setView] = useState(null);
   const shots = products.filter((p) => usableImage(p?.imgUrl)).slice(0, 3);
   return (
     <section className="s-hero" onMouseMove={parallax}>
@@ -132,7 +130,7 @@ const Hero = ({ products }) => {
         {shots.length > 0 ? (
           <div className="s-collage" aria-label="Featured products">
             {shots.map((p, i) => (
-              <div key={p._id ?? i} className={`s-tile t${i + 1}`} onClick={() => setView(p)}>
+              <div key={p._id ?? i} className={`s-tile t${i + 1}`}>
                 <div className="img">
                   <img src={usableImage(p.imgUrl)} alt={p.label} />
                 </div>
@@ -154,7 +152,6 @@ const Hero = ({ products }) => {
         )}
       </div>
       <div className="s-scroll" aria-hidden="true" />
-      {view ? <QuickView item={view} onClose={() => setView(null)} /> : null}
     </section>
   );
 };

@@ -357,3 +357,163 @@
   border-color: var(--gold);
   background: rgba(201, 161, 74, 0.06);
 }
+
+/* ================= hero collage on phones: a designed, overlapping stack ================= */
+@media (max-width: 640px) {
+  .s-collage {
+    position: relative;
+    display: block;
+    height: 340px;
+    margin: 6px 0 0;
+    padding: 0;
+    overflow: visible;
+    transform: none;
+    height: 396px;
+  }
+  .s-collage::before {
+    /* soft gold glow behind the photos */
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: 300px;
+    height: 300px;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(217, 180, 92, 0.38), transparent 65%);
+    filter: blur(10px);
+    pointer-events: none;
+  }
+  .s-tile,
+  .s-tile.t1,
+  .s-tile.t2,
+  .s-tile.t3 {
+    position: absolute;
+    flex: none;
+    padding: 8px;
+    border-radius: 18px;
+    scroll-snap-align: none;
+  }
+  .s-tile.t1 {
+    width: 62%;
+    left: 19%;
+    top: 0;
+    z-index: 1;
+    animation: s-fadeup 1s var(--ease) 0.2s both, s-float 7s ease-in-out infinite;
+  }
+  .s-tile.t1 .img {
+    height: 180px;
+  }
+  .s-tile.t2,
+  .s-tile.t3 {
+    width: 44%;
+    z-index: 2;
+  }
+  .s-tile.t2 {
+    left: 0;
+    bottom: 0;
+    rotate: -6deg;
+    animation: s-fadeup 1s var(--ease) 0.4s both, s-float 7s ease-in-out -2.3s infinite;
+  }
+  .s-tile.t3 {
+    right: 0;
+    bottom: 8px;
+    rotate: 5deg;
+    animation: s-fadeup 1s var(--ease) 0.6s both, s-float 7s ease-in-out -4.6s infinite;
+  }
+  .s-tile.t2 .img,
+  .s-tile.t3 .img {
+    height: 92px;
+    padding: 6px;
+  }
+  .s-tile .cap {
+    margin-top: 7px;
+    font-size: 0.68rem;
+    gap: 6px;
+  }
+  .s-tile.t2 .cap b,
+  .s-tile.t3 .cap b {
+    display: none; /* small tiles show just the price */
+  }
+  .s-tile.t2 .cap,
+  .s-tile.t3 .cap {
+    justify-content: center;
+  }
+  .s-chip {
+    display: none;
+  }
+  .s-chip.c2 {
+    display: flex;
+    right: 4%;
+    top: -12px;
+    left: auto;
+    z-index: 3;
+    font-size: 0.68rem;
+    padding: 6px 11px;
+  }
+}
+@media (max-width: 360px) {
+  .s-collage {
+    height: 300px;
+  }
+  .s-tile.t1 .img {
+    height: 160px;
+  }
+  .s-tile.t2 .img,
+  .s-tile.t3 .img {
+    height: 78px;
+  }
+}
+
+/* ================= phones: sticky Call / WhatsApp bar instead of the floating bubble ================= */
+.s-mbar {
+  display: none;
+}
+@media (max-width: 640px) {
+  .s-fab {
+    display: none;
+  }
+  .s-mbar {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    z-index: 65;
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 8px;
+    padding: 7px;
+    border-radius: 20px;
+    background: rgba(13, 15, 19, 0.86);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+    animation: s-barin 0.6s var(--ease) 0.8s both;
+  }
+  .s-mbar .s-btn {
+    padding: 12px 10px;
+    font-size: 0.9rem;
+    border-radius: 14px;
+  }
+  .s-mbar .call {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff !important;
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+  /* keep the last bit of every page clear of the bar */
+  .s-footer {
+    padding-bottom: 96px;
+  }
+  .s-qv-backdrop {
+    z-index: 90;
+  }
+}
+@keyframes s-barin {
+  from {
+    transform: translateY(140%);
+  }
+  to {
+    transform: none;
+  }
+}
