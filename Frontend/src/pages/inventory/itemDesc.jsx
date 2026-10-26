@@ -5,127 +5,23 @@ import { useMutation } from "@tanstack/react-query";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import ImageInput from "../../components/imageInput/imgInput.jsx";
 import { useState } from "react";
-import Checkbox from "@mui/material/Checkbox";
+import { Switch, TextField } from "@mui/material";
 import LoaderLayout from "../../components/loaders/loaderLayout.jsx";
 import GeneralLoader from "../../components/loaders/generalLoader.jsx";
 import { toast } from "react-toastify";
+import "../../components/receiptForm/receiptForm.css";
+import "./itemModal.css";
 
-const ItemAttribute = ({ handleItemChange, product, isEditable }) => {
-  return (
-    <>
-      <div className="mt-3  d-flex justify-content-between align-items-center">
-        <h3 className="text-dgreen w-35">Name</h3>
-        {!isEditable ? (
-          <p className="fs-5 text-wrap w-65">{product?.label}</p>
-        ) : (
-          <input
-            name="label"
-            onChange={(e) => {
-              handleItemChange(e);
-            }}
-            className="w-65 border-1 fs-5 p-2"
-            type="text"
-            value={product?.label}
-          />
-        )}
-      </div>
-      <div className="mt-3  d-flex justify-content-between align-items-center">
-        <h3 className="text-dgreen w-35">Category</h3>
-        {!isEditable ? (
-          <p className="fs-5 text-wrap w-65">{product?.category}</p>
-        ) : (
-          <input
-            className="w-65 border-1 fs-5 p-2"
-            type="text"
-            name="category"
-            onChange={(e) => {
-              handleItemChange(e);
-            }}
-            value={product?.category}
-          />
-        )}
-      </div>
-      <div className="mt-3  d-flex justify-content-between align-items-center">
-        <h3 className="text-dgreen w-35">Qty</h3>
-        {!isEditable ? (
-          <p className="fs-5 text-wrap w-65">{product?.qty}</p>
-        ) : (
-          <input
-            name="qty"
-            onChange={(e) => {
-              handleItemChange(e);
-            }}
-            className="w-65 border-1 fs-5 p-2"
-            type="text"
-            value={product?.qty}
-          />
-        )}
-      </div>
-      <div className="mt-3  d-flex justify-content-between align-items-center">
-        <h3 className="text-dgreen w-35">Cost Price</h3>
-        {!isEditable ? (
-          <p className="fs-5 text-wrap w-65">{product?.costPrice}</p>
-        ) : (
-          <input
-            name="costPrice"
-            onChange={(e) => {
-              handleItemChange(e);
-            }}
-            className="w-65 border-1 fs-5 p-2"
-            type="text"
-            value={product?.costPrice}
-          />
-        )}
-      </div>
-      <div className="mt-3  d-flex justify-content-between align-items-center">
-        <h3 className="text-dgreen w-35">Selling Price</h3>
-        {!isEditable ? (
-          <p className="fs-5 text-wrap w-65">{product?.sellingPrice}</p>
-        ) : (
-          <input
-            name="sellingPrice"
-            onChange={(e) => {
-              handleItemChange(e);
-            }}
-            className="w-65 border-1 fs-5 p-2"
-            type="text"
-            value={product?.sellingPrice}
-          />
-        )}
-      </div>
-      <div className="mt-3  d-flex justify-content-between align-items-center">
-        <h3 className="text-dgreen w-35">Total</h3>
-        {!isEditable ? (
-          <p className="fs-5 text-wrap w-65">
-            {product?.qty * product?.costPrice}
-          </p>
-        ) : (
-          <input
-            className="w-65 border-1 fs-5 p-2"
-            type="text"
-            readOnly
-            value={product?.qty * product?.costPrice}
-          />
-        )}
-      </div>
-      <div className="d-flex justify-content-between mt-2  align-items-center">
-        <h3 className="text-dgreen w-6">Display on Website</h3>
-        <Checkbox
-          name="addToWebsite"
-          checked={product.addToWebsite}
-          onChange={(e) => {
-            handleItemChange(e);
-          }}
-          inputProps={{ "aria-label": "controlled" }}
-          disabled={!isEditable}
-        />
-      </div>
-    </>
-  );
-};
+const money = (n) => Number(n || 0).toLocaleString("en-US", { maximumFractionDigits: 2 });
+
+const Tile = ({ label, value, tone = "" }) => (
+  <div className={`inv_tile ${tone}`}>
+    <p className="inv_tile_label">{label}</p>
+    <p className="inv_tile_value">{value}</p>
+  </div>
+);
 
 const ItemDescription = ({ refetch, setShowItemModal, product }) => {
-  console.log(product);
   const mutation = useMutation({
     mutationFn: updateInventory,
     onSuccess: () => {
@@ -140,8 +36,9 @@ const ItemDescription = ({ refetch, setShowItemModal, product }) => {
   const [isEditable, setIsEditable] = useState(false);
   const [item, setitem] = useState(product);
   const [img, setImg] = useState();
+  const [saving, setSaving] = useState(false);
 
-  if (mutation.isLoading) {
+  if (mutation.isLoading || saving) {
     return (
       <LoaderLayout>
         <GeneralLoader />
@@ -158,65 +55,142 @@ const ItemDescription = ({ refetch, setShowItemModal, product }) => {
     }
   };
 
+  const save = async () => {
+    let image;
+    try {
+      if (img) {
+        setSaving(true);
+        let a = new Date();
+        const num = Math.round(Math.random() * 10000 + a.getMilliseconds());
+        image = await uploadImageAndGetURL(`/shop/${num}`, img);
+      }
+    } catch (e) {
+      toast.error("Ops error! Image could not be uploaded");
+      setSaving(false);
+      return;
+    }
+    setSaving(false);
+    setIsEditable(false);
+    mutation.mutate({ ...item, imgUrl: image ?? item.imgUrl });
+  };
+
+  const qty = Number(item?.qty) || 0;
+  const cost = Number(item?.costPrice) || 0;
+  const sell = Number(item?.sellingPrice) || 0;
+  const profit = sell - cost;
+
+  const field = (name, label, type = "text", full = false) => (
+    <TextField
+      name={name}
+      label={label}
+      type={type}
+      size="small"
+      value={item?.[name] ?? ""}
+      onChange={handleItemChange}
+      className={full ? "inv_full" : ""}
+      fullWidth
+    />
+  );
+
   return (
-    <section className="bg-white rounded p-5 modal_bg">
-      <div>
-        <div className="d-flex justify-content-between align-items-center">
-          <h1 className="text-dgreen">Product Details 🧾</h1>
-          <button
-            onClick={() => {
-              setIsEditable(true);
-            }}
-            className="bg-none ms-5 border-0 bg-white text-grey"
-          >
-            <FontAwesomeIcon className="fs-3" icon={faPenToSquare} />
-          </button>
+    <section className="rf_modal inv_modal">
+      <header className="rf_head">
+        <h2 className="m-0">Product Details</h2>
+        <div className="d-flex align-items-center gap-3">
+          {!isEditable && (
+            <button className="btn btn-sm inv_edit_btn" onClick={() => setIsEditable(true)}>
+              <FontAwesomeIcon icon={faPenToSquare} /> Edit
+            </button>
+          )}
           <button
             onClick={() => setShowItemModal(false)}
-            className="text-dark btn-close ms-2 border-0 bg-white fs-4"
+            className="btn-close"
             type="button"
             aria-label="Close"
           ></button>
         </div>
-        <hr />
-        <div className="d-flex flex-column ">
-          <ItemAttribute
-            handleItemChange={handleItemChange}
-            product={item}
-            isEditable={isEditable}
-          />
-        </div>
-        <div className="d-flex flex-column align-items-start">
-          <h3 className="text-dgreen w-50 mb-4 mt-2">Product Image:</h3>
+      </header>
 
-          <ImageInput
-            setcardImage={setImg}
-            img={<img src={item?.imgUrl} className="picture__img" alt="" />}
-            setIsEditable={setIsEditable}
-          />
-        </div>
-        <div className="d-flex justify-content-center mt-5">
-          <button
-            onClick={async (e) => {
-              e.preventDefault();
-              setIsEditable(false);
-              let image;
-              if (img) {
-                let a = new Date();
-                const num = Math.round(
-                  Math.random() * 10000 + a.getMilliseconds()
-                );
-                image = await uploadImageAndGetURL(`/shop/${num}`, img);
-              }
-              mutation.mutate({ ...item, imgUrl: image ?? item.imgUrl });
-            }}
-            className="btn bg-dgreen text-white px-4 py-2"
-            disabled={!isEditable}
-          >
-            Save
-          </button>
+      <div className="rf_body">
+        <div className="inv_grid">
+          <div className="inv_image">
+            <div className="rf_section_title">Image</div>
+            <ImageInput
+              setcardImage={setImg}
+              img={<img src={item?.imgUrl} className="picture__img" alt="" />}
+              setIsEditable={setIsEditable}
+            />
+            <p className="inv_image_hint">Click the image to change it.</p>
+          </div>
+
+          {isEditable ? (
+            <div className="inv_fields">
+              <div className="rf_section_title inv_full m-0">Edit details</div>
+              {field("label", "Name", "text", true)}
+              {field("category", "Category")}
+              {field("qty", "Quantity", "number")}
+              {field("costPrice", "Cost Price", "number")}
+              {field("sellingPrice", "Selling Price", "number")}
+              <label className="inv_switch inv_full">
+                Show on website
+                <Switch
+                  name="addToWebsite"
+                  checked={!!item?.addToWebsite}
+                  onChange={handleItemChange}
+                />
+              </label>
+            </div>
+          ) : (
+            <div className="inv_fields">
+              <div className="inv_full">
+                <p className="inv_name">{item?.label}</p>
+                {item?.category ? <span className="inv_chip">{item.category}</span> : null}
+              </div>
+              <Tile label="In stock" value={qty} tone={qty <= 0 ? "inv_low" : ""} />
+              <Tile label="Stock value (cost)" value={money(qty * cost)} />
+              <Tile label="Cost price" value={money(cost)} />
+              <Tile label="Selling price" value={money(sell)} />
+              <Tile
+                label="Profit per unit"
+                value={`${money(profit)}${cost ? ` (${((profit / cost) * 100).toFixed(0)}%)` : ""}`}
+                tone={profit < 0 ? "inv_low" : "inv_good"}
+              />
+              <Tile label="On website" value={item?.addToWebsite ? "Yes" : "No"} />
+            </div>
+          )}
         </div>
       </div>
+
+      <footer className="rf_foot justify-content-end">
+        <div className="rf_actions">
+          {isEditable ? (
+            <>
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  setitem(product);
+                  setImg(undefined);
+                  setIsEditable(false);
+                }}
+              >
+                Cancel
+              </button>
+              <button type="button" className="btn rf_submit" onClick={save}>
+                Save changes
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => setShowItemModal(false)}
+            >
+              Close
+            </button>
+          )}
+        </div>
+      </footer>
     </section>
   );
 };

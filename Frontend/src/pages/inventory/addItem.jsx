@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { TextField } from "@mui/material";
+import { Switch, TextField } from "@mui/material";
 import ImageInput from "../../components/imageInput/imgInput";
 import { uploadImageAndGetURL } from "../../firebase/utils";
-import Checkbox from "@mui/material/Checkbox";
 import { useMutation } from "@tanstack/react-query";
 import { addInventory } from "../../functions/inventory";
-import { useOutletContext } from "react-router-dom";
 import LoaderLayout from "../../components/loaders/loaderLayout";
 import GeneralLoader from "../../components/loaders/generalLoader";
 import { toast } from "react-toastify";
+import "../../components/receiptForm/receiptForm.css";
+import "./itemModal.css";
+
+const money = (n) => Number(n || 0).toLocaleString("en-US", { maximumFractionDigits: 2 });
 
 const AddItem = ({ refetch, setShowModal }) => {
   const [isloading, setIsLoading] = useState(false);
@@ -25,7 +27,7 @@ const AddItem = ({ refetch, setShowModal }) => {
   });
   const [itemData, setItemData] = useState({
     label: "",
-    qty: null,
+    qty: "",
     costPrice: "",
     sellingPrice: "",
     category: "",
@@ -33,15 +35,7 @@ const AddItem = ({ refetch, setShowModal }) => {
   });
   const [img, setImg] = useState();
 
-  if (mutation.isLoading) {
-    return (
-      <LoaderLayout>
-        <GeneralLoader />
-      </LoaderLayout>
-    );
-  }
-
-  if (isloading) {
+  if (mutation.isLoading || isloading) {
     return (
       <LoaderLayout>
         <GeneralLoader />
@@ -86,109 +80,92 @@ const AddItem = ({ refetch, setShowModal }) => {
     let imgUrl = "";
     if (img) {
       setIsLoading(true);
-      imgUrl = await uploadImageAndGetURL(`/shop/${num}`, img);
+      try {
+        imgUrl = await uploadImageAndGetURL(`/shop/${num}`, img);
+      } catch (err) {
+        setIsLoading(false);
+        toast.error("Ops error! Image could not be uploaded");
+        return;
+      }
     }
-    console.log(imgUrl);
-    const obj = itemData;
-    obj.qty = Number(itemData?.qty);
+    const obj = { ...itemData, qty: Number(itemData?.qty) };
 
     mutation.mutate({ ...obj, imgUrl });
     setIsLoading(false);
     setShowModal(false);
   };
 
+  const cost = Number(itemData.costPrice) || 0;
+  const sell = Number(itemData.sellingPrice) || 0;
+  const field = (name, label, type = "text", full = false) => (
+    <TextField
+      name={name}
+      label={label}
+      type={type}
+      size="small"
+      value={itemData?.[name]}
+      onChange={handleChange}
+      className={full ? "inv_full" : ""}
+      fullWidth
+    />
+  );
+
   return (
-    <section className="bg-white rounded p-5 modal_bg">
-      <div>
-        <div className="d-flex justify-content-between align-items-center">
-          <h1 className="text-dgreen">Add Product 🗄</h1>
-          <button
-            onClick={() => setShowModal(false)}
-            className="ms-5 text-dark btn-close border-0 bg-white fs-4"
-            type="button"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div className="d-flex flex-column pt-4">
-          <TextField
-            id="outlined-search"
-            name="label"
-            label="Name"
-            type="search"
-            className="my-2"
-            value={itemData?.name}
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          <TextField
-            id="outlined-search"
-            name="qty"
-            label="Quantity"
-            type="number"
-            className="my-2"
-            value={itemData?.qty}
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          <TextField
-            id="outlined-search"
-            name="costPrice"
-            label="Cost Price"
-            type="number"
-            className="my-2"
-            value={itemData?.costPrice}
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          <TextField
-            id="outlined-search"
-            name="sellingPrice"
-            label="Selling Price"
-            type="number"
-            className="my-2"
-            value={itemData?.sellingPrice}
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          <TextField
-            id="outlined-search"
-            name="category"
-            label="Category"
-            type="search"
-            className="my-2 mb-4"
-            value={itemData?.category}
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          <div className="d-flex justify-content-between mb-2 align-items-center">
-            <p className="fs-5 text-dgreen">Add product on website?</p>
-            <Checkbox
-              name="addToWebsite"
-              checked={itemData?.addToWebsite}
-              onChange={(e) => {
-                handleChange(e);
-              }}
-              inputProps={{ "aria-label": "controlled" }}
-            />
+    <section className="rf_modal inv_modal">
+      <header className="rf_head">
+        <h2 className="m-0">Add Product</h2>
+        <button
+          onClick={() => setShowModal(false)}
+          className="btn-close"
+          type="button"
+          aria-label="Close"
+        ></button>
+      </header>
+
+      <div className="rf_body">
+        <div className="inv_grid">
+          <div className="inv_image">
+            <div className="rf_section_title">Image</div>
+            <ImageInput type={"add"} setcardImage={setImg} />
+            <p className="inv_image_hint">Optional. Click the box to choose a photo.</p>
           </div>
-          <ImageInput type={"add"} setcardImage={setImg} />
-        </div>
-        <div className="d-flex justify-content-center mt-5">
-          <button
-            onClick={(e) => {
-              submit(e);
-            }}
-            className="btn bg-dgreen text-white fs-5 px-4 py-2"
-          >
-            Add !
-          </button>
+          <div className="inv_fields">
+            <div className="rf_section_title inv_full m-0">Details</div>
+            {field("label", "Name", "text", true)}
+            {field("category", "Category")}
+            {field("qty", "Quantity", "number")}
+            {field("costPrice", "Cost Price", "number")}
+            {field("sellingPrice", "Selling Price", "number")}
+            {cost > 0 && sell > 0 ? (
+              <div className={`inv_tile inv_full ${sell - cost < 0 ? "inv_low" : "inv_good"}`}>
+                <p className="inv_tile_label">Profit per unit</p>
+                <p className="inv_tile_value">
+                  {money(sell - cost)} ({(((sell - cost) / cost) * 100).toFixed(0)}%)
+                </p>
+              </div>
+            ) : null}
+            <label className="inv_switch inv_full">
+              Show on website
+              <Switch
+                name="addToWebsite"
+                checked={itemData?.addToWebsite}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
         </div>
       </div>
+
+      <footer className="rf_foot justify-content-end">
+        <div className="rf_actions">
+          <button type="button" className="btn btn-outline-secondary" onClick={() => setShowModal(false)}>
+            Cancel
+          </button>
+          <button type="button" className="btn rf_submit" onClick={submit}>
+            Add Product
+          </button>
+        </div>
+      </footer>
     </section>
   );
 };

@@ -1,0 +1,92 @@
+/* Product details / add product modals (reuse the receipt modal frame from receiptForm.css) */
+.inv_modal {
+  width: min(900px, 94vw);
+}
+.inv_grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 1.5rem;
+}
+.inv_image .picture {
+  width: 100% !important;
+  border-radius: 0.6rem;
+}
+.inv_image_hint {
+  color: #6b7b86;
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
+}
+.inv_fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+  align-content: start;
+}
+.inv_full {
+  grid-column: 1 / -1;
+}
+
+/* read-only view */
+.inv_name {
+  color: #272643;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0;
+}
+.inv_chip {
+  display: inline-block;
+  margin-top: 0.3rem;
+  padding: 0.1rem 0.7rem;
+  border-radius: 1rem;
+  background: #e3f6f5;
+  color: #2c698d;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.inv_tile {
+  background: #f5fbfb;
+  border: 1px solid #e3edf2;
+  border-radius: 0.6rem;
+  padding: 0.6rem 0.8rem;
+}
+.inv_tile_label {
+  color: #6b7b86;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+.inv_tile_value {
+  color: #272643;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0.1rem 0 0;
+}
+.inv_low .inv_tile_value {
+  color: #b3261e;
+}
+.inv_good .inv_tile_value {
+  color: #1d7a46;
+}
+.inv_switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #e3edf2;
+  border-radius: 0.6rem;
+  padding: 0.2rem 0.4rem 0.2rem 0.8rem;
+  color: #272643;
+  font-weight: 600;
+}
+.inv_edit_btn {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 700px) {
+  .inv_grid {
+    grid-template-columns: 1fr;
+  }
+}
