@@ -54,7 +54,7 @@ const ContactUs = () => {
                   </div>
                   <div className='d-flex flex-column g-1 '>
                     <h4 style={{ color: "rgb(2, 150, 179)", fontWeight: "bolder" }}>Address</h4>
-                    <p style={{ color: "white", fontWeight: "bold", fontSize: "1rem" }}>Plot 356,36/C Korangi #5 </p>
+                    <p style={{ color: "white", fontWeight: "bold", fontSize: "1rem" }}>H No. 83/1, Area 4-D, Landhi No. 6, Karachi</p>
                   </div>
                 </div>
 
@@ -76,7 +76,7 @@ const ContactUs = () => {
                   </div>
                   <div className='d-flex flex-column g-1'>
                     <h4 style={{ color: "rgb(2, 150, 179)", fontWeight: "bolder" }}>Phone</h4>
-                    <p style={{ color: "white", fontWeight: "bolder" }}>03712502670</p>
+                    <p style={{ color: "white", fontWeight: "bolder" }}><a href='tel:+923358782828'>0335-8782828</a></p>
                   </div>
                 </div>
                 <div className='d-flex gap-3 my-2  border-bottom border-3'>
@@ -97,7 +97,7 @@ const ContactUs = () => {
                   </div>
                   <div className='d-flex flex-column g-1'>
                     <h4 style={{ color: "rgb(2, 150, 179)", fontWeight: "bolder" }}>Email</h4>
-                    <p style={{ color: "white", fontWeight: "bolder", fontSize: "1rem", wordWrap: "break-word" }}> <a href='mailto:muhammadsoban075@gmail.com'>Muhammadsoban075@gmail .com</a></p>
+                    <p style={{ color: "white", fontWeight: "bolder", fontSize: "1rem", wordWrap: "break-word" }}> <a href='mailto:muhammadsoban075@gmail.com'>muhammadsoban075@gmail.com</a></p>
                   </div>
                 </div>
               </div>
