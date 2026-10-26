@@ -90,3 +90,9 @@
     grid-template-columns: 1fr;
   }
 }
+.inv_desc {
+  color: #272643;
+  font-size: 0.95rem;
+  margin: 0.2rem 0 0;
+  white-space: pre-line;
+}

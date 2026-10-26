@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -13,74 +13,171 @@ import {
   FaMapMarkerAlt,
   FaPhoneAlt,
   FaEnvelope,
-  FaChevronDown,
   FaPaperPlane,
+  FaGem,
+  FaDirections,
 } from "react-icons/fa";
 import { fetchWebsiteProducts } from "../../functions/website";
 import SiteLayout from "./siteLayout";
 import ItemCard from "./itemCard/itemCard.jsx";
+import QuickView from "./quickView";
 import StoreMap from "./map/map";
 import video from "../../../assets/ceramics.mp4";
-import { CONTACT, FAQS, REVIEWS, whatsappLink } from "./siteData";
-
-const FEATURES = [
-  { icon: <FaShieldAlt />, title: "Trusted brands", text: "Products from reputable manufacturers, built for durability and daily use." },
-  { icon: <FaTags />, title: "Honest prices", text: "Clear pricing on every item, with the best value for your budget." },
-  { icon: <FaTruck />, title: "Home delivery", text: "Our delivery team brings your order to your doorstep on time." },
-  { icon: <FaHeadset />, title: "Expert advice", text: "Not sure what fits your bathroom? Message us and we'll help you choose." },
-];
+import { CONTACT, FAQS, REVIEWS, directionsLink, money, usableImage, whatsappLink } from "./siteData";
 
 const STATS = [
-  { value: "500+", label: "Happy clients" },
-  { value: "300+", label: "Products" },
-  { value: "150+", label: "Categories" },
+  { value: 500, suffix: "+", label: "Happy clients across Karachi" },
+  { value: 300, suffix: "+", label: "Products" },
+  { value: 150, suffix: "+", label: "Categories" },
 ];
 
-const Hero = () => (
-  <section className="s-hero">
-    <video src={video} muted loop autoPlay playsInline aria-hidden="true" />
-    <div className="s-container">
-      <div className="s-hero-content">
-        <span className="s-eyebrow">Ceramics &amp; Sanitary · Karachi</span>
-        <h1>
-          Beautiful bathrooms <em>start here.</em>
-        </h1>
-        <p className="lead">
-          MS Enterprise brings you premium commodes, vanities, showers and fittings, all in one
-          place, with honest prices and delivery to your door.
-        </p>
-        <div className="s-hero-actions">
-          <Link to="/item" className="s-btn s-btn-gold">
-            Browse products <FaArrowRight />
-          </Link>
-          <a className="s-btn s-btn-ghost" href={whatsappLink()} target="_blank" rel="noreferrer">
-            <FaWhatsapp /> Chat on WhatsApp
-          </a>
-        </div>
-        <div className="s-trust">
-          <span>
-            <FaCheckCircle /> Genuine products
-          </span>
-          <span>
-            <FaCheckCircle /> Delivery available
-          </span>
-          <span>
-            <FaCheckCircle /> Easy WhatsApp ordering
-          </span>
-        </div>
-      </div>
-    </div>
-    <div className="s-scroll">Scroll</div>
-  </section>
-);
-
-const Categories = ({ products }) => {
+const categoryCounts = (products) => {
   const counts = new Map();
   products.forEach((p) => {
     const c = String(p?.category ?? "").trim().toLowerCase();
     if (c) counts.set(c, (counts.get(c) ?? 0) + 1);
   });
-  const cats = Array.from(counts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  return Array.from(counts.entries()).sort((a, b) => b[1] - a[1]);
+};
+
+// Counts up to `to` the first time it scrolls into view.
+const CountUp = ({ to, suffix = "" }) => {
+  const ref = useRef(null);
+  const [n, setN] = useState(to);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !("IntersectionObserver" in window)) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    let raf;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        const start = performance.now();
+        const tick = (t) => {
+          const p = Math.min(1, (t - start) / 1600);
+          setN(Math.round(to * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) raf = requestAnimationFrame(tick);
+        };
+        setN(0);
+        raf = requestAnimationFrame(tick);
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [to]);
+  return (
+    <strong ref={ref}>
+      {n}
+      {suffix}
+    </strong>
+  );
+};
+
+const Hero = ({ products }) => {
+  const [view, setView] = useState(null);
+  const shots = products.filter((p) => usableImage(p?.imgUrl)).slice(0, 3);
+  return (
+    <section className="s-hero">
+      <video src={video} muted loop autoPlay playsInline aria-hidden="true" />
+      <div className="s-blob a" />
+      <div className="s-blob b" />
+      <div className="s-grain" />
+      <div className="s-container s-hero-grid">
+        <div>
+          <span className="s-eyebrow s-fade-up">
+            <i /> Ceramics &amp; Sanitary · Karachi
+          </span>
+          <h1>
+            <span className="line">
+              <span>Beautiful</span>
+            </span>
+            <span className="line">
+              <span>bathrooms</span>
+            </span>
+            <span className="line">
+              <em>start here.</em>
+            </span>
+          </h1>
+          <p className="lead s-fade-up s-d1">
+            Premium commodes, vanities, showers and fittings, all in one place, with honest prices and
+            delivery to your door.
+          </p>
+          <div className="s-hero-actions s-fade-up s-d2">
+            <Link to="/item" className="s-btn s-btn-gold">
+              Browse products <FaArrowRight />
+            </Link>
+            <a className="s-btn s-btn-ghost" href={whatsappLink()} target="_blank" rel="noreferrer">
+              <FaWhatsapp /> Chat on WhatsApp
+            </a>
+          </div>
+          <div className="s-trust s-fade-up s-d3">
+            <span>
+              <FaCheckCircle /> Genuine products
+            </span>
+            <span>
+              <FaCheckCircle /> Delivery available
+            </span>
+            <span>
+              <FaCheckCircle /> Easy WhatsApp ordering
+            </span>
+          </div>
+        </div>
+
+        {shots.length > 0 ? (
+          <div className="s-collage" aria-label="Featured products">
+            {shots.map((p, i) => (
+              <div key={p._id ?? i} className={`s-tile t${i + 1}`} onClick={() => setView(p)}>
+                <div className="img">
+                  <img src={usableImage(p.imgUrl)} alt={p.label} />
+                </div>
+                <div className="cap">
+                  <b>{String(p.label).toLowerCase()}</b>
+                  <span>Rs {money(p.sellingPrice)}</span>
+                </div>
+              </div>
+            ))}
+            <div className="s-chip c1">
+              <FaStar /> 5-star rated by our clients
+            </div>
+            <div className="s-chip c2">
+              <FaTruck /> Delivery across Karachi
+            </div>
+          </div>
+        ) : (
+          <div />
+        )}
+      </div>
+      <div className="s-scroll" aria-hidden="true" />
+      {view ? <QuickView item={view} onClose={() => setView(null)} /> : null}
+    </section>
+  );
+};
+
+const Marquee = ({ products }) => {
+  const words = categoryCounts(products).map(([c]) => c);
+  const list = (words.length ? words : ["Commodes", "Vanities", "Showers", "Basins", "Fittings"]).concat(
+    "Premium quality",
+    "Delivery in Karachi"
+  );
+  const track = [...list, ...list]; // doubled so the loop is seamless
+  return (
+    <div className="s-marquee" aria-hidden="true">
+      <div className="s-marquee-track">
+        {track.map((w, i) => (
+          <span key={i}>{w}</span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const Categories = ({ products }) => {
+  const cats = categoryCounts(products).slice(0, 8);
   if (cats.length === 0) return null;
   return (
     <section className="s-section tight">
@@ -94,9 +191,10 @@ const Categories = ({ products }) => {
             All products <FaArrowRight />
           </Link>
         </div>
-        <div className="s-cats s-reveal">
-          {cats.map(([name, count]) => (
-            <Link key={name} to={`/item?category=${encodeURIComponent(name)}`} className="s-cat">
+        <div className="s-cats">
+          {cats.map(([name, count], i) => (
+            <Link key={name} to={`/item?category=${encodeURIComponent(name)}`} className="s-cat s-reveal">
+              <span className="num">{String(i + 1).padStart(2, "0")}</span>
               <strong>{name}</strong>
               <small>
                 {count} item{count === 1 ? "" : "s"}
@@ -119,7 +217,7 @@ const Featured = ({ products, loading }) => (
         <div>
           <span className="s-eyebrow">Featured</span>
           <h2>Our popular products</h2>
-          <p>Tap “Order” on any product to send us a WhatsApp message with its details.</p>
+          <p>Tap any product for details, or “Order” to send us its details on WhatsApp.</p>
         </div>
         <Link to="/item" className="s-btn s-btn-line">
           View all products <FaArrowRight />
@@ -135,27 +233,68 @@ const Featured = ({ products, loading }) => (
 );
 
 const Why = () => (
-  <section className="s-section">
+  <section className="s-section s-dark">
     <div className="s-container">
-      <div className="s-head s-center s-reveal">
-        <span className="s-eyebrow">Why MS Enterprise</span>
-        <h2>Quality you can see, service you can count on</h2>
+      <div className="s-head s-reveal">
+        <div>
+          <span className="s-eyebrow">Why MS Enterprise</span>
+          <h2>
+            Quality you can see,
+            <br />
+            service you can count on
+          </h2>
+        </div>
+        <p>From a single tap to a full bathroom fit-out, we help you choose well and pay fairly.</p>
       </div>
-      <div className="s-features">
-        {FEATURES.map((f) => (
-          <div key={f.title} className="s-feature s-reveal">
-            <div className="s-feature-icon">{f.icon}</div>
-            <h3>{f.title}</h3>
-            <p>{f.text}</p>
+      <div className="s-bento">
+        <div className="s-feature big s-reveal">
+          <div className="s-feature-icon">
+            <FaGem />
           </div>
-        ))}
+          <h3>Premium ceramics for every budget</h3>
+          <p>
+            Commodes, vanities, urinals, showers and all the fittings that go with them, from brands
+            known for durability and finish.
+          </p>
+          <Link to="/item" className="s-btn s-btn-gold">
+            Explore the range <FaArrowRight />
+          </Link>
+        </div>
+        <div className="s-feature s-reveal">
+          <div className="s-feature-icon">
+            <FaShieldAlt />
+          </div>
+          <h3>Trusted brands</h3>
+          <p>Products from reputable manufacturers, built to last.</p>
+        </div>
+        <div className="s-feature s-reveal">
+          <div className="s-feature-icon">
+            <FaTags />
+          </div>
+          <h3>Honest prices</h3>
+          <p>Clear pricing on every item and the best value for you.</p>
+        </div>
+        <div className="s-feature s-reveal">
+          <div className="s-feature-icon">
+            <FaTruck />
+          </div>
+          <h3>Delivered to your door</h3>
+          <p>Our delivery team brings your order safely and on time, anywhere in Karachi.</p>
+        </div>
+        <div className="s-feature s-reveal">
+          <div className="s-feature-icon">
+            <FaHeadset />
+          </div>
+          <h3>Expert advice</h3>
+          <p>Send us a photo of your space and we'll suggest the right products.</p>
+        </div>
       </div>
     </div>
   </section>
 );
 
 const About = () => (
-  <section id="about" className="s-section s-alt">
+  <section id="about" className="s-section">
     <div className="s-container s-about">
       <div className="s-reveal">
         <span className="s-eyebrow">About us</span>
@@ -169,14 +308,14 @@ const About = () => (
           Every step of our journey has been about progress and growth, and we're committed to delivering
           excellence with every order.
         </p>
-        <Link to="/item" className="s-link" style={{ marginTop: 10 }}>
+        <Link to="/item" className="s-link" style={{ marginTop: 12 }}>
           Explore the collection <FaArrowRight />
         </Link>
       </div>
-      <div className="s-stats s-reveal">
+      <div className="s-stats">
         {STATS.map((s) => (
-          <div key={s.label} className="s-stat">
-            <strong>{s.value}</strong>
+          <div key={s.label} className="s-stat s-reveal">
+            <CountUp to={s.value} suffix={s.suffix} />
             <span>{s.label}</span>
           </div>
         ))}
@@ -185,46 +324,62 @@ const About = () => (
   </section>
 );
 
-const Reviews = () => (
-  <section id="reviews" className="s-section">
-    <div className="s-container">
-      <div className="s-head s-center s-reveal">
-        <span className="s-eyebrow">Testimonials</span>
-        <h2>What our customers say</h2>
-      </div>
-      <div className="s-reviews">
-        {REVIEWS.map((r) => (
-          <figure key={r.name} className="s-review s-reveal" style={{ margin: 0 }}>
-            <div className="s-stars" aria-label="5 out of 5 stars">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <FaStar key={i} />
-              ))}
-            </div>
-            <p>“{r.body}”</p>
-            <figcaption className="s-person">
-              <img src={r.img} alt="" />
-              <span>
-                {r.name}
-                <small>Customer</small>
-              </span>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
+const ReviewCard = ({ r }) => (
+  <figure className="s-review">
+    <div className="s-stars" aria-label="5 out of 5 stars">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <FaStar key={i} />
+      ))}
     </div>
-  </section>
+    <p>“{r.body}”</p>
+    <figcaption className="s-person">
+      <img src={r.img} alt="" />
+      <span>
+        {r.name}
+        <small>Verified customer</small>
+      </span>
+    </figcaption>
+  </figure>
 );
 
+const Reviews = () => {
+  const half = Math.ceil(REVIEWS.length / 2);
+  const rowA = REVIEWS.slice(0, half);
+  const rowB = REVIEWS.slice(half);
+  return (
+    <section id="reviews" className="s-section s-dark" style={{ overflow: "hidden" }}>
+      <div className="s-container">
+        <div className="s-head s-center s-reveal">
+          <span className="s-eyebrow">Testimonials</span>
+          <h2>Loved by homes across Karachi</h2>
+        </div>
+      </div>
+      <div className="s-wall">
+        {[rowA, rowB].map((row, i) => (
+          <div key={i} className={`s-wall-row ${i ? "rev" : ""}`}>
+            {[...row, ...row, ...row, ...row].map((r, j) => (
+              <ReviewCard key={`${r.name}-${j}`} r={r} />
+            ))}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
 const CtaBand = () => (
-  <section className="s-section tight" style={{ paddingTop: 0 }}>
+  <section className="s-section tight">
     <div className="s-container">
       <div className="s-cta s-reveal">
         <div>
-          <h2>Planning a new bathroom? Let's make it beautiful.</h2>
+          <span className="s-eyebrow">
+            <i /> We reply fast
+          </span>
+          <h2 style={{ marginTop: 16 }}>Planning a new bathroom? Let's make it beautiful.</h2>
           <p>Send us a photo or a list on WhatsApp and we'll suggest the right products and price.</p>
         </div>
         <a className="s-btn s-btn-gold" href={whatsappLink()} target="_blank" rel="noreferrer">
-          <FaWhatsapp /> Start on WhatsApp
+          <FaWhatsapp /> Start on WhatsApp <FaArrowRight />
         </a>
       </div>
     </div>
@@ -242,8 +397,8 @@ const Contact = () => (
         </div>
       </div>
       <div className="s-contact">
-        <div className="s-info s-reveal">
-          <div className="s-info-item">
+        <div className="s-info">
+          <div className="s-info-item full s-reveal">
             <span className="s-info-icon">
               <FaMapMarkerAlt />
             </span>
@@ -252,7 +407,7 @@ const Contact = () => (
               <b>{CONTACT.address}</b>
             </div>
           </div>
-          <a className="s-info-item" href={CONTACT.phoneHref}>
+          <a className="s-info-item s-reveal" href={CONTACT.phoneHref}>
             <span className="s-info-icon">
               <FaPhoneAlt />
             </span>
@@ -261,16 +416,16 @@ const Contact = () => (
               <b>{CONTACT.phone}</b>
             </div>
           </a>
-          <a className="s-info-item" href={whatsappLink()} target="_blank" rel="noreferrer">
+          <a className="s-info-item s-reveal" href={whatsappLink()} target="_blank" rel="noreferrer">
             <span className="s-info-icon">
               <FaWhatsapp />
             </span>
             <div>
-              <small>WhatsApp orders</small>
+              <small>WhatsApp</small>
               <b>Chat with us now</b>
             </div>
           </a>
-          <a className="s-info-item" href={`mailto:${CONTACT.email}`}>
+          <a className="s-info-item full s-reveal" href={`mailto:${CONTACT.email}`}>
             <span className="s-info-icon">
               <FaEnvelope />
             </span>
@@ -285,17 +440,17 @@ const Contact = () => (
           <p>We usually reply within a few hours.</p>
           <div className="s-row2">
             <div className="s-field">
+              <input id="c-name" name="name" required placeholder=" " />
               <label htmlFor="c-name">Full name</label>
-              <input id="c-name" name="name" required placeholder="Your name" />
             </div>
             <div className="s-field">
+              <input id="c-email" name="email" type="email" required placeholder=" " />
               <label htmlFor="c-email">Email</label>
-              <input id="c-email" name="email" type="email" required placeholder="you@example.com" />
             </div>
           </div>
           <div className="s-field">
-            <label htmlFor="c-msg">Message</label>
-            <textarea id="c-msg" name="message" rows={5} required placeholder="Tell us what you're looking for" />
+            <textarea id="c-msg" name="message" rows={5} required placeholder=" " />
+            <label htmlFor="c-msg">What are you looking for?</label>
           </div>
           <button type="submit" className="s-btn s-btn-dark" style={{ width: "100%" }}>
             <FaPaperPlane /> Send message
@@ -310,19 +465,35 @@ const Faqs = () => {
   const [open, setOpen] = useState(0);
   return (
     <section id="faqs" className="s-section">
-      <div className="s-container">
-        <div className="s-head s-center s-reveal">
-          <span className="s-eyebrow">FAQs</span>
-          <h2>Frequently asked questions</h2>
+      <div className="s-container s-faq-wrap">
+        <div className="s-head s-reveal">
+          <div>
+            <span className="s-eyebrow">FAQs</span>
+            <h2>Questions, answered</h2>
+            <p>Can't find what you need? Message us on WhatsApp and we'll help right away.</p>
+            <a
+              className="s-btn s-btn-wa"
+              style={{ marginTop: 22 }}
+              href={whatsappLink()}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaWhatsapp /> Ask a question
+            </a>
+          </div>
         </div>
-        <div className="s-faq s-reveal">
+        <div className="s-faq">
           {FAQS.map((f, i) => (
-            <div key={f.q} className={`s-faq-item ${open === i ? "open" : ""}`}>
+            <div key={f.q} className={`s-faq-item s-reveal ${open === i ? "open" : ""}`}>
               <button className="s-faq-q" aria-expanded={open === i} onClick={() => setOpen(open === i ? -1 : i)}>
                 {f.q}
-                <FaChevronDown />
+                <span className="pm" aria-hidden="true" />
               </button>
-              {open === i ? <div className="s-faq-a">{f.a}</div> : null}
+              <div className="s-faq-a">
+                <div>
+                  <p>{f.a}</p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -337,12 +508,18 @@ const Location = () => (
       <div className="s-head s-reveal">
         <div>
           <span className="s-eyebrow">Our store</span>
-          <h2>Where to find us</h2>
-          <p>{CONTACT.address}</p>
+          <h2>Come and see it in person</h2>
         </div>
       </div>
       <div className="s-map s-reveal">
         <StoreMap />
+        <div className="s-map-card">
+          <h3>MS Enterprise</h3>
+          <p>{CONTACT.address}</p>
+          <a className="s-btn s-btn-gold" href={directionsLink} target="_blank" rel="noreferrer">
+            <FaDirections /> Get directions
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -353,7 +530,8 @@ const Website = () => {
   const products = data?.data?.data ?? [];
   return (
     <SiteLayout title="MS Enterprise | Ceramics & Sanitary Ware, Karachi" overHero>
-      <Hero />
+      <Hero products={products} />
+      <Marquee products={products} />
       <Categories products={products} />
       <Featured products={products} loading={isLoading} />
       <Why />

@@ -83,7 +83,7 @@ const Header = ({ overHero }) => {
             {n.label}
           </Link>
         ))}
-        <a href={CONTACT.phoneHref}>
+        <a className="s-phone-link" href={CONTACT.phoneHref}>
           <FaPhoneAlt /> {CONTACT.phone}
         </a>
         <a className="s-btn s-btn-wa" href={whatsappLink()} target="_blank" rel="noreferrer">
@@ -161,6 +161,9 @@ const Footer = () => (
           </ul>
         </div>
       </div>
+      <div className="s-bigword" aria-hidden="true">
+        MS Enterprise
+      </div>
       <div className="s-footer-bottom">
         <span>© {new Date().getFullYear()} MS Enterprise. All rights reserved.</span>
         <span>Ceramics &amp; Sanitary · Karachi</span>
@@ -186,12 +189,16 @@ const SiteLayout = ({ title = "MS Enterprise", overHero = false, children }) => 
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
         />
       </Helmet>
+      <div className="s-progress" aria-hidden="true" />
       <Header overHero={overHero} />
       <main>{children}</main>
       <Footer />
       <a className="s-fab" href={whatsappLink()} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp">
         <FaWhatsapp />
+        <span className="s-fab-tip">Chat with us</span>
       </a>
+      {/* popups (product quick view) render here so they keep the site styles */}
+      <div id="s-portal" />
     </div>
   );
 };

@@ -13,6 +13,7 @@ export const createInventory = async (req, res) => {
         costPrice,
         sellingPrice,
         imgUrl,
+        description,
     } = req.body;
     console.log(req.body);
     const userId = req.user.id;
@@ -27,6 +28,7 @@ export const createInventory = async (req, res) => {
         imgUrl: imgUrl,
         costPrice,
         sellingPrice,
+        description: description ?? "",
     };
 
     const result = await inventoryCollection[0].insertOne(inventoryData);
@@ -79,6 +81,7 @@ export const editInventory = async (req, res) => {
             costPrice: req.body.costPrice,
             sellingPrice: req.body.sellingPrice,
             imgUrl: req.body.imgUrl,
+            description: req.body.description ?? "",
         };
         console.log(req.params.id);
         // Perform the update operation
@@ -141,7 +144,13 @@ export const getWebsiteProducts = async (req, res) => {
         const inventoryCollection = await database_connection(['inventory'])
 
         const [data, categories] = await Promise.all([
-            inventoryCollection[0].find({userId: req?.params?.id, addToWebsite: true}).toArray(),
+            // only public fields: cost price and stock stay private
+            inventoryCollection[0]
+                .find(
+                    {userId: req?.params?.id, addToWebsite: true},
+                    {projection: {label: 1, category: 1, sellingPrice: 1, imgUrl: 1, description: 1}},
+                )
+                .toArray(),
             inventoryCollection[0].distinct("category", {userId:req?.params?.id})
         ])
 

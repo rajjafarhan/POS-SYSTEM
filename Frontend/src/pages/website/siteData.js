@@ -97,3 +97,14 @@ export const FAQS = [
     a: "Call or WhatsApp us, send a message through this website, or visit our store. Our team is happy to help.",
   },
 ];
+
+// Old product photos were on Firebase Storage, which no longer serves files.
+export const usableImage = (url) =>
+  url && !String(url).includes("firebasestorage.googleapis.com") ? url : "";
+
+export const describe = (item) =>
+  String(item?.description ?? "").trim();
+
+export const directionsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  "MS Enterprise, " + CONTACT.address
+)}`;

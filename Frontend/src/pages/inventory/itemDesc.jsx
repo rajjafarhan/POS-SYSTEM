@@ -131,6 +131,18 @@ const ItemDescription = ({ refetch, setShowItemModal, product }) => {
               {field("qty", "Quantity", "number")}
               {field("costPrice", "Cost Price", "number")}
               {field("sellingPrice", "Selling Price", "number")}
+              <TextField
+                name="description"
+                label="Description (shown on website)"
+                size="small"
+                multiline
+                minRows={2}
+                value={item?.description ?? ""}
+                onChange={handleItemChange}
+                className="inv_full"
+                placeholder="Size, colour, material, warranty…"
+                fullWidth
+              />
               <label className="inv_switch inv_full">
                 Show on website
                 <Switch
@@ -156,6 +168,10 @@ const ItemDescription = ({ refetch, setShowItemModal, product }) => {
                 tone={profit < 0 ? "inv_low" : "inv_good"}
               />
               <Tile label="On website" value={item?.addToWebsite ? "Yes" : "No"} />
+              <div className="inv_tile inv_full">
+                <p className="inv_tile_label">Description</p>
+                <p className="inv_desc">{item?.description || "No description yet. Click Edit to add one."}</p>
+              </div>
             </div>
           )}
         </div>

@@ -31,6 +31,7 @@ const AddItem = ({ refetch, setShowModal }) => {
     costPrice: "",
     sellingPrice: "",
     category: "",
+    description: "",
     addToWebsite: false,
   });
   const [img, setImg] = useState();
@@ -136,6 +137,18 @@ const AddItem = ({ refetch, setShowModal }) => {
             {field("qty", "Quantity", "number")}
             {field("costPrice", "Cost Price", "number")}
             {field("sellingPrice", "Selling Price", "number")}
+            <TextField
+              name="description"
+              label="Description (shown on website)"
+              size="small"
+              multiline
+              minRows={2}
+              value={itemData.description}
+              onChange={handleChange}
+              className="inv_full"
+              placeholder="Size, colour, material, warranty…"
+              fullWidth
+            />
             {cost > 0 && sell > 0 ? (
               <div className={`inv_tile inv_full ${sell - cost < 0 ? "inv_low" : "inv_good"}`}>
                 <p className="inv_tile_label">Profit per unit</p>
