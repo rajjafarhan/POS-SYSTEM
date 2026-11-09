@@ -96,7 +96,7 @@ const ReceiptForm = ({
             helperText={creditHint ? "Empty = paid in full" : undefined}
           />
           <div className={`rf_change ${hasCash && diff < 0 ? "rf_due" : ""}`}>
-            <span>{hasCash && diff < 0 ? (creditHint ? "Udhaar (due later)" : "Balance due") : "Change"}</span>
+            <span>{hasCash && diff < 0 ? (creditHint ? "Due later" : "Balance due") : "Change"}</span>
             <strong>{hasCash ? money(Math.abs(diff)) : "–"}</strong>
           </div>
         </div>

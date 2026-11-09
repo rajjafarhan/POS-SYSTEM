@@ -152,7 +152,7 @@ const Dashboard = () => {
         />
         <div className="cursor-pointer" onClick={() => navigate("/pos/customer")} title="See unpaid receipts">
           <DashboardCard
-            label="Outstanding (Udhaar)"
+            label="Pending Payments"
             value={money(outstanding.data?.data?.total ?? 0)}
             icon={faHandHoldingDollar}
             tone="due"

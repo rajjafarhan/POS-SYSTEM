@@ -234,7 +234,7 @@ const Customer = () => {
                   setStatus("unpaid");
                 }}
               >
-                Unpaid (udhaar)
+                Unpaid
               </button>
             </div>
           </div>
