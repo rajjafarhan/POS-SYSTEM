@@ -1,30 +1,55 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import img from "../../../assets/auth.svg";
-import FloatingBackground from "./floatingBg";
 import { ToastContainer } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartLine, faFileInvoiceDollar, faWarehouse } from "@fortawesome/free-solid-svg-icons";
+import logo from "../../../assets/logo1.png";
+import "./auth.css";
 
+// Sign-in screen: brand panel on the left, form card on the right.
 const LoginSignup = () => {
   useEffect(() => {
     document.body.classList.add("no-overflow");
-
-    // return () => {
-    //   document.body.classList.remove("no-overflow");
-    // };
   }, []);
   return (
-    <>
-      <ToastContainer />
-      <FloatingBackground />
-      <div className="w-100 hv-100 d-flex justify-content-center flex-wrap align-items-center ">
-        <div className="w-37rem  d-flex justify-content-center align-items-center flex-column">
-          <img className="w-50 h-50 auth-pic" alt="" src={img} />
-
-          <h1 className="x-font fw-bold text-dgreen">POS SYSTEM</h1>
+    <div className="auth">
+      <ToastContainer position="top-right" autoClose={2500} theme="colored" />
+      <section className="auth-brand">
+        <div className="auth-logo">
+          <img src={logo} alt="MS Enterprise" />
         </div>
+        <h1>
+          Run your shop
+          <br />
+          <em>with confidence.</em>
+        </h1>
+        <p>Sales, stock and reports for MS Enterprise, all in one place.</p>
+        <ul>
+          <li>
+            <span>
+              <FontAwesomeIcon icon={faFileInvoiceDollar} />
+            </span>
+            Receipts, returns and pending payments
+          </li>
+          <li>
+            <span>
+              <FontAwesomeIcon icon={faWarehouse} />
+            </span>
+            Live stock that updates with every sale
+          </li>
+          <li>
+            <span>
+              <FontAwesomeIcon icon={faChartLine} />
+            </span>
+            Dashboard and sales closing reports
+          </li>
+        </ul>
+        <small>© {new Date().getFullYear()} MS Enterprise · Point of Sale</small>
+      </section>
+      <section className="auth-form">
         <Outlet />
-      </div>
-    </>
+      </section>
+    </div>
   );
 };
 

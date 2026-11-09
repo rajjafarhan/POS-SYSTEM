@@ -172,12 +172,15 @@ const VendorPage = () => {
   };
   return (
     <section className="d_main">
-      <div className="text-dgreen flex-mob subheadiv d-flex justify-content-between my-3 align-items-center pe-5">
-        <h1 className="x-font ">Vendor Receipts</h1>
+      <div className="pos-toolbar">
+        <p className="pos-sub">
+          <b>Vendor receipts</b>
+          Stock bought from your suppliers
+        </p>
         <SearchBar value={query} setValue={setQuery} width={"w-23rem"} />
 
         <div className="d-flex justify-content-center bnts align-items-center ">
-          <AddButton onChange={setModal} />
+          <AddButton onChange={setModal} label="New receipt" />
         </div>
       </div>
       <div>

@@ -81,14 +81,6 @@ a{
   #modal:empty {
     display: none;
   }
-  .css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
-    letter-spacing: 8px !important;
-  }
-  fieldset{
-    border-style: solid !important;
-    border-width: 1px !important;
-    border-color: rgba(0, 0, 0, 0.23) !important;
-}
 p{
     margin: 0;
     padding: 0;

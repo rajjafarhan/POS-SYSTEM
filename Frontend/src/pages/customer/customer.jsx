@@ -191,11 +191,14 @@ const Customer = () => {
   };
   return (
     <section className="d_main">
-      <div className="text-dgreen d-flex justify-content-between my-3 align-items-center px-5">
-        <h1 className="x-font">Customer Receipts</h1>
+      <div className="pos-toolbar">
+        <p className="pos-sub">
+          <b>Customer receipts</b>
+          Sales to customers, returns and pending payments
+        </p>
         <SearchBar value={query} setValue={setQuery} width={"w-23rem"} />
         <div className="d-flex justify-content-center align-items-center ">
-          <AddButton onChange={setShowModal} />
+          <AddButton onChange={setShowModal} label="New receipt" />
         </div>
       </div>
       <div className="d-flex justify-content-center mb-3">

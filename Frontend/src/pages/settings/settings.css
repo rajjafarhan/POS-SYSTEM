@@ -7,9 +7,6 @@ ul{
 .snav_h{
     min-height: 60vh ;
 }
-fieldset{
-    border: 2px solid transparent!important;
-}
 .textfield_w{
     width: 20rem !important;
 }

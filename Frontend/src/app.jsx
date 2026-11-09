@@ -19,6 +19,22 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Website from "./pages/website/websitemain";
 import "react-toastify/dist/ReactToastify.css";
 import Item from "./pages/website/itempg/Item";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+// One look for every MUI input, select and button in the POS.
+const muiTheme = createTheme({
+  palette: {
+    primary: { main: "#2c698d", dark: "#1f5070" },
+    secondary: { main: "#c9a14a" },
+    success: { main: "#15803d" },
+    error: { main: "#b91c1c" },
+  },
+  shape: { borderRadius: 10 },
+  typography: {
+    fontFamily: '"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+    button: { textTransform: "none", fontWeight: 600 },
+  },
+});
 import axios from "axios";
 
 // A saved login the backend no longer accepts (expired, or issued by another backend)
@@ -47,6 +63,7 @@ const queryClient = new QueryClient({
 const App = () => {
   return (
     <BrowserRouter>
+      <ThemeProvider theme={muiTheme}>
       <QueryClientProvider client={queryClient}>
         <Routes>
           <Route path="/auth" element={<LoginSignup />}>
@@ -70,6 +87,7 @@ const App = () => {
          
         </Routes>
       </QueryClientProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 };

@@ -19,8 +19,11 @@ const Inventory = () => {
 
   return (
     <section className="d_main">
-      <div className="flex-mob text-dgreen subheadiv d-flex justify-content-between my-3 align-items-center pe-5">
-        <h1 className="x-font ">Inventory</h1>
+      <div className="pos-toolbar">
+        <p className="pos-sub">
+          <b>Stock</b>
+          {pData.length} products · tap a product to view or edit it
+        </p>
         <SearchBar
           value={searchVal}
           setValue={setSearchVal}
@@ -29,7 +32,7 @@ const Inventory = () => {
             setcurr={setcurr}
         />
         <div className="d-flex bnts justify-content-center align-items-center ">
-          <AddButton onChange={setShowModal} />
+          <AddButton onChange={setShowModal} label="Add product" />
         </div>
       </div>
       <div>

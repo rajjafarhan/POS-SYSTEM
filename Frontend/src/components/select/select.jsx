@@ -5,7 +5,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 const MySelect = ({ name, setter, values, curr, id }) => {
-  console.log(values);
+
   return (
     <div className="mx-2">
       <Box sx={{ minWidth: 120 }}>
@@ -16,7 +16,7 @@ const MySelect = ({ name, setter, values, curr, id }) => {
             id="demo-simple-select"
             value={curr ? curr : ""}
             size="small"
-            label="Age"
+            label={name}
             onChange={(e) => {
               setter(e.target.value, id);
             }}

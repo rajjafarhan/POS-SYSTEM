@@ -1,0 +1,318 @@
+/* ================= POS app frame ================= */
+.pos {
+  --p: #2c698d; /* brand teal */
+  --p-dark: #1f5070;
+  --p-soft: #e6f1f6;
+  --gold: #c9a14a;
+  --gold-2: #ecd08a;
+  --ink: #111827;
+  --side: #0f1720;
+  --side-2: #18222d;
+  --bg: #f3f5f8;
+  --card: #ffffff;
+  --line: #e5e9ef;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --ok: #15803d;
+  --bad: #b91c1c;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 4px 16px rgba(16, 24, 40, 0.06);
+  --side-w: 256px;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.pos * {
+  font-family: inherit;
+}
+
+/* ---------- sidebar ---------- */
+.pos-side {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--side-w);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at 0% 0%, rgba(201, 161, 74, 0.12), transparent 40%), var(--side);
+  color: #fff;
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+}
+.pos-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 18px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.pos-logo {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+.pos-logo img {
+  width: 100%;
+  height: auto;
+}
+.pos-brand b {
+  display: block;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.2;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pos-brand small {
+  color: var(--gold-2);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.pos-close {
+  display: none;
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+}
+.pos-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 12px;
+  overflow-y: auto;
+}
+.pos-nav-label {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0 12px 8px;
+}
+.pos .pos-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: 0.93rem;
+  font-weight: 500;
+  text-align: left;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.pos .pos-link .ico {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.pos .pos-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff !important;
+}
+.pos .pos-link.active {
+  background: linear-gradient(90deg, rgba(201, 161, 74, 0.2), rgba(201, 161, 74, 0.04));
+  color: #fff !important;
+  font-weight: 600;
+}
+.pos .pos-link.active::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 8px;
+  bottom: 8px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--gold);
+}
+.pos .pos-link.active .ico {
+  background: linear-gradient(135deg, #f1d78f, #c9a14a);
+  color: #1b1405;
+}
+.pos-side-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.pos .pos-link.logout:hover {
+  background: rgba(185, 28, 28, 0.18);
+  color: #fecaca !important;
+}
+.pos-scrim {
+  display: none;
+}
+
+/* ---------- main area ---------- */
+.pos-main {
+  margin-left: var(--side-w);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.pos-top {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 28px;
+  background: rgba(243, 245, 248, 0.85);
+  backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.pos-burger {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+.pos-title h1 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.pos-title small {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.pos-user {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pos-user-text {
+  text-align: right;
+  line-height: 1.2;
+}
+.pos-user-text small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+.pos-user-text b {
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.pos-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--p), var(--p-dark));
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--line);
+}
+.pos-content {
+  flex: 1;
+  padding: 24px 28px 32px;
+  animation: pos-in 0.35s ease both;
+}
+.pos-foot {
+  padding: 16px 28px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--line);
+}
+@keyframes pos-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- tablets & phones: sidebar becomes a drawer ---------- */
+@media (max-width: 991px) {
+  .pos-side {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.25);
+  }
+  .pos-side.open {
+    transform: none;
+  }
+  .pos-close {
+    display: block;
+  }
+  .pos-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    background: rgba(15, 23, 32, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .pos-scrim.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .pos-main {
+    margin-left: 0;
+  }
+  .pos-burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pos-top {
+    padding: 12px 16px;
+  }
+  .pos-content {
+    padding: 18px 14px 28px;
+  }
+  .pos-foot {
+    padding: 14px 16px;
+  }
+}
+@media (max-width: 560px) {
+  .pos-user-text {
+    display: none;
+  }
+  .pos-title h1 {
+    font-size: 1.15rem;
+  }
+  .pos-title small {
+    font-size: 0.72rem;
+  }
+}

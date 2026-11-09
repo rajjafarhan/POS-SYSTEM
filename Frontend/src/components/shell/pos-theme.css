@@ -1,0 +1,342 @@
+/* ================= POS theme: one consistent look for every page ================= */
+
+/* page titles live in the top bar now; the old cursive page headings are hidden */
+.pos h1.x-font {
+  display: none !important;
+}
+.pos h2.x-font,
+.pos h3.x-font,
+.pos .x-font {
+  font-family: "Inter", system-ui, sans-serif !important;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.pos .text-dgreen {
+  color: var(--p) !important;
+}
+.pos .bg-dgreen {
+  background-color: var(--p) !important;
+}
+.pos .d_main,
+.pos .r_main,
+.pos .settings_main {
+  min-height: 0 !important;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ---------- page toolbar (search + add) ---------- */
+.pos .pos-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 0 !important;
+}
+.pos .pos-toolbar .pos-sub {
+  margin-right: auto;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.pos .pos-toolbar .pos-sub b {
+  color: var(--ink);
+  font-size: 1.05rem;
+  display: block;
+}
+.pos .pos-toolbar .s-div {
+  flex: 0 1 380px;
+}
+
+/* ---------- search box ---------- */
+.pos .s-div .form {
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.pos .s-div .form:focus-within {
+  border-color: var(--p);
+  box-shadow: 0 0 0 4px rgba(44, 105, 141, 0.14);
+}
+.pos .s-div .form::before,
+.pos .s-div .form::after {
+  display: none;
+}
+.pos .s-div .form p {
+  color: var(--muted);
+  display: flex;
+}
+.pos .s-div .input-s {
+  width: 100% !important;
+  font-size: 0.92rem;
+  outline: none;
+}
+
+/* ---------- primary "Add" button ---------- */
+.pos .pos-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--p), var(--p-dark));
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.92rem;
+  box-shadow: 0 8px 18px rgba(44, 105, 141, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.pos .pos-add:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(44, 105, 141, 0.35);
+}
+
+/* ---------- tables ---------- */
+.pos .pc_vendor,
+.pos .t-div {
+  display: block !important;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.pos .pc_vendor > div,
+.pos .t-div > div {
+  min-width: 100%;
+}
+.pos .t_main {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  overflow: hidden;
+  font-size: 0.92rem;
+}
+.pos .t_main thead {
+  background: #f8fafc !important;
+  color: var(--muted) !important;
+}
+.pos .t_main thead th {
+  padding: 12px 14px !important;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+}
+.pos .t_main tbody td {
+  padding: 12px 14px !important;
+  border-bottom: 1px solid #eef1f5;
+  color: var(--text);
+  vertical-align: middle;
+}
+.pos .t_main tbody tr {
+  transition: background 0.15s ease;
+}
+.pos .t_main tbody tr.nbg:nth-child(even) {
+  background: #fbfcfd;
+}
+.pos .t_main tbody tr:hover {
+  background: var(--p-soft) !important;
+}
+.pos .t_main tfoot td {
+  padding: 10px 14px !important;
+  font-size: 0.88rem !important;
+  color: var(--muted) !important;
+  background: #f8fafc;
+}
+.pos .t_main tfoot button {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px !important;
+  border: 1px solid var(--line) !important;
+  background: #fff !important;
+  color: var(--p) !important;
+  font-size: 0.95rem !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.pos .t_main tfoot button:disabled {
+  opacity: 0.4;
+}
+.pos .t_main .eye {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px !important;
+}
+.pos .t_main .eye:hover {
+  background: var(--p-soft) !important;
+}
+@media (max-width: 991px) {
+  .pos .t_main {
+    min-width: 720px;
+  }
+}
+/* phones used to hide the receipt tables completely */
+@media only screen and (max-width: 600px) {
+  .pos .pc_vendor {
+    display: block !important;
+  }
+}
+
+/* ---------- tabs / pills used on Customer page ---------- */
+.pos .ret_tabs {
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.pos .ret_tab.active {
+  background: var(--p);
+}
+
+/* ---------- MUI inputs (fix global rules that hid their borders) ---------- */
+.pos fieldset,
+.rf_modal fieldset,
+.ret_modal fieldset,
+.inv_modal fieldset {
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: #d7dde5 !important;
+  border-radius: 10px !important;
+}
+.pos .Mui-focused fieldset,
+.rf_modal .Mui-focused fieldset,
+.ret_modal .Mui-focused fieldset,
+.inv_modal .Mui-focused fieldset {
+  border-color: var(--p, #2c698d) !important;
+  border-width: 2px !important;
+}
+.MuiSelect-select {
+  letter-spacing: normal !important;
+}
+
+/* ---------- settings ---------- */
+.pos .settings_main .set-mob {
+  margin: 0 !important;
+  gap: 20px;
+  align-items: flex-start;
+}
+.pos .settings_main .snav_h {
+  min-height: 0 !important;
+  width: 240px;
+  flex: none;
+  background: #fff !important;
+  border: 1px solid var(--line);
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  padding: 8px;
+}
+.pos .settings_main .snav_h > div > div {
+  margin: 0 !important;
+}
+.pos .settings_main .snav_h li {
+  margin: 2px 0 !important;
+  padding: 11px 14px !important;
+  border-radius: 10px;
+  font-size: 0.93rem !important;
+  font-weight: 500;
+  background: transparent !important;
+  color: var(--text) !important;
+}
+.pos .settings_main .snav_h li:hover {
+  background: #f3f5f8 !important;
+  color: var(--ink) !important;
+}
+.pos .settings_main .snav_h li.bg_sl {
+  background: var(--p-soft) !important;
+  color: var(--p) !important;
+  font-weight: 600;
+}
+.pos .settings_main .mw-75,
+.pos .settings_main .bg-lgreen {
+  flex: 1;
+  width: auto !important;
+  margin: 0 !important;
+  background: #fff !important;
+  border: 1px solid var(--line);
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  padding: 8px 8px 20px;
+}
+.pos .settings_main h2 {
+  font-size: 1.15rem;
+  margin: 16px 20px !important;
+  color: var(--ink) !important;
+}
+.pos .settings_main .textfield_w {
+  box-shadow: none !important;
+}
+@media (max-width: 760px) {
+  .pos .settings_main .set-mob {
+    flex-direction: column !important;
+  }
+  .pos .settings_main .snav_h {
+    width: 100%;
+    height: auto !important;
+  }
+}
+
+/* ---------- buttons inside pages ---------- */
+.pos .btn.bg-dgreen,
+.pos button.bg-dgreen {
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+/* ---------- loaders and modals ---------- */
+.loader-layout {
+  background: rgba(243, 245, 248, 0.7) !important;
+  backdrop-filter: blur(3px);
+}
+#modal {
+  backdrop-filter: blur(4px);
+  background-color: rgba(15, 23, 32, 0.55) !important;
+  padding: 12px;
+}
+
+/* ---------- dashboard / report fit the new frame ---------- */
+.pos .d_main .d_head {
+  margin-bottom: 18px;
+}
+.pos .d_main .d_head h1 + .d_sub,
+.pos .d_main .d_head .d_sub {
+  font-size: 0.95rem;
+}
+.pos .r_main > div:first-child {
+  margin-top: 0 !important;
+}
+
+/* ---------- small fixes ---------- */
+.pos .t_main td,
+.pos .t_main th {
+  white-space: nowrap;
+}
+.pos .settings_main li {
+  list-style: none;
+}
+.pos .settings_main .fd-c {
+  gap: 14px;
+  padding: 0 20px;
+  flex-wrap: wrap;
+  justify-content: flex-start !important;
+}
+@media (max-width: 760px) {
+  .pos .settings_main .mw-75,
+  .pos .settings_main .bg-lgreen {
+    width: 100% !important;
+  }
+  .pos .settings_main .textfield_w {
+    width: 100% !important;
+  }
+}

@@ -51,7 +51,8 @@ const LoginFrame = () => {
   return (
     <div className="bg-white shadow p-5  pt-5 mx-5 ">
       <div>
-        <h1 className="text-dgreen x-font">Login</h1>
+        <h1 className="text-dgreen x-font">Welcome back</h1>
+        <p className="auth-sub">Sign in to continue to your dashboard</p>
         <div className="mt-5">
           <form
             onSubmit={(e) => {
@@ -94,7 +95,7 @@ const LoginFrame = () => {
                 onClick={submit}
                 className=" my-3 w-50 mx-auto mustard std-btn"
               >
-                Login
+                Sign in
               </button>
             </div>
           </form>
