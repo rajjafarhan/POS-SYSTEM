@@ -80,3 +80,10 @@
   color: #b3261e;
   font-weight: 600;
 }
+.dash_due {
+  --accent: #b46b00;
+  --accent-soft: #fff1e0;
+}
+.dash_due .dash_value {
+  color: #b46b00;
+}

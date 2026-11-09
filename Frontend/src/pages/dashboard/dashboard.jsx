@@ -6,7 +6,9 @@ import MySelect from "../../components/select/select";
 import DashboardCard from "../../components/dashboardCard/dashboardCard";
 import { BarChart } from "./barChart";
 import { useQuery } from "@tanstack/react-query";
-import { faCartShopping, faTruck, faScaleBalanced } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faTruck, faScaleBalanced, faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { fetchOutstanding } from "../../functions/customer";
 import {
   fetchMonthStates,
   fetchDashboardData,
@@ -56,6 +58,8 @@ const Dashboard = () => {
     fetchMonthStates
   );
   const years = useQuery(["years"], fetchYears);
+  const outstanding = useQuery(["outstanding"], fetchOutstanding, { staleTime: 0 });
+  const navigate = useNavigate();
   const { data, isLoading } = useQuery({
     queryKey: ["dashboardData", barChartYear],
     queryFn: fetchDashboardData,
@@ -146,6 +150,15 @@ const Dashboard = () => {
           change={change(now.net, prev.net)}
           hint={compareHint}
         />
+        <div className="cursor-pointer" onClick={() => navigate("/pos/customer")} title="See unpaid receipts">
+          <DashboardCard
+            label="Outstanding (Udhaar)"
+            value={money(outstanding.data?.data?.total ?? 0)}
+            icon={faHandHoldingDollar}
+            tone="due"
+            hint={`owed on ${outstanding.data?.data?.count ?? 0} receipt${outstanding.data?.data?.count === 1 ? "" : "s"} · all time`}
+          />
+        </div>
       </div>
 
       <div className="d_panel">

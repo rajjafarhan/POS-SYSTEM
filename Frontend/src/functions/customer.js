@@ -22,6 +22,7 @@ export const fetchCustomerReceipt = async ({ queryKey }) => {
   const res = await axios.get(
     `${import.meta.env.VITE_API_URL}/api/customer/${offSet}/${query}`,
     {
+      params: queryKey[3] === "unpaid" ? { status: "unpaid" } : {},
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -50,3 +51,18 @@ export const deleteManyCustomerReceipts = ({ ids }) =>
     { ids },
     { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } }
   );
+
+
+// Record a later payment on a part-paid receipt (udhaar).
+export const addCustomerPayment = ({ id, amount, date, note }) =>
+  axios.post(
+    `${import.meta.env.VITE_API_URL}/api/customer/${id}/payments`,
+    { amount, date, note },
+    { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } }
+  );
+
+// Total still owed by customers and on how many receipts.
+export const fetchOutstanding = () =>
+  axios.get(`${import.meta.env.VITE_API_URL}/api/customer-outstanding`, {
+    headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
+  });

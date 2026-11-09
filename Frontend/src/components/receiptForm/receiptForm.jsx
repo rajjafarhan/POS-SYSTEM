@@ -20,6 +20,7 @@ const ReceiptForm = ({
   total,
   onSubmit,
   onClose,
+  creditHint = false, // customer receipts: less cash than the total is kept as udhaar
   children,
 }) => {
   const hasCash = receiptData.cash !== "" && receiptData.cash !== undefined;
@@ -92,9 +93,10 @@ const ReceiptForm = ({
             value={receiptData.cash}
             onChange={onFieldChange}
             className="rf_cash"
+            helperText={creditHint ? "Empty = paid in full" : undefined}
           />
           <div className={`rf_change ${hasCash && diff < 0 ? "rf_due" : ""}`}>
-            <span>{hasCash && diff < 0 ? "Balance due" : "Change"}</span>
+            <span>{hasCash && diff < 0 ? (creditHint ? "Udhaar (due later)" : "Balance due") : "Change"}</span>
             <strong>{hasCash ? money(Math.abs(diff)) : "–"}</strong>
           </div>
         </div>

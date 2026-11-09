@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POS SYSTEM</title>
+    <meta name="theme-color" content="#0d0f13">
+    <title>MS Enterprise</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@800&family=Space+Grotesk:wght@300&display=swap" rel="stylesheet">
     <link
   rel="stylesheet"
@@ -11,11 +12,81 @@
   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
   crossorigin=""
 />
+    <style>
+      /* Splash shown while the app's JavaScript loads; React replaces it on first render. */
+      .boot {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+        background: radial-gradient(circle at 50% 40%, #1d2129, #0d0f13 70%);
+        font-family: Georgia, "Times New Roman", serif;
+        z-index: 9999;
+      }
+      .boot-ring {
+        position: relative;
+        width: 74px;
+        height: 74px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .boot-ring::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 2px solid rgba(236, 208, 138, 0.15);
+        border-top-color: #ecd08a;
+        border-right-color: #c9a14a;
+        animation: boot-spin 0.9s linear infinite;
+      }
+      .boot-ring b {
+        color: #ecd08a;
+        font-size: 22px;
+        letter-spacing: 0.04em;
+        animation: boot-pulse 1.4s ease-in-out infinite;
+      }
+      .boot-name {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 15px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+      }
+      .boot-bar {
+        width: 120px;
+        height: 2px;
+        border-radius: 2px;
+        background: rgba(236, 208, 138, 0.15);
+        overflow: hidden;
+      }
+      .boot-bar::after {
+        content: "";
+        display: block;
+        width: 40%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, #ecd08a, transparent);
+        animation: boot-slide 1.2s ease-in-out infinite;
+      }
+      @keyframes boot-spin { to { transform: rotate(360deg); } }
+      @keyframes boot-pulse { 50% { opacity: 0.55; } }
+      @keyframes boot-slide { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
+      @media (prefers-reduced-motion: reduce) {
+        .boot-ring::before, .boot-ring b, .boot-bar::after { animation-duration: 3s; }
+      }
+    </style>
 </head>
 <body>
     <div id="modal"></div>
     <div id="root">
-        not rendered
+        <div class="boot" role="status" aria-label="Loading">
+            <div class="boot-ring"><b>MS</b></div>
+            <div class="boot-name">MS Enterprise</div>
+            <div class="boot-bar"></div>
+        </div>
     </div>
     <script type="module" src="./app.jsx"></script>
 

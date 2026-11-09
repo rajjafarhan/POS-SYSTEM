@@ -61,3 +61,77 @@
   background: #2c698d;
   color: #ffffff;
 }
+
+/* ---------- part payments (udhaar) ---------- */
+.pay_summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.pay_summary > div {
+  background: #f5fbfb;
+  border: 1px solid #e3edf2;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.pay_summary small {
+  display: block;
+  color: #6b7b86;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.pay_summary b {
+  font-size: 1.15rem;
+}
+.pay_ok {
+  color: #1d7a46;
+}
+.pay_due {
+  color: #b3261e;
+}
+.pay_row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px dashed #e3edf2;
+}
+.pay_row em {
+  color: #6b7b86;
+  font-style: normal;
+}
+.pay_filter {
+  display: inline-flex;
+  gap: 6px;
+}
+.pay_filter button {
+  border: 1px solid #cfe3ea;
+  background: #fff;
+  color: #2c698d;
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.pay_filter button.active {
+  background: #b46b00;
+  border-color: #b46b00;
+  color: #fff;
+}
+.pay_badge {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.pay_badge.due {
+  background: #fff1e0;
+  color: #b46b00;
+}
+.pay_badge.paid {
+  background: #e2f4ea;
+  color: #1d7a46;
+}

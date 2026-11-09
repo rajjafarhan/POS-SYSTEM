@@ -57,6 +57,17 @@ const styles = StyleSheet.create({
   },
   bold: { fontFamily: "Helvetica-Bold" },
   thanks: { textAlign: "center", fontFamily: "Helvetica-Bold", fontSize: 9, marginTop: 8 },
+  stamp: {
+    marginTop: 6,
+    alignSelf: "center",
+    paddingVertical: 3,
+    paddingHorizontal: 10,
+    border: "1.5pt solid #111111",
+    borderRadius: 3,
+    fontFamily: "Helvetica-Bold",
+    fontSize: 10,
+    letterSpacing: 1.5,
+  },
 });
 
 const VendorReceipt = ({ data, type }) => {
@@ -85,8 +96,22 @@ const VendorReceipt = ({ data, type }) => {
   // page height grows with the number of lines (long names wrap onto a second line)
   const itemLines = items.reduce((s, i) => s + Math.ceil(i.name.length / 20) + (i.rate < i.list ? 1 : 0), 0);
   const returned = num(data?.returned);
+  // part payments (udhaar): show the payment history once there is a balance or more than one payment
+  const payments = Array.isArray(data?.payments) ? data.payments : [];
+  const balance = num(data?.balance);
+  const showPayments = !isVendor && data?.balance !== undefined && (balance > 0 || payments.length > 1);
+  const paidTotal = payments.reduce((s, p) => s + num(p.amount), 0);
+  const fmtDay = (d) => {
+    const x = new Date(d);
+    return isNaN(x.getTime()) ? "-" : `${pad(x.getDate())}-${MONTHS[x.getMonth()]}-${x.getFullYear()}`;
+  };
   const height =
-    215 + itemLines * 11 + (discount > 0 ? 24 : 0) + (data?.rDesc ? 12 : 0) + (returned > 0 ? 28 : 0);
+    215 +
+    itemLines * 11 +
+    (discount > 0 ? 24 : 0) +
+    (data?.rDesc ? 12 : 0) +
+    (returned > 0 ? 28 : 0) +
+    (showPayments ? 64 + payments.length * 12 : 0);
 
   return (
     <PDFViewer width={400} height={600}>
@@ -182,7 +207,33 @@ const VendorReceipt = ({ data, type }) => {
               </View>
             </>
           ) : null}
-          {hasCash ? (
+          {showPayments ? (
+            <>
+              <Text style={[styles.bold, { marginTop: 8, fontSize: 8.5 }]}>PAYMENTS</Text>
+              <View style={styles.rule} />
+              {payments.map((p, i) => (
+                <View key={i} style={styles.totRow}>
+                  <Text>
+                    {fmtDay(p.date)}
+                    {p.note ? <Text style={styles.muted}> · {p.note}</Text> : null}
+                  </Text>
+                  <Text>{money(p.amount)}</Text>
+                </View>
+              ))}
+              <View style={styles.totRow}>
+                <Text style={styles.bold}>Total paid</Text>
+                <Text style={styles.bold}>{money(paidTotal)}</Text>
+              </View>
+              {balance > 0 ? (
+                <View style={styles.grand}>
+                  <Text>BALANCE DUE</Text>
+                  <Text>Rs {money(balance)}</Text>
+                </View>
+              ) : (
+                <Text style={styles.stamp}>PAID IN FULL</Text>
+              )}
+            </>
+          ) : hasCash ? (
             <>
               <View style={styles.totRow}>
                 <Text>Cash</Text>

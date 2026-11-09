@@ -423,6 +423,112 @@ const CtaBand = () => (
   </section>
 );
 
+// Sends the message by email through FormSubmit in the background, shows the result
+// on the page, and offers WhatsApp (with the message filled in) if email fails.
+const ContactForm = () => {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [state, setState] = useState("idle"); // idle | sending | sent | error
+  const [error, setError] = useState("");
+  const set = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const waText = `Hello, I'm ${form.name}${form.email ? ` (${form.email})` : ""}.\n\n${form.message}`;
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setState("sending");
+    setError("");
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${CONTACT.email}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          _subject: `New website message from ${form.name}`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && String(data.success) === "true") {
+        setState("sent");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        setState("error");
+        setError(data.message || "We couldn't send your message right now.");
+      }
+    } catch {
+      setState("error");
+      setError("We couldn't send your message right now.");
+    }
+  };
+
+  if (state === "sent") {
+    return (
+      <div className="s-form s-form-done">
+        <div className="s-done-icon">
+          <FaCheckCircle />
+        </div>
+        <h3>Message sent!</h3>
+        <p>Thank you. We'll get back to you within a few hours. Need it faster? Message us on WhatsApp.</p>
+        <div className="d-flex gap-2 flex-wrap justify-content-center">
+          <a className="s-btn s-btn-wa" href={whatsappLink()} target="_blank" rel="noreferrer">
+            <FaWhatsapp /> WhatsApp us
+          </a>
+          <button type="button" className="s-btn s-btn-ghost" onClick={() => setState("idle")}>
+            Send another
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <form className="s-form" onSubmit={submit}>
+      <h3>Send us a message</h3>
+      <p>Tell us what you need and we'll get back to you with options and prices.</p>
+      <div className="s-row2">
+        <div className="s-field">
+          <input id="c-name" name="name" required placeholder=" " value={form.name} onChange={set} />
+          <label htmlFor="c-name">Full name</label>
+        </div>
+        <div className="s-field">
+          <input id="c-email" name="email" type="email" required placeholder=" " value={form.email} onChange={set} />
+          <label htmlFor="c-email">Email</label>
+        </div>
+      </div>
+      <div className="s-field">
+        <textarea id="c-msg" name="message" rows={5} required placeholder=" " value={form.message} onChange={set} />
+        <label htmlFor="c-msg">What are you looking for?</label>
+      </div>
+      {state === "error" ? (
+        <div className="s-form-error" role="alert">
+          <span>{error}</span>
+          <a
+            className="s-btn s-btn-wa"
+            href={`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(waText)}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FaWhatsapp /> Send on WhatsApp instead
+          </a>
+        </div>
+      ) : null}
+      <button type="submit" className="s-btn s-btn-gold" style={{ width: "100%" }} disabled={state === "sending"}>
+        {state === "sending" ? (
+          <>
+            <span className="s-spinner" /> Sending…
+          </>
+        ) : (
+          <>
+            <FaPaperPlane /> Send message
+          </>
+        )}
+      </button>
+    </form>
+  );
+};
+
 const Contact = () => (
   <section id="contact" className="s-contact-scene" onMouseMove={spot}>
     <video src={video} muted loop autoPlay playsInline aria-hidden="true" />
@@ -489,27 +595,7 @@ const Contact = () => (
           </div>
         </div>
         <div className="s-form-wrap s-reveal">
-          <form className="s-form" action={`https://formsubmit.co/${CONTACT.email}`} method="POST">
-            <h3>Send us a message</h3>
-            <p>Tell us what you need and we'll get back to you with options and prices.</p>
-            <div className="s-row2">
-              <div className="s-field">
-                <input id="c-name" name="name" required placeholder=" " />
-                <label htmlFor="c-name">Full name</label>
-              </div>
-              <div className="s-field">
-                <input id="c-email" name="email" type="email" required placeholder=" " />
-                <label htmlFor="c-email">Email</label>
-              </div>
-            </div>
-            <div className="s-field">
-              <textarea id="c-msg" name="message" rows={5} required placeholder=" " />
-              <label htmlFor="c-msg">What are you looking for?</label>
-            </div>
-            <button type="submit" className="s-btn s-btn-gold" style={{ width: "100%" }}>
-              <FaPaperPlane /> Send message
-            </button>
-          </form>
+          <ContactForm />
         </div>
       </div>
     </div>

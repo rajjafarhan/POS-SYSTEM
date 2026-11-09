@@ -38,6 +38,7 @@ const Table = ({
   mutation,
   type,
   onReturn,
+  onPayment,
   bulkMutation,
   returnedMap,
 }) => {
@@ -191,6 +192,11 @@ const Table = ({
                         −{returnedMap.get(String(d._id)).toLocaleString()} returned
                       </div>
                     ) : null}
+                    {onPayment && Number(d.balance) > 0 ? (
+                      <div className="pay_badge due">Rs {Number(d.balance).toLocaleString()} due</div>
+                    ) : onPayment && (d.payments?.length ?? 0) > 1 ? (
+                      <div className="pay_badge paid">Paid in full</div>
+                    ) : null}
                   </td>
                   <td
                     className="p-3 text-center border-0 bg-transparent text-danger p-2  "
@@ -247,17 +253,30 @@ const Table = ({
               type={type}
               data={{ ...currReceipt, returned: returnedMap?.get(String(currReceipt._id)) ?? 0 }}
             />
-            {onReturn && (
-              <div className="d-flex justify-content-center mt-2">
-                <button
-                  className="btn btn-warning fw-semibold"
-                  onClick={() => {
-                    setShowReceiptModal(false);
-                    onReturn(currReceipt);
-                  }}
-                >
-                  ↩ Return items
-                </button>
+            {(onReturn || onPayment) && (
+              <div className="d-flex justify-content-center gap-2 mt-2">
+                {onPayment && Number(currReceipt.balance) > 0 && (
+                  <button
+                    className="btn btn-success fw-semibold"
+                    onClick={() => {
+                      setShowReceiptModal(false);
+                      onPayment(currReceipt);
+                    }}
+                  >
+                    + Record payment (Rs {Number(currReceipt.balance).toLocaleString()} due)
+                  </button>
+                )}
+                {onReturn && (
+                  <button
+                    className="btn btn-warning fw-semibold"
+                    onClick={() => {
+                      setShowReceiptModal(false);
+                      onReturn(currReceipt);
+                    }}
+                  >
+                    ↩ Return items
+                  </button>
+                )}
               </div>
             )}
           </ReceiptLayout>

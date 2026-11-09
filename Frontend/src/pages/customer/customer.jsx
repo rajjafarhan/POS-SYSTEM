@@ -30,19 +30,21 @@ import { validateProducts } from "../../helpers/validate";
 import { toast } from "react-toastify";
 import ReturnForm from "./returnForm";
 import ReturnsList from "./returnsList";
+import PaymentForm from "./paymentForm";
 import ReceiptForm from "../../components/receiptForm/receiptForm";
 
 const Customer = () => {
   const [offSet, setOffSet] = useState(1);
   const [query, setQuery] = useState("");
+  const [status, setStatus] = useState("all"); // "all" | "unpaid"
   const { data, refetch, isLoading } = useQuery({
-    queryKey: ["fetchCutomer", offSet, query],
+    queryKey: ["fetchCutomer", offSet, query, status],
     queryFn: fetchCustomerReceipt,
     enabled: false,
   });
   useEffect(() => {
     refetch();
-  }, [query, offSet]);
+  }, [query, offSet, status]);
   const rData = data?.data?.customers ?? [];
   const [products, refetchProducts] = useOutletContext();
 
@@ -96,6 +98,8 @@ const Customer = () => {
   const [product, setProduct] = useState([]);
   const [tab, setTab] = useState("receipts");
   const [returnInvoice, setReturnInvoice] = useState(null);
+  const [paymentInvoice, setPaymentInvoice] = useState(null);
+  const [paidReceipt, setPaidReceipt] = useState(null); // updated receipt shown after a payment
 
   if (mutation.isLoading) {
     return (
@@ -212,6 +216,28 @@ const Customer = () => {
       </div>
       {tab === "receipts" ? (
         <div>
+          <div className="d-flex justify-content-center mb-3">
+            <div className="pay_filter">
+              <button
+                className={status === "all" ? "active" : ""}
+                onClick={() => {
+                  setOffSet(1);
+                  setStatus("all");
+                }}
+              >
+                All receipts
+              </button>
+              <button
+                className={status === "unpaid" ? "active" : ""}
+                onClick={() => {
+                  setOffSet(1);
+                  setStatus("unpaid");
+                }}
+              >
+                Unpaid (udhaar)
+              </button>
+            </div>
+          </div>
           <div className="pc_vendor d-flex justify-content-center align-items-start">
             <Table
               headings={[
@@ -228,6 +254,7 @@ const Customer = () => {
               offSet={[offSet, setOffSet]}
               type={"Customer Receipt"}
               onReturn={setReturnInvoice}
+              onPayment={setPaymentInvoice}
               bulkMutation={bulkDeleteMutation}
               returnedMap={returnedMap}
             />
@@ -235,6 +262,26 @@ const Customer = () => {
         </div>
       ) : (
         <ReturnsList refetchProducts={refetchProducts} />
+      )}
+      {paymentInvoice && (
+        <Modal>
+          <PaymentForm
+            invoice={paymentInvoice}
+            onClose={() => setPaymentInvoice(null)}
+            onSaved={(updated) => {
+              setPaymentInvoice(null);
+              refetch();
+              if (updated) setPaidReceipt(updated);
+            }}
+          />
+        </Modal>
+      )}
+      {paidReceipt && (
+        <Modal>
+          <ReceiptLayout setShowReceiptModal={() => setPaidReceipt(null)} refetch={refetch}>
+            <VendorReceipt type={"Customer Receipt"} data={paidReceipt} />
+          </ReceiptLayout>
+        </Modal>
       )}
       {returnInvoice && (
         <Modal>
@@ -254,6 +301,7 @@ const Customer = () => {
           <ReceiptForm
             title="Create Customer Receipt"
             partyLabel="Customer name"
+            creditHint
             receiptData={receiptData}
             onFieldChange={handleChange}
             onDateChange={(newValue) => setReceiptData({ ...receiptData, date: newValue })}

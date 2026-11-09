@@ -10,6 +10,8 @@ import {
   deleteAllCustomers,
   deleteCustomer,
   getAllCustomers,
+  addPayment,
+  getOutstanding,
 } from "./handlers/customer";
 import {
   createInventory,
@@ -46,6 +48,8 @@ router.post("/customer", createCustomer);
 router.delete("/customer/:id", deleteCustomer);
 router.delete("/customer/", deleteAllCustomers);
 router.post("/customer/delete-many", deleteManyFrom("customer invoice"));
+router.post("/customer/:id/payments", addPayment);
+router.get("/customer-outstanding", getOutstanding);
 
 //*****************CUSTOMER RETURNS************ */
 
