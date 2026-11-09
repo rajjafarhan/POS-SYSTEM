@@ -1,6 +1,6 @@
 .dash_card {
-  --accent: #2c698d;
-  --accent-soft: #e3f6f5;
+  --accent: #1f2937;
+  --accent-soft: #f6f1e6;
   background: #ffffff;
   border-radius: 0.75rem;
   border-top: 4px solid var(--accent);
@@ -13,8 +13,8 @@
   transform: translateY(-2px);
 }
 .dash_sales {
-  --accent: #2c698d;
-  --accent-soft: #e3f6f5;
+  --accent: #1f2937;
+  --accent-soft: #f6f1e6;
 }
 .dash_purchases {
   --accent: #c27c0e;
@@ -35,7 +35,7 @@
   justify-content: space-between;
 }
 .dash_label {
-  color: #6b7b86;
+  color: #6b7280;
   font-size: 0.9rem;
   font-weight: 600;
   margin: 0;
@@ -67,7 +67,7 @@
   color: #b3261e;
 }
 .dash_hint {
-  color: #6b7b86;
+  color: #6b7280;
   font-size: 0.82rem;
   margin: 0;
   min-height: 1.2rem;

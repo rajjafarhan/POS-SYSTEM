@@ -3,8 +3,8 @@
 import { createElement } from "react";
 import { formatDay, dayKey } from "./closingReport";
 
-const BRAND = "FF2C698D";
-const LIGHT = "FFE3F6F5";
+const BRAND = "FF1F2937";
+const LIGHT = "FFF6F1E6";
 const MONEY = "#,##0.00";
 const PCT = "0.0%";
 const GROUP_TITLES = { day: "Daily", week: "Weekly", month: "Monthly" };

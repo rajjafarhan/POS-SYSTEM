@@ -15,6 +15,8 @@ import ReportPage from "./pages/report/report";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./global.css";
+import "./components/shell/pos-theme.css";
+import "./components/shell/pos-coherent.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Website from "./pages/website/websitemain";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,7 +26,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 // One look for every MUI input, select and button in the POS.
 const muiTheme = createTheme({
   palette: {
-    primary: { main: "#2c698d", dark: "#1f5070" },
+    primary: { main: "#1f2937", dark: "#111827" },
     secondary: { main: "#c9a14a" },
     success: { main: "#15803d" },
     error: { main: "#b91c1c" },

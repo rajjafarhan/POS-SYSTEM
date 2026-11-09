@@ -44,7 +44,7 @@ td{
     border-bottom: 1px solid gray;
 }
 .nbg:nth-child(even){
-    background-color: #e3f6f5;
+    background-color: #f6f1e6;
 }
 .nbg:hover{
     background-color: rgba(0, 0, 0, 0.1);

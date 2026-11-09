@@ -59,7 +59,7 @@ export const BarChart = ({ sales, expense }) => {
       {
         label: "Sales",
         data: byMonth(sales),
-        backgroundColor: "#2c698d",
+        backgroundColor: "#1f2937",
         borderRadius: 6,
         maxBarThickness: 28,
       },

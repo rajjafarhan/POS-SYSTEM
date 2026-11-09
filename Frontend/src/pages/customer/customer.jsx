@@ -201,46 +201,77 @@ const Customer = () => {
           <AddButton onChange={setShowModal} label="New receipt" />
         </div>
       </div>
-      <div className="d-flex justify-content-center mb-3">
-        <div className="ret_tabs">
+      <div className="view_bar">
+        <div
+          className="ret_tabs"
+          role="tablist"
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+              e.preventDefault();
+              e.stopPropagation();
+              const t = tab === "receipts" ? "returns" : "receipts";
+              setTab(t);
+              e.currentTarget.querySelectorAll("button")[t === "receipts" ? 0 : 1].focus();
+            }
+          }}
+        >
           <button
             className={`ret_tab ${tab === "receipts" ? "active" : ""}`}
+            role="tab"
+            aria-selected={tab === "receipts"}
             onClick={() => setTab("receipts")}
           >
             Receipts
           </button>
           <button
             className={`ret_tab ${tab === "returns" ? "active" : ""}`}
+            role="tab"
+            aria-selected={tab === "returns"}
             onClick={() => setTab("returns")}
           >
             Returns
           </button>
         </div>
+        {tab === "receipts" && (
+          <div
+            className="pay_filter"
+            role="group"
+            aria-label="Show"
+            onKeyDown={(e) => {
+              if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+                e.preventDefault();
+                const s = status === "all" ? "unpaid" : "all";
+                setOffSet(1);
+                setStatus(s);
+                e.currentTarget.querySelectorAll("button")[s === "all" ? 0 : 1].focus();
+              }
+            }}
+          >
+            <button
+              className={status === "all" ? "active" : ""}
+              aria-pressed={status === "all"}
+              onClick={() => {
+                setOffSet(1);
+                setStatus("all");
+              }}
+            >
+              All
+            </button>
+            <button
+              className={status === "unpaid" ? "active" : ""}
+              aria-pressed={status === "unpaid"}
+              onClick={() => {
+                setOffSet(1);
+                setStatus("unpaid");
+              }}
+            >
+              Unpaid only
+            </button>
+          </div>
+        )}
       </div>
       {tab === "receipts" ? (
         <div>
-          <div className="d-flex justify-content-center mb-3">
-            <div className="pay_filter">
-              <button
-                className={status === "all" ? "active" : ""}
-                onClick={() => {
-                  setOffSet(1);
-                  setStatus("all");
-                }}
-              >
-                All receipts
-              </button>
-              <button
-                className={status === "unpaid" ? "active" : ""}
-                onClick={() => {
-                  setOffSet(1);
-                  setStatus("unpaid");
-                }}
-              >
-                Unpaid
-              </button>
-            </div>
-          </div>
           <div className="pc_vendor d-flex justify-content-center align-items-start">
             <Table
               headings={[

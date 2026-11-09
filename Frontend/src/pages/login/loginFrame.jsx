@@ -1,14 +1,22 @@
 import "./login.css";
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import { validateEmail, validatePass } from "../../helpers/validate";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../functions/signup";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRight,
+  faEnvelope,
+  faEye,
+  faEyeSlash,
+  faLock,
+  faShieldHalved,
+} from "@fortawesome/free-solid-svg-icons";
 
 const LoginFrame = () => {
   const navigate = useNavigate();
+  const [showPass, setShowPass] = useState(false);
   const mutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
@@ -16,15 +24,13 @@ const LoginFrame = () => {
       localStorage.setItem("name", data?.data?.name);
       toast.success("Logged in successfully!");
       navigate("/pos/dashboard");
-        location.reload()
+      location.reload();
     },
     onError: (error) => {
-      if (error?.response?.data?.message === "User not found") {
-        toast.error("User not found!");
-      }
-      if (error?.response?.data?.message === "Invalid credentials") {
-        toast.error("Incorrect Password!");
-      }
+      const msg = error?.response?.data?.message;
+      if (msg === "User not found") toast.error("User not found!");
+      else if (msg === "Invalid credentials") toast.error("Incorrect Password!");
+      else toast.error("Could not sign in. Please try again.");
     },
   });
   const [data, setData] = useState({ email: "", password: "" });
@@ -32,11 +38,6 @@ const LoginFrame = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
-    if (name === "email") {
-      console.log(validateEmail(value));
-    } else {
-      console.log(validatePass(value));
-    }
   };
 
   const submit = (e) => {
@@ -45,62 +46,58 @@ const LoginFrame = () => {
       toast.error("Email or Password can't be empty!");
       return;
     }
-    console.log(data);
     mutation.mutate(data);
   };
   return (
-    <div className="bg-white shadow p-5  pt-5 mx-5 ">
-      <div>
-        <h1 className="text-dgreen x-font">Welcome back</h1>
-        <p className="auth-sub">Sign in to continue to your dashboard</p>
-        <div className="mt-5">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const { email, pass } = data;
-            }}
-          >
-            <div>
-              <div className="input-container">
-                <input
-                  value={data.email}
-                  onChange={(e) => {
-                    handleInputChange(e);
-                  }}
-                  type="email"
-                  className={` text-black inp_u`}
-                  name="email"
-                />
-                <label className={`${data.email === "" ? "" : "inp_d"}`}>
-                  Email
-                </label>
-              </div>
-              <div className="input-container">
-                <input
-                  value={data.password}
-                  onChange={(e) => {
-                    handleInputChange(e);
-                  }}
-                  type="password"
-                  className={` text-black`}
-                  name="password"
-                />
-                <label className={`${data.password === "" ? "" : "inp_d"}`}>
-                  Password
-                </label>
-              </div>
-            </div>
-            <div>
-              <button
-                onClick={submit}
-                className=" my-3 w-50 mx-auto mustard std-btn"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+    <div className="lg-card">
+      <span className="lg-eyebrow">Staff sign-in</span>
+      <h1>Welcome back</h1>
+      <p className="lg-sub">Sign in to continue to your dashboard</p>
+      <form onSubmit={submit} noValidate>
+        <label className="lg-field">
+          <span>Email</span>
+          <div className="lg-input">
+            <FontAwesomeIcon icon={faEnvelope} />
+            <input
+              value={data.email}
+              onChange={handleInputChange}
+              type="email"
+              name="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+            />
+          </div>
+        </label>
+        <label className="lg-field">
+          <span>Password</span>
+          <div className="lg-input">
+            <FontAwesomeIcon icon={faLock} />
+            <input
+              value={data.password}
+              onChange={handleInputChange}
+              type={showPass ? "text" : "password"}
+              name="password"
+              autoComplete="current-password"
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              className="lg-eye"
+              onClick={() => setShowPass((v) => !v)}
+              aria-label={showPass ? "Hide password" : "Show password"}
+            >
+              <FontAwesomeIcon icon={showPass ? faEyeSlash : faEye} />
+            </button>
+          </div>
+        </label>
+        <button type="submit" className="lg-btn" disabled={mutation.isLoading}>
+          {mutation.isLoading ? "Signing in…" : "Sign in"}
+          {!mutation.isLoading && <FontAwesomeIcon icon={faArrowRight} />}
+        </button>
+      </form>
+      <p className="lg-safe">
+        <FontAwesomeIcon icon={faShieldHalved} /> Your shop data is private and secure
+      </p>
     </div>
   );
 };

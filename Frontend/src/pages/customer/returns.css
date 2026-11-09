@@ -3,7 +3,7 @@
   width: 92vw;
 }
 .ret_muted {
-  color: #6b7b86;
+  color: #6b7280;
 }
 .ret_list {
   width: 100%;
@@ -22,21 +22,21 @@
   background: #ffffff;
 }
 .ret_table th {
-  background: #2c698d;
+  background: #1f2937;
   color: #ffffff;
   padding: 0.7rem 0.8rem;
   white-space: nowrap;
 }
 .ret_table td {
   padding: 0.6rem 0.8rem;
-  border-bottom: 1px solid #e3edf2;
+  border-bottom: 1px solid #ece6da;
   vertical-align: top;
 }
 .ret_table tbody tr:nth-child(even) {
-  background: #f5fbfb;
+  background: #fbf8f1;
 }
 .ret_table tfoot td {
-  background: #e3f6f5;
+  background: #f6f1e6;
   font-weight: 700;
 }
 .ret_n {
@@ -45,20 +45,20 @@
 }
 .ret_tabs {
   display: inline-flex;
-  background: #e3f6f5;
+  background: #f6f1e6;
   border-radius: 2rem;
   padding: 0.25rem;
 }
 .ret_tab {
   border: 0;
   background: transparent;
-  color: #2c698d;
+  color: #1f2937;
   font-weight: 600;
   padding: 0.4rem 1.2rem;
   border-radius: 2rem;
 }
 .ret_tab.active {
-  background: #2c698d;
+  background: #1f2937;
   color: #ffffff;
 }
 
@@ -69,14 +69,14 @@
   gap: 10px;
 }
 .pay_summary > div {
-  background: #f5fbfb;
-  border: 1px solid #e3edf2;
+  background: #fbf8f1;
+  border: 1px solid #ece6da;
   border-radius: 12px;
   padding: 10px 12px;
 }
 .pay_summary small {
   display: block;
-  color: #6b7b86;
+  color: #6b7280;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -94,10 +94,10 @@
   display: flex;
   justify-content: space-between;
   padding: 6px 0;
-  border-bottom: 1px dashed #e3edf2;
+  border-bottom: 1px dashed #ece6da;
 }
 .pay_row em {
-  color: #6b7b86;
+  color: #6b7280;
   font-style: normal;
 }
 .pay_filter {
@@ -105,9 +105,9 @@
   gap: 6px;
 }
 .pay_filter button {
-  border: 1px solid #cfe3ea;
+  border: 1px solid #e8dcc4;
   background: #fff;
-  color: #2c698d;
+  color: #1f2937;
   border-radius: 999px;
   padding: 0.3rem 0.9rem;
   font-size: 0.9rem;

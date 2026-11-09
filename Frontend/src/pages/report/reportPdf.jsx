@@ -1,7 +1,7 @@
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import { formatDay, money, pct } from "../../helpers/closingReport";
 
-const BRAND = "#2c698d";
+const BRAND = "#1f2937";
 
 const styles = StyleSheet.create({
   page: { padding: 28, fontSize: 8.5, fontFamily: "Helvetica", color: "#272643" },
@@ -14,14 +14,14 @@ const styles = StyleSheet.create({
     marginRight: "1.8%",
     marginBottom: 6,
     padding: 7,
-    backgroundColor: "#e3f6f5",
+    backgroundColor: "#f6f1e6",
     borderLeft: `3pt solid ${BRAND}`,
   },
   cardLabel: { color: "#555555", fontSize: 7.5 },
   cardValue: { fontSize: 12, fontFamily: "Helvetica-Bold", marginTop: 2 },
-  row: { flexDirection: "row", borderBottom: "0.5pt solid #d6e4ec" },
+  row: { flexDirection: "row", borderBottom: "0.5pt solid #ece6da" },
   head: { flexDirection: "row", backgroundColor: BRAND, color: "#ffffff", fontFamily: "Helvetica-Bold" },
-  total: { flexDirection: "row", backgroundColor: "#e3f6f5", fontFamily: "Helvetica-Bold" },
+  total: { flexDirection: "row", backgroundColor: "#f6f1e6", fontFamily: "Helvetica-Bold" },
   cell: { padding: 4, flex: 1 },
   num: { padding: 4, flex: 1, textAlign: "right" },
   footer: { position: "absolute", bottom: 14, left: 28, right: 28, color: "#999999", fontSize: 7, flexDirection: "row", justifyContent: "space-between" },
@@ -38,7 +38,7 @@ const Table = ({ columns, rows, totals }) => (
       ))}
     </View>
     {rows.map((r, i) => (
-      <View key={i} style={[styles.row, i % 2 ? { backgroundColor: "#f7fbfb" } : {}]} wrap={false}>
+      <View key={i} style={[styles.row, i % 2 ? { backgroundColor: "#fbf8f1" } : {}]} wrap={false}>
         {columns.map((c) => (
           <Text key={c.title} style={[c.num ? styles.num : styles.cell, { flex: c.flex ?? 1 }]}>
             {c.get(r)}

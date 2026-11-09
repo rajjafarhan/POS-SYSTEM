@@ -3,7 +3,7 @@ import "./seachBar.css";
 const SearchBar = ({text, setcurr, refetch, value, setValue, width }) => {
   return (
     <div className="s-div">
-      <form className="form">
+      <form className="form" role="search" onSubmit={(e) => e.preventDefault()}>
         <p>
           <svg
             width="17"
@@ -32,9 +32,18 @@ const SearchBar = ({text, setcurr, refetch, value, setValue, width }) => {
               }
             setValue(e.target.value);
           }}
-          required=""
+          onKeyDown={(e) => {
+            // Esc clears the search, then leaves the box
+            if (e.key === "Escape") {
+              if (value) setValue("");
+              else e.currentTarget.blur();
+            }
+          }}
+          aria-label={text ? text : "Search"}
+          data-search
           type="text"
         />
+        <kbd className="s-kbd" title="Press / to search">/</kbd>
         
       </form>
     </div>

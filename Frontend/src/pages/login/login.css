@@ -23,7 +23,7 @@
 .input-container input:focus{ 
  border:none;	
  outline:none;
- border-bottom:2px solid #2c698d;	
+ border-bottom:2px solid #1f2937;	
 }
 
 
@@ -57,8 +57,8 @@
     background: white;
     overflow: hidden;
     transition: 1s;
-    color: #2c698d  !important;
-    border-color: #2c698d ;
+    color: #1f2937  !important;
+    border-color: #1f2937 ;
   }
  
 
@@ -91,7 +91,7 @@
     color: #f2f2f2;
   }
   .std-btn:hover:first-child{
-    background: #2c698d ;
+    background: #1f2937 ;
     
     color:white !important
   }
@@ -121,7 +121,7 @@
   .floating-bg{
     width:150vw;
     height:150vw;
-    background-color:#bae8e8;
+    background-color:#efe4cc;
     opacity:0.8;
     position:absolute;
     top:-125vw;

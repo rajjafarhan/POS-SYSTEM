@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../../components/modal/modal";
 import VendorReceipt from "./receipt";
+import { pagerKeys, rowKeys } from "../../helpers/tableKeys";
 
 export const ReceiptLayout = ({ children, setShowReceiptModal, refetch }) => {
   return (
@@ -53,7 +54,6 @@ const Table = ({
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
-  console.log(data);
   let pages = Math.ceil(total / 10);
   let [curr, setcurr] = useState(1);
   let [currentData, setCurrentData] = useState(1);
@@ -62,7 +62,6 @@ const Table = ({
     setCurrentData(currentData + 1);
     if (total > data?.length && (curr % 5) + 1 === 1) {
       const [val, setOffset] = offSet;
-      console.log(val, "INvokedddddd");
       setOffset(val + 1);
       setCurrentData(1);
     }
@@ -85,167 +84,145 @@ const Table = ({
       pageIds.forEach((id) => (allOnPage ? next.delete(id) : next.add(id)));
       return next;
     });
+  const open = (d) => {
+    setShowReceiptModal(true);
+    setCurrReceipt(d);
+  };
+  const cols = headings.length + (bulkMutation ? 1 : 0);
+  const pageCount = isNaN(pages) || pages < 1 ? 1 : pages;
+  const from = (curr - 1) * 10 + 1;
+  const to = (curr - 1) * 10 + (currData?.length ?? 0);
   return (
-    <div>
+    <div
+      className="tcard"
+      onKeyDown={pagerKeys({ prev, next, canPrev: curr > 1, canNext: curr < pageCount })}
+    >
       {bulkMutation && selected.size > 0 && (
-        <div className="bulk_bar">
+        <div className="tcard_bulk">
           <span>
             <b>{selected.size}</b> selected
           </span>
-          <button className="btn btn-danger btn-sm" onClick={() => setShowBulkModal(true)}>
-            <FontAwesomeIcon icon={faTrash} /> Delete selected
-          </button>
-          <button className="btn btn-outline-secondary btn-sm" onClick={() => setSelected(new Set())}>
+          <button className="tbtn ghost" onClick={() => setSelected(new Set())}>
             Clear
+          </button>
+          <button className="tbtn danger" onClick={() => setShowBulkModal(true)}>
+            <FontAwesomeIcon icon={faTrash} /> Delete selected
           </button>
         </div>
       )}
-      <table className="t_main p-4 rounde shadow">
-        <thead className="m-3 bg-dgreen text-white">
-          <tr className="m-3">
-            {bulkMutation && (
-              <th className="p-3 text-center">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  title="Select all on this page"
-                  checked={allOnPage}
-                  onChange={togglePage}
-                />
-              </th>
-            )}
-            {headings.map((heading, ind) => {
-              return (
-                <th key={ind} className="p-3 text-center">
-                  {heading}
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {!currData || currData?.length <= 0 ? (
+      <div className="tcard_scroll">
+        <table className="t_main">
+          <thead>
             <tr>
-              <td></td>
-              <td></td>
-              <td className="p-5 text-dgreen fw-bold fs-4">
-                No Data In DataBase!
-              </td>
-              <td></td>
-              <td></td>
+              {bulkMutation && (
+                <th className="t_check">
+                  <input
+                    type="checkbox"
+                    className="tck"
+                    title="Select all on this page"
+                    checked={allOnPage}
+                    onChange={togglePage}
+                  />
+                </th>
+              )}
+              {headings.map((heading, ind) => (
+                <th key={ind} className={ind === headings.length - 1 ? "t_act" : ""}>
+                  {heading === "Delete" ? "" : heading}
+                </th>
+              ))}
             </tr>
-          ) : (
-            currData?.map((d, index) => {
-              console.log(d);
-              return (
-                <tr key={index} className="cursor-pointer nbg">
-                  {bulkMutation && (
-                    <td className="p-3 text-center">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={selected.has(String(d._id))}
-                        onChange={() => toggle(String(d._id))}
-                      />
+          </thead>
+          <tbody>
+            {!currData || currData?.length <= 0 ? (
+              <tr>
+                <td colSpan={cols} className="t_empty">
+                  No receipts yet
+                </td>
+              </tr>
+            ) : (
+              currData?.map((d, index) => {
+                const id = String(d._id);
+                return (
+                  <tr
+                    key={index}
+                    className={selected.has(id) ? "is-sel" : ""}
+                    tabIndex={0}
+                    onKeyDown={rowKeys(() => open(d))}
+                    aria-label={`Open receipt for ${d.rName || "unnamed"}`}
+                  >
+                    {bulkMutation && (
+                      <td className="t_check">
+                        <input
+                          type="checkbox"
+                          className="tck"
+                          checked={selected.has(id)}
+                          onChange={() => toggle(id)}
+                        />
+                      </td>
+                    )}
+                    <td className="t_no" onClick={() => open(d)}>
+                      {String((curr - 1) * 10 + index + 1).padStart(2, "0")}
                     </td>
-                  )}
-                  <td className="p-3 text-center">
-                    {index === 9 ? curr * 10 : `${curr - 1}${index + 1}`}
-                  </td>
-                  <td
-                    onClick={() => {
-                      setShowReceiptModal(true);
-                      setCurrReceipt(d);
-                    }}
-                    className="p-3 text-center"
-                  >
-                    {d.rName === "" ? "------" : d.rName}
-                  </td>
-                  <td
-                    onClick={() => {
-                      setShowReceiptModal(true);
-                      setCurrReceipt(d);
-                    }}
-                    className="p-3 text-center"
-                  >
-                    {d.rDesc === "" ? "------" : d.rDesc}
-                  </td>
-                  <td
-                    onClick={() => {
-                      setShowReceiptModal(true);
-                      setCurrReceipt(d);
-                    }}
-                    className="p-3 text-center"
-                  >
-                    {formatDate(d.date)}
-                  </td>
-                  <td
-                    onClick={() => {
-                      setShowReceiptModal(true);
-                      setCurrReceipt(d);
-                    }}
-                    className="p-3 text-center"
-                  >
-                    {d.total}
-                    {returnedMap?.get(String(d._id)) ? (
-                      <div className="returned_tag">
-                        −{returnedMap.get(String(d._id)).toLocaleString()} returned
-                      </div>
-                    ) : null}
-                    {onPayment && Number(d.balance) > 0 ? (
-                      <div className="pay_badge due">Rs {Number(d.balance).toLocaleString()} due</div>
-                    ) : onPayment && (d.payments?.length ?? 0) > 1 ? (
-                      <div className="pay_badge paid">Paid in full</div>
-                    ) : null}
-                  </td>
-                  <td
-                    className="p-3 text-center border-0 bg-transparent text-danger p-2  "
-                    onClick={() => {
-                      setCurrReceipt(d);
-                      setShowDeleteModal(true);
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      style={{ fontSize: "1.2rem" }}
-                    />
-                  </td>
-                </tr>
-              );
-            })
+                    <td className="t_strong" onClick={() => open(d)}>
+                      {d.rName === "" ? "—" : d.rName}
+                    </td>
+                    <td onClick={() => open(d)}>{d.rDesc === "" ? "—" : d.rDesc}</td>
+                    <td onClick={() => open(d)}>{formatDate(d.date)}</td>
+                    <td className="t_amt" onClick={() => open(d)}>
+                      Rs {Number(d.total).toLocaleString()}
+                      {returnedMap?.get(id) ? (
+                        <div className="returned_tag">
+                          −{returnedMap.get(id).toLocaleString()} returned
+                        </div>
+                      ) : null}
+                      {onPayment && Number(d.balance) > 0 ? (
+                        <div className="pay_badge due">Rs {Number(d.balance).toLocaleString()} due</div>
+                      ) : onPayment && (d.payments?.length ?? 0) > 1 ? (
+                        <div className="pay_badge paid">Paid in full</div>
+                      ) : null}
+                    </td>
+                    <td className="t_act">
+                      <button
+                        className="icon_btn danger"
+                        title="Delete receipt"
+                        aria-label="Delete receipt"
+                        onClick={() => {
+                          setCurrReceipt(d);
+                          setShowDeleteModal(true);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
+      <div className="tcard_foot">
+        <span>
+          {total ? (
+            <>
+              Showing <b>{from}–{to}</b> of <b>{total}</b>
+            </>
+          ) : (
+            "No records"
           )}
-        </tbody>
-        <tfoot>
-          <tr>
-            {bulkMutation && <td></td>}
-            <td className="p-2 fs-5 text-dgreen text-center">
-              Total Records :
-            </td>
-            <td className="p-2 fs-5 text-dgreen ">{total ?? 0}</td>
-            <td className="p-2 fs-5 text-dgreen text-center">
-              Page {curr} of {isNaN(pages) ? 1 : pages}
-            </td>
-            <td className="p-2 text-center">
-              <button
-                onClick={prev}
-                disabled={curr === 1}
-                className="border-0  text-dgreen bg-white fs-4"
-              >
-                <FontAwesomeIcon icon={faArrowLeft} />
-              </button>
-            </td>
-            <td className="p-2 text-center" s>
-              <button
-                onClick={next}
-                disabled={curr === pages}
-                className="border-0  text-dgreen bg-white fs-4"
-              >
-                <FontAwesomeIcon icon={faArrowRight} />
-              </button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+        </span>
+        <div className="pager">
+          <button onClick={prev} disabled={curr === 1} aria-label="Previous page">
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
+          <span>
+            Page {curr} of {pageCount}
+          </span>
+          <button onClick={next} disabled={curr >= pageCount} aria-label="Next page">
+            <FontAwesomeIcon icon={faArrowRight} />
+          </button>
+        </div>
+      </div>
       {showReceiptModal && (
         <Modal>
           <ReceiptLayout setShowReceiptModal={setShowReceiptModal}>

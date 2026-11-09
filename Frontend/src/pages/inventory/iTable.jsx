@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { search } from "../../helpers/search";
 import { fuzzySearch } from "../../helpers/search";
+import { pagerKeys, rowKeys } from "../../helpers/tableKeys";
 
 
 const InventoryTable = ({ curr, setcurr, pData, refetch, searchParam}) => {
@@ -25,8 +26,7 @@ const InventoryTable = ({ curr, setcurr, pData, refetch, searchParam}) => {
     "Cost Price",
     "Selling Price",
     "Total Cost",
-    "View",
-    "Delete",
+    "Actions",
   ];
 
   const data = fuzzySearch(pData, searchParam) ?? [];
@@ -40,94 +40,104 @@ const InventoryTable = ({ curr, setcurr, pData, refetch, searchParam}) => {
 
   const currData = data?.slice((curr - 1) * 10, curr * 10);
 
+  const n = (v) => Number(v || 0).toLocaleString();
+  const pageCount = pages < 1 ? 1 : pages;
+  const from = (curr - 1) * 10 + 1;
+  const to = (curr - 1) * 10 + (currData?.length ?? 0);
+  const view = (d) => {
+    setCurrItem(d);
+    setShowItemModal(true);
+  };
+
   return (
-    <div>
-      <table className="t_main p-4 rounde shadow">
-        <thead className="m-3 bg-dgreen text-white">
-          <tr className="m-3">
-            {headings.map((heading, ind) => {
-              return (
-                <th key={ind} className="p-3 text-center">
-                  {heading}
+    <div
+      className="tcard"
+      onKeyDown={pagerKeys({ prev, next, canPrev: curr > 1, canNext: curr < pageCount })}
+    >
+      <div className="tcard_scroll">
+        <table className="t_main">
+          <thead>
+            <tr>
+              {headings.map((heading, ind) => (
+                <th
+                  key={ind}
+                  className={ind === headings.length - 1 ? "t_act" : ind >= 3 && ind <= 6 ? "t_num" : ""}
+                >
+                  {ind === headings.length - 1 ? "" : heading}
                 </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {currData?.map((d, index) => {
-            return (
-              <tr key={index} className="cursor-pointer nbg z-0">
-                <td className="p-3 text-center">
-{index !== 9 ? `${curr-1}${index+1}` : `${curr*10}` }
-                </td>
-                <td className="p-3 text-center">
-                  {d.label === "" ? "------" : d.label}
-                </td>
-                <td className="p-3 text-center">{d?.category}</td>
-                <td className="p-3 text-center">{d?.qty}</td>
-                <td className="p-3 text-center">{d?.costPrice}</td>
-                <td className="p-3 text-center">{d?.sellingPrice}</td>
-                <td className="p-3 text-center">{d?.qty * d.costPrice}</td>
-                <td className="p- text-center text-danger fs-5">
-                  <button
-                    className="border-0 eye bg-transpaent p-2 rounded-circle text-dgreen bg-transparent "
-                    onClick={() => {
-                      setCurrItem(d);
-                      setShowItemModal(true);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faEye} />
-                  </button>
-                </td>
-                <td className="p- text-center text-danger fs-5">
-                  <button
-                    className="border-0 bg-transparent text-danger eye p-2  br-40"
-                    onClick={() => {
-                      setCurrItem(d);
-                      setShowDelModal(true);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {currData.length === 0 ? (
+              <tr>
+                <td colSpan={headings.length} className="t_empty">
+                  No products found
                 </td>
               </tr>
-            );
-          })}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td className="p-2 fs-5 text-dgreen text-center">
-              Total Records :
-            </td>
-            <td className="p-2 fs-5 text-dgreen ">{data?.length}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td className="p-2 fs-5 text-dgreen text-center">
-              Page {curr} of {pages}
-            </td>
-            <td className="p-2 text-center">
-              <button
-                onClick={prev}
-                disabled={curr === 1}
-                className="border-0  text-dgreen bg-white fs-4"
-              >
-                <FontAwesomeIcon icon={faArrowLeft} />
-              </button>
-            </td>
-            <td className="p-2 text-center">
-              <button
-                onClick={next}
-                disabled={curr === pages}
-                className="border-0  text-dgreen bg-white fs-4"
-              >
-                <FontAwesomeIcon icon={faArrowRight} />
-              </button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+            ) : (
+              currData.map((d, index) => (
+                <tr
+                  key={index}
+                  tabIndex={0}
+                  onKeyDown={rowKeys(() => view(d))}
+                  aria-label={`Open ${d.label}`}
+                >
+                  <td className="t_no" onClick={() => view(d)}>
+                    {String((curr - 1) * 10 + index + 1).padStart(2, "0")}
+                  </td>
+                  <td className="t_strong" onClick={() => view(d)}>
+                    {d.label === "" ? "—" : d.label}
+                  </td>
+                  <td onClick={() => view(d)}>{d?.category}</td>
+                  <td className="t_num" onClick={() => view(d)}>{d?.qty}</td>
+                  <td className="t_num" onClick={() => view(d)}>{n(d?.costPrice)}</td>
+                  <td className="t_num" onClick={() => view(d)}>{n(d?.sellingPrice)}</td>
+                  <td className="t_num t_amt" onClick={() => view(d)}>{n(d?.qty * d.costPrice)}</td>
+                  <td className="t_act">
+                    <button className="icon_btn" title="View product" aria-label="View product" onClick={() => view(d)}>
+                      <FontAwesomeIcon icon={faEye} />
+                    </button>
+                    <button
+                      className="icon_btn danger"
+                      title="Delete product"
+                      aria-label="Delete product"
+                      onClick={() => {
+                        setCurrItem(d);
+                        setShowDelModal(true);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+      <div className="tcard_foot">
+        <span>
+          {data.length ? (
+            <>
+              Showing <b>{from}–{to}</b> of <b>{data.length}</b>
+            </>
+          ) : (
+            "No records"
+          )}
+        </span>
+        <div className="pager">
+          <button onClick={prev} disabled={curr === 1} aria-label="Previous page">
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
+          <span>
+            Page {curr} of {pageCount}
+          </span>
+          <button onClick={next} disabled={curr >= pageCount} aria-label="Next page">
+            <FontAwesomeIcon icon={faArrowRight} />
+          </button>
+        </div>
+      </div>
       {showItemModal && (
         <Modal>
           <ItemDescription

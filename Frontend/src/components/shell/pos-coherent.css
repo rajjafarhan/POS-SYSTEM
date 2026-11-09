@@ -1,0 +1,870 @@
+/* ================= POS: one coherent ink + gold look =================
+   Applies inside the POS frame (.pos) and in popups, which render in #modal
+   outside that frame. Ink = main actions; gold = highlight and focus. */
+
+:root {
+  --ink: #1f2937;
+  --ink-2: #111827;
+  --gold: #c9a14a;
+  --gold-2: #ecd08a;
+  --gold-grad: linear-gradient(135deg, #f1d78f 0%, #d9b45c 45%, #b08433 100%);
+  --cream: #f6f1e6;
+  --cream-2: #fbf8f1;
+  --line: #e7e2d8;
+}
+
+/* ---------- buttons ---------- */
+.pos .btn,
+#modal .btn {
+  border-radius: 10px;
+  font-weight: 600;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.pos .btn:active,
+#modal .btn:active {
+  transform: scale(0.98);
+}
+/* main action: ink */
+.pos .bg-dgreen.btn,
+.pos button.bg-dgreen,
+#modal .bg-dgreen.btn,
+#modal button.bg-dgreen,
+#modal .rf_submit,
+.pos .btn-success,
+#modal .btn-success,
+.pos .btn-primary,
+#modal .btn-primary {
+  background: var(--ink) !important;
+  border: 1px solid var(--ink) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 16px rgba(17, 24, 39, 0.18);
+}
+.pos .bg-dgreen.btn:hover,
+.pos button.bg-dgreen:hover,
+#modal .bg-dgreen.btn:hover,
+#modal button.bg-dgreen:hover,
+#modal .rf_submit:hover,
+.pos .btn-success:hover,
+#modal .btn-success:hover,
+.pos .btn-primary:hover,
+#modal .btn-primary:hover {
+  background: var(--ink-2) !important;
+  box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.35), 0 8px 20px rgba(17, 24, 39, 0.22);
+}
+/* secondary highlight action (e.g. Return items): gold outline */
+.pos .btn-warning,
+#modal .btn-warning {
+  background: #fff !important;
+  border: 1.5px solid var(--gold) !important;
+  color: #8a6420 !important;
+}
+.pos .btn-warning:hover,
+#modal .btn-warning:hover {
+  background: var(--cream) !important;
+}
+/* quiet action */
+.pos .btn-outline-secondary,
+#modal .btn-outline-secondary {
+  background: #fff;
+  border: 1px solid #d6d0c4;
+  color: #374151;
+}
+.pos .btn-outline-secondary:hover,
+#modal .btn-outline-secondary:hover {
+  background: #f4f1ea;
+  border-color: #c9c1b1;
+  color: var(--ink-2);
+}
+/* danger stays red, but softer */
+.pos .btn-danger,
+#modal .btn-danger {
+  background: #b91c1c !important;
+  border-color: #b91c1c !important;
+}
+/* "Add" button in page toolbars: gold call-to-action */
+.pos .pos-add {
+  background: var(--gold-grad) !important;
+  color: #1b1405 !important;
+  box-shadow: 0 8px 20px rgba(201, 161, 74, 0.35) !important;
+}
+.pos .pos-add:hover {
+  box-shadow: 0 12px 26px rgba(201, 161, 74, 0.45) !important;
+}
+
+/* ---------- popups ---------- */
+#modal > div > section,
+#modal .rf_modal,
+#modal .ret_modal,
+#modal .inv_modal {
+  border-radius: 18px !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35) !important;
+}
+#modal .rf_head {
+  background: radial-gradient(circle at 100% 0%, rgba(201, 161, 74, 0.28), transparent 45%), var(--ink-2) !important;
+  border-bottom: 2px solid var(--gold);
+}
+#modal .rf_head h2 {
+  color: #fff;
+}
+#modal .rf_section_title {
+  color: #8a6420 !important;
+}
+#modal .rf_count {
+  background: var(--cream) !important;
+  color: #8a6420;
+}
+#modal .rf_foot {
+  background: var(--cream-2) !important;
+  border-top-color: var(--line) !important;
+}
+#modal .rf_add {
+  color: var(--ink) !important;
+  border-color: var(--gold) !important;
+  background: var(--cream-2) !important;
+}
+#modal .rf_add:hover {
+  background: var(--cream) !important;
+}
+#modal .pi_row {
+  background: #fff !important;
+  border-color: var(--line) !important;
+}
+#modal .rf_total strong {
+  color: var(--ink-2);
+}
+/* old-style popups (delete confirm, return, payment) */
+#modal .text-dgreen,
+#modal h2.text-dgreen,
+#modal h4.text-dgreen {
+  color: var(--ink) !important;
+}
+#modal p.fs-5.text-dgreen {
+  color: #4b5563 !important;
+}
+#modal .ret_table th {
+  background: var(--ink) !important;
+}
+#modal .ret_table tfoot td,
+#modal .pay_summary > div,
+#modal .inv_tile {
+  background: var(--cream-2) !important;
+  border-color: var(--line) !important;
+}
+#modal .inv_edit_btn {
+  border-color: rgba(236, 208, 138, 0.6) !important;
+}
+
+/* ---------- inputs: gold focus everywhere ---------- */
+.pos .Mui-focused fieldset,
+#modal .Mui-focused fieldset {
+  border-color: var(--gold) !important;
+  border-width: 2px !important;
+}
+.pos .MuiInputLabel-root.Mui-focused,
+#modal .MuiInputLabel-root.Mui-focused {
+  color: #8a6420 !important;
+}
+.pos .s-div .form:focus-within {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 4px rgba(201, 161, 74, 0.18) !important;
+}
+.pos input[type="checkbox"].form-check-input:checked,
+#modal input[type="checkbox"].form-check-input:checked {
+  background-color: var(--ink);
+  border-color: var(--ink);
+}
+.pos .form-check-input:focus {
+  box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.3);
+  border-color: var(--gold);
+}
+
+/* ---------- tabs, filters, badges ---------- */
+.pos .ret_tabs {
+  background: #fff !important;
+  border-color: var(--line) !important;
+}
+.pos .ret_tab {
+  color: #4b5563 !important;
+}
+.pos .ret_tab.active {
+  background: var(--ink) !important;
+  color: #fff !important;
+}
+.pos .pay_filter button {
+  border-color: var(--line) !important;
+  color: #4b5563 !important;
+  background: #fff;
+}
+.pos .pay_filter button.active {
+  background: var(--gold-grad) !important;
+  border-color: transparent !important;
+  color: #1b1405 !important;
+}
+.pos .bulk_bar {
+  background: #fff7ed !important;
+  border-color: #fed7aa !important;
+}
+
+/* ---------- tables ---------- */
+.pos .t_main thead {
+  background: var(--cream-2) !important;
+}
+.pos .t_main thead th {
+  color: #8a6420 !important;
+  border-bottom-color: var(--line) !important;
+}
+.pos .t_main tbody tr:hover {
+  background: var(--cream) !important;
+}
+.pos .t_main tfoot td {
+  background: var(--cream-2) !important;
+}
+.pos .t_main tfoot button {
+  color: var(--ink) !important;
+}
+.pos .t_main .eye,
+.pos .t_main .text-dgreen {
+  color: var(--ink) !important;
+}
+
+/* ---------- settings ---------- */
+.pos .settings_main .snav_h li.bg_sl {
+  background: var(--cream) !important;
+  color: #8a6420 !important;
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+
+/* ---------- report page ---------- */
+.pos .r_filters {
+  background: #fff !important;
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+.pos .r_insights {
+  background: var(--cream) !important;
+  border: 1px solid var(--line);
+}
+.pos .r_csv,
+.pos .r_sort {
+  background-color: var(--ink) !important;
+}
+
+/* ---------- toasts ---------- */
+.Toastify__toast {
+  border-radius: 12px !important;
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 500;
+}
+
+/* ================= richer finish: gradients, glow and shine ================= */
+:root {
+  --cta: linear-gradient(135deg, #f6e2a4 0%, #e0bd62 35%, #c9a14a 60%, #a8792a 100%);
+  --deep: linear-gradient(135deg, #2a3446 0%, #161d2a 55%, #0b1018 100%);
+}
+
+/* page background: soft warm gradient instead of flat grey */
+.pos {
+  background: radial-gradient(1200px 600px at 100% -10%, rgba(201, 161, 74, 0.12), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(31, 41, 55, 0.07), transparent 60%), #f5f3ee !important;
+}
+.pos-top {
+  background: rgba(255, 255, 255, 0.78) !important;
+  border-bottom: 0 !important;
+  box-shadow: 0 1px 0 rgba(17, 24, 39, 0.05);
+}
+.pos-top::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d9b45c 30%, #f1d78f 50%, #d9b45c 70%, transparent);
+  opacity: 0.8;
+}
+.pos-avatar {
+  background: var(--cta) !important;
+  color: #1b1405 !important;
+  box-shadow: 0 0 0 3px #fff, 0 6px 16px rgba(201, 161, 74, 0.45) !important;
+}
+.pos-burger {
+  background: var(--deep) !important;
+  color: #f1d78f !important;
+  border: 0 !important;
+}
+
+/* main actions: shiny gold gradient with a light sweep on hover */
+.pos .pos-add,
+.pos .bg-dgreen.btn,
+.pos button.bg-dgreen,
+#modal .bg-dgreen.btn,
+#modal button.bg-dgreen,
+#modal .rf_submit,
+.pos .btn-success,
+#modal .btn-success,
+.pos .btn-primary,
+#modal .btn-primary,
+.auth-form .std-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--cta) !important;
+  background-size: 160% 160% !important;
+  border: 0 !important;
+  color: #1b1405 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 8px 22px rgba(201, 161, 74, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, background-position 0.6s ease !important;
+}
+.pos .pos-add::after,
+.pos .bg-dgreen.btn::after,
+.pos button.bg-dgreen::after,
+#modal .bg-dgreen.btn::after,
+#modal button.bg-dgreen::after,
+#modal .rf_submit::after,
+.pos .btn-success::after,
+#modal .btn-success::after,
+.auth-form .std-btn::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%) !important;
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+}
+.pos .pos-add:hover,
+.pos .bg-dgreen.btn:hover,
+.pos button.bg-dgreen:hover,
+#modal .bg-dgreen.btn:hover,
+#modal button.bg-dgreen:hover,
+#modal .rf_submit:hover,
+.pos .btn-success:hover,
+#modal .btn-success:hover,
+.pos .btn-primary:hover,
+#modal .btn-primary:hover,
+.auth-form .std-btn:hover {
+  transform: translateY(-1px);
+  background-position: 100% 100% !important;
+  box-shadow: 0 12px 28px rgba(201, 161, 74, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+.pos .pos-add:hover::after,
+.pos .bg-dgreen.btn:hover::after,
+.pos button.bg-dgreen:hover::after,
+#modal .bg-dgreen.btn:hover::after,
+#modal button.bg-dgreen:hover::after,
+#modal .rf_submit:hover::after,
+.pos .btn-success:hover::after,
+#modal .btn-success:hover::after,
+.auth-form .std-btn:hover::after {
+  transform: translateX(120%);
+}
+.pos .btn-danger,
+#modal .btn-danger {
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  box-shadow: 0 8px 20px rgba(185, 28, 28, 0.3);
+}
+
+/* selected tabs / filters and table headers: deep gradient with gold */
+.pos .ret_tab.active {
+  background: var(--deep) !important;
+  color: #f1d78f !important;
+  box-shadow: 0 6px 14px rgba(17, 24, 39, 0.25);
+}
+.pos .pay_filter button.active {
+  background: var(--cta) !important;
+  box-shadow: 0 6px 14px rgba(201, 161, 74, 0.35);
+}
+.pos .t_main thead {
+  background: linear-gradient(180deg, #fbf6ea, #f6efdf) !important;
+}
+.pos .t_main {
+  border-color: #ece3d1 !important;
+}
+#modal .ret_table th {
+  background: var(--deep) !important;
+  color: #f1d78f !important;
+}
+
+/* cards: gradient accent line across the top */
+.pos .dash_card,
+.pos .d_panel,
+.pos .r_stat,
+.pos .settings_main .mw-75,
+.pos .settings_main .snav_h {
+  position: relative;
+}
+.pos .d_panel::before,
+.pos .settings_main .mw-75::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 0;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(90deg, #a8792a, #f1d78f, #a8792a);
+}
+.pos .dash_sales {
+  --accent: #1f2937;
+  --accent-soft: #f4eedf;
+}
+.pos .dash_card {
+  border-top: 0 !important;
+  overflow: hidden;
+}
+.pos .dash_card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 35%, #f1d78f));
+}
+.pos .dash_icon {
+  background: linear-gradient(135deg, var(--accent-soft), #fff) !important;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+/* sidebar: brighter active item and a gentle gold glow */
+.pos .pos-side {
+  background: radial-gradient(circle at 0% 0%, rgba(201, 161, 74, 0.22), transparent 42%),
+    radial-gradient(circle at 100% 100%, rgba(201, 161, 74, 0.1), transparent 45%),
+    linear-gradient(180deg, #161f2b, #0c121a) !important;
+}
+.pos .pos-link.active {
+  background: linear-gradient(90deg, rgba(241, 215, 143, 0.22), rgba(201, 161, 74, 0.05)) !important;
+  box-shadow: inset 0 0 0 1px rgba(241, 215, 143, 0.18);
+}
+
+/* modal header: deep gradient */
+#modal .rf_head {
+  background: radial-gradient(circle at 100% 0%, rgba(241, 215, 143, 0.3), transparent 45%), var(--deep) !important;
+}
+
+/* ================= data tables: one card, one checkbox, one footer ================= */
+.pos .tcard {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ece3d1;
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 8px 24px rgba(17, 24, 39, 0.06);
+  overflow: hidden;
+}
+.pos .tcard_scroll {
+  overflow-x: auto;
+}
+/* the card draws the frame now, so the table itself is flat */
+.pos .tcard .t_main {
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0;
+}
+.pos .tcard .t_main thead th {
+  padding: 12px 16px !important;
+  text-align: left;
+}
+.pos .tcard .t_main tbody td {
+  padding: 12px 16px !important;
+  text-align: left;
+  cursor: pointer;
+}
+.pos .tcard .t_main tbody tr:last-child td {
+  border-bottom: 0;
+}
+.pos .tcard .t_main tbody tr.is-sel td {
+  background: #fdf6e3;
+}
+.pos .tcard .t_check {
+  width: 48px;
+  text-align: center !important;
+  cursor: default;
+}
+.pos .tcard .t_no {
+  width: 64px;
+  color: #9ca3af !important;
+  font-variant-numeric: tabular-nums;
+}
+.pos .tcard .t_strong {
+  font-weight: 600;
+  color: var(--ink) !important;
+}
+.pos .tcard .t_amt {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.pos .tcard .t_amt .pay_badge,
+.pos .tcard .t_amt .returned_tag {
+  display: table;
+  margin: 4px 0 0;
+  font-weight: 600;
+}
+.pos .tcard .t_act {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right !important;
+  cursor: default;
+}
+.pos .tcard .t_act .icon_btn + .icon_btn {
+  margin-left: 6px;
+}
+.pos .tcard .t_empty {
+  text-align: center !important;
+  padding: 48px 16px !important;
+  color: #9ca3af !important;
+  cursor: default;
+}
+
+/* every checkbox in a table: same 18px box */
+.pos input.tck {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1.5px solid #cbbf9f;
+  border-radius: 5px;
+  background: #fff center / 12px no-repeat;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.pos input.tck:hover {
+  border-color: var(--gold);
+}
+.pos input.tck:checked {
+  background-color: var(--ink);
+  border-color: var(--ink);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23f1d78f' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M3.5 8.5l3 3 6-6.5'/%3e%3c/svg%3e");
+}
+.pos input.tck:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.35);
+}
+
+/* row action: small square icon button */
+.pos .icon_btn {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: #6b7280 !important;
+  font-size: 0.9rem;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.pos .icon_btn:hover {
+  background: var(--cream);
+  border-color: var(--line);
+  color: var(--ink) !important;
+}
+.pos .icon_btn.danger:hover {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626 !important;
+}
+
+/* selection bar: replaces nothing, slides in at the top of the card */
+.pos .tcard_bulk {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #2a3446, #161d2a 60%, #0b1018);
+  color: #fff;
+  font-size: 0.9rem;
+}
+.pos .tcard_bulk > span {
+  margin-right: auto;
+}
+.pos .tcard_bulk b {
+  color: #f1d78f;
+}
+.pos .tbtn {
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.pos .tbtn.ghost {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff !important;
+}
+.pos .tbtn.ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.pos .tbtn.danger {
+  background: #dc2626;
+  color: #fff !important;
+}
+.pos .tbtn.danger:hover {
+  background: #b91c1c;
+}
+
+/* footer: count on the left, pager on the right */
+.pos .tcard_foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  border-top: 1px solid #f0eadb;
+  background: var(--cream-2);
+  color: #6b7280;
+  font-size: 0.86rem;
+}
+.pos .tcard_foot b {
+  color: var(--ink);
+}
+.pos .pager {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pos .pager button {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--ink) !important;
+  font-size: 0.8rem;
+}
+.pos .pager button:hover:not(:disabled) {
+  border-color: var(--gold);
+}
+.pos .pager button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* filter bar: tabs left, filter right, sits right above the table */
+.pos .view_bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 4px 0 12px;
+}
+.pos .view_bar .ret_tabs {
+  display: inline-flex;
+  gap: 2px;
+  padding: 4px;
+  background: #fff !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 12px;
+  box-shadow: none;
+}
+.pos .view_bar .ret_tab {
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 9px;
+  font-size: 0.9rem;
+  box-shadow: none !important;
+}
+.pos .view_bar .ret_tab.active {
+  background: var(--deep, var(--ink)) !important;
+  color: #f1d78f !important;
+}
+.pos .view_bar .pay_filter {
+  display: inline-flex;
+  gap: 0;
+  padding: 4px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.pos .view_bar .pay_filter button {
+  height: 30px;
+  padding: 0 12px;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: none !important;
+}
+.pos .view_bar .pay_filter button.active {
+  background: var(--cream) !important;
+  color: #8a6420 !important;
+  box-shadow: inset 0 0 0 1px #e8d6a8 !important;
+}
+@media (max-width: 991px) {
+  .pos .tcard .t_main {
+    min-width: 680px;
+  }
+}
+.pos .tcard .t_main th.t_num,
+.pos .tcard .t_main td.t_num {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ================= keyboard ================= */
+/* a clear gold ring on whatever the keyboard is on (mouse clicks stay ring-free) */
+.pos a:focus-visible,
+.pos button:focus-visible,
+.pos [tabindex]:focus-visible,
+#modal button:focus-visible,
+#modal a:focus-visible {
+  outline: 2px solid var(--gold) !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px rgba(201, 161, 74, 0.2) !important;
+}
+.pos .tcard tbody tr:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.pos .tcard tbody tr:focus-visible td {
+  background: #fdf6e3;
+  box-shadow: inset 0 2px 0 var(--gold), inset 0 -2px 0 var(--gold);
+}
+.pos .tcard tbody tr:focus-visible td:first-child {
+  box-shadow: inset 3px 0 0 var(--gold), inset 0 2px 0 var(--gold), inset 0 -2px 0 var(--gold);
+}
+.pos .pos-side .pos-link:focus-visible {
+  outline-color: var(--gold-2) !important;
+}
+
+/* "/" hint inside the search box */
+.pos .s-div .form {
+  position: relative;
+}
+.pos .s-kbd {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: var(--cream-2);
+  color: #8a6420;
+  font: 600 0.75rem/1 "Inter", sans-serif;
+  pointer-events: none;
+}
+.pos .s-div .form:focus-within .s-kbd {
+  display: none;
+}
+@media (hover: none) {
+  .pos .s-kbd,
+  .pos .pos-keys {
+    display: none !important;
+  }
+}
+
+/* keyboard button in the top bar */
+.pos .pos-keys {
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: #8a6420 !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.pos .pos-keys:hover {
+  border-color: var(--gold);
+  box-shadow: 0 4px 12px rgba(201, 161, 74, 0.2);
+}
+
+/* shortcuts panel */
+.pos-help-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1250;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(15, 23, 32, 0.55);
+  backdrop-filter: blur(4px);
+}
+.pos-help {
+  width: 100%;
+  max-width: 440px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+.pos-help-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: var(--deep);
+  border-bottom: 2px solid var(--gold);
+  color: #f1d78f;
+}
+.pos-help-head b svg {
+  margin-right: 8px;
+}
+.pos-help-head button {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff !important;
+}
+.pos-help ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px 18px 14px;
+}
+.pos-help li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0eadb;
+  color: #374151;
+  font-size: 0.92rem;
+}
+.pos-help li:last-child {
+  border-bottom: 0;
+}
+.pos-help kbd {
+  flex: none;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 7px;
+  background: var(--cream-2);
+  color: var(--ink);
+  font: 600 0.78rem/1 "Inter", sans-serif;
+}
+.pos .pos-keys + .pos-user {
+  margin-left: 0;
+}
