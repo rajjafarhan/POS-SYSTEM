@@ -48,7 +48,6 @@
 #modal .btn-success:hover,
 .pos .btn-primary:hover,
 #modal .btn-primary:hover {
-  background: var(--ink-2) !important;
   box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.35), 0 8px 20px rgba(17, 24, 39, 0.22);
 }
 /* secondary highlight action (e.g. Return items): gold outline */
